@@ -4,34 +4,37 @@ import { useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { getAccent } from "@/lib/accents";
 import type { WorkshopObjectDef } from "@/lib/types";
-import { cn, scrollToId } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 interface WorkshopObjectProps {
   def: WorkshopObjectDef;
   /** Render the artwork; receives hover/focus state to intensify glow. */
   art: (active: boolean) => ReactNode;
+  /** Called when the portal is activated (click / Enter / Space). */
+  onSelect: (def: WorkshopObjectDef, rect: DOMRect) => void;
 }
 
 /**
- * Positioned, clickable + keyboard-focusable hotspot in the workshop scene.
- * Highlights and shows a tooltip on hover/focus, and scrolls to its section.
+ * Positioned, clickable + keyboard-focusable PORTAL in the workshop hub.
+ * Highlights and shows a tooltip on hover/focus, and hands its on-screen rect
+ * to the hub so it can zoom into the object before navigating.
  */
-export function WorkshopObject({ def, art }: WorkshopObjectProps) {
+export function WorkshopObject({ def, art, onSelect }: WorkshopObjectProps) {
   const [active, setActive] = useState(false);
   const reduce = useReducedMotion();
   const a = getAccent(def.accent);
   const tooltipBelow = def.area.top < 22;
-  const hover = reduce ? undefined : { scale: 1.045, y: -4 };
+  const hover = reduce ? undefined : { scale: 1.05, y: -5 };
 
   return (
     <motion.button
       type="button"
-      onClick={() => scrollToId(def.target)}
+      onClick={(e) => onSelect(def, e.currentTarget.getBoundingClientRect())}
       onHoverStart={() => setActive(true)}
       onHoverEnd={() => setActive(false)}
       onFocus={() => setActive(true)}
       onBlur={() => setActive(false)}
-      aria-label={`${def.label}: ${def.caption}. Jump to section.`}
+      aria-label={`${def.label}: ${def.caption}. Open page.`}
       className="absolute cursor-pointer rounded-xl outline-none"
       style={{
         left: `${def.area.left}%`,
@@ -40,7 +43,7 @@ export function WorkshopObject({ def, art }: WorkshopObjectProps) {
       }}
       whileHover={hover}
       whileFocus={hover}
-      whileTap={{ scale: 0.99 }}
+      whileTap={{ scale: 0.98 }}
       transition={{ type: "spring", stiffness: 300, damping: 22 }}
     >
       {/* accent halo */}
@@ -50,7 +53,7 @@ export function WorkshopObject({ def, art }: WorkshopObjectProps) {
           "pointer-events-none absolute -inset-2 -z-10 rounded-[36%] blur-2xl transition-opacity duration-300",
           a.bgSolid,
         )}
-        style={{ opacity: active ? 0.22 : 0 }}
+        style={{ opacity: active ? 0.24 : 0 }}
       />
 
       {art(active)}
@@ -77,6 +80,9 @@ export function WorkshopObject({ def, art }: WorkshopObjectProps) {
               <span className={cn("h-1.5 w-1.5 shrink-0 rounded-full", a.bgSolid)} />
               <span className="text-xs font-semibold text-ink">{def.label}</span>
               <span className="text-[0.7rem] text-muted">· {def.caption}</span>
+              <span className={cn("ml-1 text-[0.7rem] font-medium", a.text)}>
+                →
+              </span>
             </div>
           </motion.div>
         ) : null}

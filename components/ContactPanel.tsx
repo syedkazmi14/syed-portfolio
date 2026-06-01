@@ -12,8 +12,6 @@ import { siteConfig } from "@/data/site";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
-import { Section } from "@/components/Section";
-import { SectionHeader } from "@/components/SectionHeader";
 
 const strip = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
 
@@ -43,57 +41,46 @@ const methods: {
   },
 ];
 
+/** Contact methods + frontend-only message form. */
 export function ContactPanel() {
   return (
-    <Section id="contact">
-      <SectionHeader
-        index="07"
-        eyebrow="Pick up the desk phone"
-        title="Get in touch"
-        description="Have a role, a project, or an idea worth building? Let's talk."
-        accent="neon"
-      />
-
-      <div className="mt-10 grid gap-6 lg:grid-cols-2">
-        {/* contact methods */}
-        <Reveal>
-          <div className="flex h-full flex-col gap-3">
-            {methods.map(({ Icon, label, value, href }) => (
-              <a
-                key={label}
-                href={href}
-                {...(label === "Email"
-                  ? {}
-                  : { target: "_blank", rel: "noopener noreferrer" })}
-                className="panel group flex items-center gap-4 rounded-2xl border border-line p-4 transition-all hover:border-neon/50 hover:shadow-[0_0_28px_-12px_var(--color-neon)]"
-              >
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-line bg-white/[0.03] text-muted transition-colors group-hover:border-neon/50 group-hover:text-neon">
-                  <Icon className="h-5 w-5" aria-hidden />
+    <div className="grid gap-6 lg:grid-cols-2">
+      <Reveal>
+        <div className="flex h-full flex-col gap-3">
+          {methods.map(({ Icon, label, value, href }) => (
+            <a
+              key={label}
+              href={href}
+              {...(label === "Email"
+                ? {}
+                : { target: "_blank", rel: "noopener noreferrer" })}
+              className="panel group flex items-center gap-4 rounded-2xl border border-line p-4 transition-all hover:border-neon/50 hover:shadow-[0_0_28px_-12px_var(--color-neon)]"
+            >
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-line bg-white/[0.03] text-muted transition-colors group-hover:border-neon/50 group-hover:text-neon">
+                <Icon className="h-5 w-5" aria-hidden />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-sm font-medium text-ink">
+                  {label}
                 </span>
-                <span className="min-w-0">
-                  <span className="block text-sm font-medium text-ink">
-                    {label}
-                  </span>
-                  <span className="block truncate font-mono text-xs text-muted">
-                    {value}
-                  </span>
+                <span className="block truncate font-mono text-xs text-muted">
+                  {value}
                 </span>
-              </a>
-            ))}
+              </span>
+            </a>
+          ))}
 
-            <div className="panel mt-auto flex items-center gap-3 rounded-2xl border border-line p-4 text-sm text-muted">
-              <MapPin className="h-4 w-4 shrink-0 text-mint" aria-hidden />
-              Based in {siteConfig.location} — open to new opportunities.
-            </div>
+          <div className="panel mt-auto flex items-center gap-3 rounded-2xl border border-line p-4 text-sm text-muted">
+            <MapPin className="h-4 w-4 shrink-0 text-mint" aria-hidden />
+            Based in {siteConfig.location} — open to new opportunities.
           </div>
-        </Reveal>
+        </div>
+      </Reveal>
 
-        {/* contact form */}
-        <Reveal delay={0.1}>
-          <ContactForm />
-        </Reveal>
-      </div>
-    </Section>
+      <Reveal delay={0.1}>
+        <ContactForm />
+      </Reveal>
+    </div>
   );
 }
 

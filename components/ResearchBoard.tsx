@@ -8,63 +8,48 @@ import { researchInterests, researchProjectIds } from "@/data/research";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/Badge";
 import { Reveal } from "@/components/ui/Reveal";
-import { Section } from "@/components/Section";
-import { SectionHeader } from "@/components/SectionHeader";
 import { ProjectVisual } from "@/components/ProjectVisual";
 
 const researchProjects = researchProjectIds
   .map((id) => projects.find((p) => p.id === id))
   .filter(Boolean) as Project[];
 
+/** The whiteboard: pinned research sketches + sticky-note focus areas. */
 export function ResearchBoard() {
   return (
-    <Section id="research">
-      <SectionHeader
-        index="03"
-        eyebrow="On the whiteboard"
-        title="Research & AI Work"
-        description="Computer vision, LLM applications, and agentic systems — sketched out, prototyped, and shipped."
-        accent="mint"
-      />
+    <Reveal>
+      <div className="relative overflow-hidden rounded-3xl border border-line bg-[#0b1018] bg-grid-fine p-5 sm:p-8">
+        {/* board header */}
+        <div className="mb-6 flex items-center gap-3">
+          <span className="font-mono text-sm text-mint">research/ai-work</span>
+          <span className="h-px flex-1 bg-line" />
+          <span className="hidden font-mono text-xs text-muted sm:inline">
+            ~/syed/notes
+          </span>
+        </div>
 
-      <Reveal className="mt-10">
-        <div className="relative overflow-hidden rounded-3xl border border-line bg-[#0b1018] bg-grid-fine p-5 sm:p-8">
-          {/* board header */}
-          <div className="mb-6 flex items-center gap-3">
-            <span className="font-mono text-sm text-mint">research/ai-work</span>
-            <span className="h-px flex-1 bg-line" />
-            <span className="hidden font-mono text-xs text-muted sm:inline">
-              ~/syed/notes
-            </span>
+        <div className="grid gap-6 lg:grid-cols-5">
+          {/* pinned project sketches */}
+          <div className="grid gap-4 sm:grid-cols-2 lg:col-span-3">
+            {researchProjects.map((p) => (
+              <PinnedCard key={p.id} project={p} />
+            ))}
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-5">
-            {/* pinned project sketches */}
-            <div className="grid gap-4 sm:grid-cols-2 lg:col-span-3">
-              {researchProjects.map((p) => (
-                <PinnedCard key={p.id} project={p} />
+          {/* sticky-note focus areas */}
+          <div className="lg:col-span-2">
+            <h3 className="mb-4 font-mono text-xs uppercase tracking-[0.18em] text-muted">
+              AI / ML focus areas
+            </h3>
+            <div className="flex flex-wrap gap-3">
+              {researchInterests.map((interest, i) => (
+                <StickyNote key={interest.label} interest={interest} index={i} />
               ))}
-            </div>
-
-            {/* sticky-note focus areas */}
-            <div className="lg:col-span-2">
-              <h3 className="mb-4 font-mono text-xs uppercase tracking-[0.18em] text-muted">
-                AI / ML focus areas
-              </h3>
-              <div className="flex flex-wrap gap-3">
-                {researchInterests.map((interest, i) => (
-                  <StickyNote
-                    key={interest.label}
-                    interest={interest}
-                    index={i}
-                  />
-                ))}
-              </div>
             </div>
           </div>
         </div>
-      </Reveal>
-    </Section>
+      </div>
+    </Reveal>
   );
 }
 
@@ -78,7 +63,6 @@ function PinnedCard({ project }: { project: Project }) {
         a.borderHover,
       )}
     >
-      {/* pin */}
       <span
         className={cn(
           "absolute -top-2 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full ring-2 ring-base",
@@ -129,7 +113,6 @@ function StickyNote({
         a.bgSoft,
       )}
     >
-      {/* tape */}
       <span className="absolute -top-1.5 left-1/2 h-3 w-10 -translate-x-1/2 rounded-sm bg-white/10" />
       <p className={cn("text-sm font-semibold", a.text)}>{interest.label}</p>
       <p className="mt-1 text-xs leading-relaxed text-muted">{interest.note}</p>
