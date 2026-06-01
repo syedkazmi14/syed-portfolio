@@ -13,7 +13,8 @@ import {
 import { motion } from "framer-motion";
 import { getAccent } from "@/lib/accents";
 import { workshopObjects } from "@/data/workshop";
-import { cn, scrollToId } from "@/lib/utils";
+import type { WorkshopObjectDef } from "@/lib/types";
+import { cn } from "@/lib/utils";
 import { WorkshopObject } from "@/components/WorkshopObject";
 import { MonitorArt } from "@/components/workshop/MonitorArt";
 import { SolderingArt } from "@/components/workshop/SolderingArt";
@@ -51,11 +52,21 @@ const iconMap: Record<string, LucideIcon> = {
   Phone,
 };
 
-export function WorkshopScene() {
+interface WorkshopSceneProps {
+  onSelect: (def: WorkshopObjectDef, rect: DOMRect) => void;
+}
+
+export function WorkshopScene({ onSelect }: WorkshopSceneProps) {
   return (
     <div className="w-full">
-      {/* ---------- Desktop / tablet: interactive room ---------- */}
-      <div className="relative mx-auto hidden aspect-[16/10] w-full max-w-5xl md:block">
+      {/* ---------- Desktop / tablet: the interactive room ---------- */}
+      <div
+        className="relative mx-auto hidden md:block"
+        style={{
+          width: "min(94vw, calc((100dvh - 13rem) * 1.6))",
+          aspectRatio: "16 / 10",
+        }}
+      >
         {/* desk surface */}
         <div
           aria-hidden
@@ -65,7 +76,6 @@ export function WorkshopScene() {
           aria-hidden
           className="absolute inset-x-[3%] top-[63%] h-[2px] rounded bg-gradient-to-r from-transparent via-neon/40 to-transparent"
         />
-        {/* floor contact shadow */}
         <div
           aria-hidden
           className="absolute inset-x-[8%] bottom-[2%] h-10 rounded-[50%] bg-black/40 blur-xl"
@@ -76,11 +86,12 @@ export function WorkshopScene() {
             key={def.id}
             def={def}
             art={(active) => renderArt(def.id, active)}
+            onSelect={onSelect}
           />
         ))}
       </div>
 
-      {/* ---------- Mobile: tap-friendly card grid ---------- */}
+      {/* ---------- Mobile: tap-friendly portal grid ---------- */}
       <div className="grid grid-cols-2 gap-3 md:hidden">
         {workshopObjects.map((def, i) => {
           const a = getAccent(def.accent);
@@ -89,15 +100,16 @@ export function WorkshopScene() {
             <motion.button
               key={def.id}
               type="button"
-              onClick={() => scrollToId(def.target)}
+              onClick={(e) =>
+                onSelect(def, e.currentTarget.getBoundingClientRect())
+              }
               initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: i * 0.05 }}
               whileTap={{ scale: 0.97 }}
-              aria-label={`${def.label}: ${def.caption}. Jump to section.`}
+              aria-label={`${def.label}: ${def.caption}. Open page.`}
               className={cn(
-                "group panel flex flex-col gap-3 rounded-2xl border p-4 text-left transition-colors",
+                "group panel flex min-h-[8.5rem] flex-col gap-3 rounded-2xl border p-4 text-left transition-colors",
                 a.borderHover,
               )}
             >
@@ -110,7 +122,7 @@ export function WorkshopScene() {
               >
                 <Icon className={cn("h-5 w-5", a.text)} aria-hidden />
               </span>
-              <span>
+              <span className="mt-auto">
                 <span className="block text-sm font-semibold text-ink">
                   {def.label}
                 </span>
@@ -119,10 +131,7 @@ export function WorkshopScene() {
                 </span>
               </span>
               <MoveRight
-                className={cn(
-                  "h-4 w-4 text-muted transition-transform group-hover:translate-x-1",
-                  a.text,
-                )}
+                className={cn("h-4 w-4 transition-transform group-hover:translate-x-1", a.text)}
                 aria-hidden
               />
             </motion.button>
