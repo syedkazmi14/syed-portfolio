@@ -1,26 +1,301 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ------------------------------------------------------------------ */
+/*  Design tokens — "Syed's Workshop" premium dark engineering theme    */
+/* ------------------------------------------------------------------ */
+@theme {
+  --color-base: #06070d;
+  --color-base-2: #0a0c15;
+  --color-panel: #0f1320;
+  --color-panel-2: #151a2b;
+  --color-line: #232a42;
+  --color-ink: #e9ecf6;
+  --color-muted: #98a1ba;
+
+  /* accent system */
+  --color-neon: #3ee0ff; /* monitor / software — cyan    */
+  --color-heat: #ff8f43; /* soldering / hardware — amber  */
+  --color-mint: #45e6a6; /* research / active — green     */
+  --color-iris: #ad93ff; /* awards / misc — violet        */
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+/* ------------------------------------------------------------------ */
+/*  Base layer                                                         */
+/* ------------------------------------------------------------------ */
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    color-scheme: dark;
+  }
+
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-base);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  /* offset anchored sections for the sticky navbar */
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-neon) 35%, transparent);
+    color: #fff;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-base);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #20263c;
+    border-radius: 9999px;
+    border: 2px solid var(--color-base);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2c3450;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-neon);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ------------------------------------------------------------------ */
+/*  Keyframes                                                          */
+/* ------------------------------------------------------------------ */
+@keyframes flicker {
+  0%,
+  91%,
+  100% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 0.72;
+  }
+  93% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 0.84;
+  }
+  96% {
+    opacity: 1;
+  }
+}
+@keyframes blink {
+  0%,
+  48% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0.18;
+  }
+}
+@keyframes floaty {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--p-op, 0.5);
+  }
+  88% {
+    opacity: var(--p-op, 0.5);
+  }
+  100% {
+    transform: translateY(-130px) translateX(16px);
+    opacity: 0;
+  }
+}
+@keyframes pulseGlow {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes scanline {
+  0% {
+    transform: translateY(-110%);
+  }
+  100% {
+    transform: translateY(1400%);
+  }
+}
+@keyframes sweep {
+  0% {
+    transform: translateX(-130%);
+  }
+  100% {
+    transform: translateX(130%);
+  }
+}
+@keyframes spinSlow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes breathe {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Effect utility classes                                             */
+/* ------------------------------------------------------------------ */
+.anim-flicker {
+  animation: flicker 7s linear infinite;
+}
+.anim-blink {
+  animation: blink 2.2s steps(1, end) infinite;
+}
+.anim-pulse-glow {
+  animation: pulseGlow 4.5s ease-in-out infinite;
+}
+.anim-scan {
+  animation: scanline 7s linear infinite;
+}
+.anim-spin-slow {
+  animation: spinSlow 32s linear infinite;
+}
+.anim-breathe {
+  animation: breathe 6s ease-in-out infinite;
+}
+
+/* blueprint grid backgrounds */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(90, 120, 190, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(90, 120, 190, 0.08) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+.bg-grid-fine {
+  background-image:
+    linear-gradient(to right, rgba(90, 120, 190, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(90, 120, 190, 0.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+.grid-mask {
+  -webkit-mask-image: radial-gradient(
+    ellipse 85% 70% at 50% 38%,
+    #000 35%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 85% 70% at 50% 38%,
+    #000 35%,
+    transparent 100%
+  );
+}
+
+/* glass panel */
+.panel {
+  background: linear-gradient(
+    180deg,
+    rgba(21, 26, 43, 0.72),
+    rgba(11, 14, 24, 0.72)
+  );
+  border: 1px solid var(--color-line);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+/* glow helpers */
+.text-glow-neon {
+  text-shadow: 0 0 22px color-mix(in oklab, var(--color-neon) 55%, transparent);
+}
+.ring-neon {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--color-neon) 45%, transparent),
+    0 0 30px color-mix(in oklab, var(--color-neon) 28%, transparent);
+}
+
+/* gradient text */
+.text-gradient {
+  background: linear-gradient(
+    100deg,
+    var(--color-ink) 0%,
+    var(--color-neon) 55%,
+    var(--color-iris) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* hide scrollbar on horizontal scrollers */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Dialog (Radix) entrance animations                                 */
+/* ------------------------------------------------------------------ */
+@keyframes overlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes contentIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -46%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+.dialog-overlay {
+  animation: overlayIn 0.2s ease forwards;
+}
+.dialog-content {
+  transform: translate(-50%, -50%);
+  animation: contentIn 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
