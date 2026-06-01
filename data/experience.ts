@@ -36,9 +36,9 @@ export const experience: ExperienceItem[] = [
     id: "techlots",
     company: "TechLots, LLC",
     role: "Hardware Technician",
-    period: "August 2025 — Present",
+    period: "August 2025 — May 2026",
     type: "hardware",
-    current: true,
+    current: false,
     description:
       "Diagnose and repair consumer electronics and laptops, performing advanced board-level troubleshooting, soldering, and component replacement using precision tools and test equipment.",
     tech: [
