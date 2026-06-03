@@ -4,6 +4,7 @@ import { experience } from "@/data/experience";
 import { awards } from "@/data/awards";
 import { siteConfig } from "@/data/site";
 import { Reveal } from "@/components/ui/Reveal";
+import { CatMascot } from "@/components/CatMascot";
 
 const stats = [
   { value: `${projects.length}`, label: "Projects shipped" },
@@ -25,14 +26,10 @@ export function AboutIntro() {
       <Reveal>
         <div className="panel rounded-2xl border border-line p-6">
           {/*
-            Replace this monogram tile with a real photo:
+            The cat mascot doubles as the avatar. To use a real photo instead:
             <img src="/me.jpg" alt="Syed Kazmi" className="h-24 w-24 rounded-2xl object-cover" />
           */}
-          <div className="grid h-24 w-24 place-items-center rounded-2xl border border-neon/30 bg-gradient-to-br from-neon/15 to-iris/15">
-            <span className="text-gradient text-3xl font-bold tracking-tight">
-              SK
-            </span>
-          </div>
+          <CatMascot className="h-24 w-24" idle label="Syed Kazmi" />
           <h2 className="mt-5 text-xl font-semibold tracking-tight text-ink">
             {siteConfig.name}
           </h2>
