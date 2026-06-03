@@ -95,10 +95,31 @@ Each project renders an abstract SVG by default. Add `image: "/projects/x.png"`
 to a project in [`data/projects.ts`](data/projects.ts) and
 [`ProjectVisual.tsx`](components/ProjectVisual.tsx) uses it instead.
 
-### About photo
+### Branding — neon sign, cat mascot & favicon
 
-Swap the "SK" monogram in [`AboutSection.tsx`](components/AboutSection.tsx) for a
-photo (a commented example is included — drop `public/me.jpg`).
+- **Neon workshop sign** — [`components/NeonSign.tsx`](components/NeonSign.tsx) is
+  the homepage centerpiece. The letters are **not a font** — each glyph is a
+  hand-routed monoline tube path in the `GLYPHS` map, rendered as layered strokes
+  (outer glow → glass tube → white-hot core → traveling shimmer) so it reads as
+  real neon glass. It's mounted on an acrylic backboard with hanging chains +
+  standoffs and casts glow/reflection onto the room. Edit the wording by changing
+  the `buildWord("…")` calls (add glyphs to `GLYPHS` if you use new letters);
+  tune colors via the `neon-title` / `neon-sub` gradients. Subtle flicker /
+  breathe / shimmer come from `.neon-*` classes in
+  [`app/globals.css`](app/globals.css).
+- **Cat mascot** — the animated hacker-cat is
+  [`components/CatMascot.tsx`](components/CatMascot.tsx): a transparent,
+  container-free SVG (hover → blink / ear-twitch / head-tilt / glow). It's the
+  hub avatar, page-chrome icon, and About avatar. To use a real photo on the
+  About page instead, see the commented example in
+  [`AboutSection.tsx`](components/AboutSection.tsx).
+- **Favicon** — a simplified, transparent version of the same cat face. The
+  source is [`app/icon.svg`](app/icon.svg); `app/favicon.ico` +
+  `app/apple-icon.png` are generated from it. After editing the cat, regenerate:
+
+  ```bash
+  npm run gen:icons
+  ```
 
 ### Theme / colors
 

@@ -9,6 +9,7 @@ import type { Accent } from "@/lib/types";
 import { siteConfig } from "@/data/site";
 import { cn } from "@/lib/utils";
 import { GithubIcon, LinkedinIcon } from "@/components/icons/BrandIcons";
+import { CatMascot } from "@/components/CatMascot";
 import { AmbientBackground } from "@/components/effects/AmbientBackground";
 
 interface PageShellProps {
@@ -73,9 +74,7 @@ export function PageShell({
             <span className="hidden font-mono text-xs text-muted sm:block">
               {siteConfig.name}
             </span>
-            <span className="grid h-9 w-9 place-items-center rounded-lg border border-neon/30 bg-gradient-to-br from-neon/15 to-iris/15 text-sm font-bold text-neon">
-              SK
-            </span>
+            <CatMascot className="h-9 w-9" />
           </Link>
         </div>
       </div>

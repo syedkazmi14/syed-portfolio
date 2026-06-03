@@ -63,7 +63,7 @@ export function WorkshopScene({ onSelect }: WorkshopSceneProps) {
       <div
         className="relative mx-auto hidden md:block"
         style={{
-          width: "min(94vw, calc((100dvh - 13rem) * 1.6))",
+          width: "min(92vw, calc((100dvh - 27.5rem) * 1.6))",
           aspectRatio: "16 / 10",
         }}
       >

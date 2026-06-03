@@ -299,3 +299,60 @@
   transform: translate(-50%, -50%);
   animation: contentIn 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+
+/* ------------------------------------------------------------------ */
+/*  Neon sign — breathe, shimmer, electrical flicker                   */
+/* ------------------------------------------------------------------ */
+@keyframes neonBreathe {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.82;
+  }
+}
+@keyframes neonShimmer {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+@keyframes neonFlicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  41% {
+    opacity: 1;
+  }
+  42% {
+    opacity: 0.82;
+  }
+  43% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  93% {
+    opacity: 0.68;
+  }
+  94% {
+    opacity: 1;
+  }
+  96% {
+    opacity: 0.86;
+  }
+  97% {
+    opacity: 1;
+  }
+}
+.neon-breathe {
+  animation: neonBreathe 5.5s ease-in-out infinite;
+}
+.neon-shimmer {
+  animation: neonShimmer 6.5s linear infinite;
+}
+.neon-flicker {
+  animation: neonFlicker 9s linear infinite;
+}

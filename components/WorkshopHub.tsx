@@ -13,6 +13,8 @@ import { GithubIcon, LinkedinIcon } from "@/components/icons/BrandIcons";
 import { AmbientBackground } from "@/components/effects/AmbientBackground";
 import { Particles } from "@/components/effects/Particles";
 import { WorkshopScene } from "@/components/WorkshopScene";
+import { CatMascot } from "@/components/CatMascot";
+import { NeonSign } from "@/components/NeonSign";
 
 interface ZoomState {
   rect: DOMRect;
@@ -75,9 +77,7 @@ export function WorkshopHub() {
         {/* ---- identity bar ---- */}
         <header className="flex items-center justify-between gap-4 px-5 py-5 sm:px-8">
           <div className="flex items-center gap-3">
-            <span className="grid h-10 w-10 place-items-center rounded-xl border border-neon/30 bg-gradient-to-br from-neon/15 to-iris/15 font-bold tracking-tight text-neon">
-              SK
-            </span>
+            <CatMascot className="h-11 w-11" idle />
             <div className="leading-tight">
               <p className="text-sm font-semibold tracking-tight text-ink">
                 {siteConfig.name}
@@ -128,15 +128,13 @@ export function WorkshopHub() {
 
         {/* ---- the workshop ---- */}
         <div className="flex flex-1 flex-col items-center justify-center px-4 pb-8 sm:px-6">
-          <div className="mb-5 text-center">
-            <h1 className="text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-              {siteConfig.headline}
-            </h1>
-            <p className="mt-2 flex items-center justify-center gap-2 font-mono text-xs text-muted">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-neon" />
-              Select a station — every object opens its own page
-            </p>
+          <div className="w-full">
+            <NeonSign />
           </div>
+          <p className="mb-6 mt-3 flex items-center justify-center gap-2 text-center font-mono text-xs text-muted sm:mt-4 sm:text-sm">
+            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-neon anim-pulse-glow" />
+            Welcome to my garage — select a station to learn more about me.
+          </p>
 
           <WorkshopScene onSelect={handleSelect} />
         </div>
