@@ -35,7 +35,7 @@ export function WorkshopObject({ def, art, onSelect }: WorkshopObjectProps) {
       onFocus={() => setActive(true)}
       onBlur={() => setActive(false)}
       aria-label={`${def.label}: ${def.caption}. Open page.`}
-      className="absolute cursor-pointer rounded-xl outline-none"
+      className="pointer-events-auto absolute cursor-pointer rounded-xl outline-none"
       style={{
         left: `${def.area.left}%`,
         top: `${def.area.top}%`,

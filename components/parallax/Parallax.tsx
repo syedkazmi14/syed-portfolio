@@ -99,7 +99,10 @@ export function ParallaxLayer({
 
   return (
     <motion.div
-      className={cn("absolute inset-0", className)}
+      // The layer itself must not eat pointer events, or upper layers would
+      // block clicks/hover on portals sitting in lower layers. Interactive
+      // children (WorkshopObject) opt back in with `pointer-events-auto`.
+      className={cn("pointer-events-none absolute inset-0", className)}
       style={ctx?.enabled ? { x, y, ...style } : style}
     >
       {children}
