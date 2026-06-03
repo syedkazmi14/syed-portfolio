@@ -1,8 +1,9 @@
 "use client";
 
+import type { CSSProperties, ReactNode } from "react";
 import {
   Brain,
-  CircuitBoard,
+  CircuitBoard as CircuitIcon,
   Monitor as MonitorIcon,
   MoveRight,
   Phone,
@@ -15,7 +16,25 @@ import { getAccent } from "@/lib/accents";
 import { workshopObjects } from "@/data/workshop";
 import type { WorkshopObjectDef } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { ParallaxLayer, ParallaxStage } from "@/components/parallax/Parallax";
 import { WorkshopObject } from "@/components/WorkshopObject";
+import { NeonSign } from "@/components/NeonSign";
+import { BrickWall, Workbench } from "@/components/workshop/Environment";
+import { SleepingCat } from "@/components/workshop/SleepingCat";
+import {
+  BlueprintSheet,
+  CableDrape,
+  CircuitBoard,
+  CommitsCalendar,
+  DerivedNote,
+  DeskLamp,
+  DevBoard,
+  Keyboard,
+  Mouse,
+  Mug,
+  Plant,
+  StickyNote,
+} from "@/components/workshop/props";
 import { MonitorArt } from "@/components/workshop/MonitorArt";
 import { SolderingArt } from "@/components/workshop/SolderingArt";
 import { WhiteboardArt } from "@/components/workshop/WhiteboardArt";
@@ -23,7 +42,6 @@ import { TrophyShelfArt } from "@/components/workshop/TrophyShelfArt";
 import { ToolboxArt } from "@/components/workshop/ToolboxArt";
 import { DeskPhoneArt } from "@/components/workshop/DeskPhoneArt";
 
-/** Render the right placeholder artwork for an object id. Swap art here. */
 function renderArt(id: string, active: boolean) {
   switch (id) {
     case "monitor":
@@ -43,101 +61,214 @@ function renderArt(id: string, active: boolean) {
   }
 }
 
+/** which depth layer each portal lives in */
+const MID = ["monitor", "whiteboard", "trophy-shelf"];
+const byId = (id: string) => workshopObjects.find((o) => o.id === id)!;
+
+interface SelectFn {
+  onSelect: (def: WorkshopObjectDef, rect: DOMRect) => void;
+}
+
+/** absolutely-positioned decoration */
+function Placed({
+  left,
+  top,
+  width,
+  rotate,
+  z,
+  children,
+}: {
+  left: number;
+  top: number;
+  width: number;
+  rotate?: number;
+  z?: number;
+  children: ReactNode;
+}) {
+  const style: CSSProperties = {
+    left: `${left}%`,
+    top: `${top}%`,
+    width: `${width}%`,
+    zIndex: z,
+  };
+  if (rotate) style.transform = `rotate(${rotate}deg)`;
+  return (
+    <div className="absolute" style={style}>
+      {children}
+    </div>
+  );
+}
+
+/* ===================================================================== */
+/*  Desktop: the immersive parallax room                                 */
+/* ===================================================================== */
+export function WorkshopRoom({ onSelect }: SelectFn) {
+  const portal = (id: string) => (
+    <WorkshopObject
+      key={id}
+      def={byId(id)}
+      art={(active) => renderArt(id, active)}
+      onSelect={onSelect}
+    />
+  );
+
+  return (
+    <ParallaxStage className="h-full w-full overflow-hidden">
+      {/* ---------------- BACKGROUND: wall + sign + diagrams ------------- */}
+      <ParallaxLayer depth={0.022}>
+        <div className="absolute -inset-8">
+          <BrickWall />
+        </div>
+
+        {/* neon light spill on the brick */}
+        <div
+          aria-hidden
+          className="neon-breathe pointer-events-none absolute left-1/2 top-[18%] h-[40%] w-[64%] -translate-x-1/2 -translate-y-1/2 rounded-[40%] blur-[90px]"
+          style={{
+            background:
+              "radial-gradient(50% 60% at 50% 50%, rgba(62,224,255,0.32), rgba(140,108,255,0.18) 55%, transparent 78%)",
+          }}
+        />
+
+        {/* wall diagrams + pinned notes */}
+        <Placed left={2.5} top={5} width={12} rotate={-3}>
+          <BlueprintSheet variant="flow" />
+        </Placed>
+        <Placed left={85.5} top={4} width={12.5} rotate={2.5}>
+          <BlueprintSheet variant="api" />
+        </Placed>
+        <Placed left={1.5} top={62} width={11} rotate={-2}>
+          <BlueprintSheet variant="arch" className="opacity-80" />
+        </Placed>
+        <Placed left={82} top={38} width={16}>
+          <CommitsCalendar />
+        </Placed>
+        <Placed left={20.5} top={30} width={6.5} rotate={-7}>
+          <StickyNote accent="iris" lines={["ship", "build", "repeat"]} />
+        </Placed>
+        <Placed left={70} top={9} width={6.5} rotate={5}>
+          <StickyNote accent="mint" lines={["focus", "build", "grow"]} />
+        </Placed>
+      </ParallaxLayer>
+
+      {/* ---------------- the neon sign (mounted, slightly proud) -------- */}
+      <ParallaxLayer depth={0.035}>
+        <Placed left={20} top={1} width={60}>
+          <NeonSign />
+        </Placed>
+        {/* power cable from the sign down the wall */}
+        <Placed left={72} top={20} width={14}>
+          <CableDrape />
+        </Placed>
+      </ParallaxLayer>
+
+      {/* ---------------- MIDGROUND: desk + monitor/research/awards ------ */}
+      <ParallaxLayer depth={0.075}>
+        <Workbench />
+        {MID.map((id) => portal(id))}
+      </ParallaxLayer>
+
+      {/* ---------------- FOREGROUND: clutter, cat, near portals --------- */}
+      <ParallaxLayer depth={0.155}>
+        {/* desk lamp reaching in from the top-left */}
+        <Placed left={-6} top={2} width={14} z={5}>
+          <DeskLamp />
+        </Placed>
+
+        {/* left side: boards + mug */}
+        <Placed left={2} top={75} width={12} rotate={-4}>
+          <CircuitBoard />
+        </Placed>
+        <Placed left={13.5} top={80} width={11} rotate={3}>
+          <DevBoard />
+        </Placed>
+        <Placed left={22} top={69} width={6.5}>
+          <Mug />
+        </Placed>
+
+        {/* center-front: keyboard + mouse + sleeping cat */}
+        <Placed left={28} top={82} width={27}>
+          <Keyboard />
+        </Placed>
+        <Placed left={57.5} top={84} width={5}>
+          <Mouse />
+        </Placed>
+        <Placed left={40} top={62} width={21} z={6}>
+          <SleepingCat />
+        </Placed>
+
+        {/* a sticky note + components on the desk */}
+        <Placed left={62} top={66} width={6.5} rotate={6}>
+          <StickyNote accent="heat" lines={["make it", "useful.", "ship it"]} />
+        </Placed>
+        <Placed left={91} top={70} width={8}>
+          <Plant />
+        </Placed>
+        <Placed left={5} top={86} width={7} rotate={2}>
+          <DerivedNote />
+        </Placed>
+
+        {/* foreground portals */}
+        {["soldering-station", "toolbox", "desk-phone"].map((id) => portal(id))}
+      </ParallaxLayer>
+
+      {/* edge vignette to seat everything in the room */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-20"
+        style={{
+          background:
+            "radial-gradient(120% 100% at 50% 45%, transparent 60%, rgba(4,5,9,0.6) 100%)",
+        }}
+      />
+    </ParallaxStage>
+  );
+}
+
+/* ===================================================================== */
+/*  Mobile: tap-friendly portal cards                                    */
+/* ===================================================================== */
 const iconMap: Record<string, LucideIcon> = {
   Monitor: MonitorIcon,
-  CircuitBoard,
+  CircuitBoard: CircuitIcon,
   Brain,
   Trophy,
   Wrench,
   Phone,
 };
 
-interface WorkshopSceneProps {
-  onSelect: (def: WorkshopObjectDef, rect: DOMRect) => void;
-}
-
-export function WorkshopScene({ onSelect }: WorkshopSceneProps) {
+export function PortalCardGrid({ onSelect }: SelectFn) {
   return (
-    <div className="w-full">
-      {/* ---------- Desktop / tablet: the interactive room ---------- */}
-      <div
-        className="relative mx-auto hidden md:block"
-        style={{
-          width: "min(92vw, calc((100dvh - 27.5rem) * 1.6))",
-          aspectRatio: "16 / 10",
-        }}
-      >
-        {/* desk surface */}
-        <div
-          aria-hidden
-          className="absolute inset-x-[1%] top-[63%] h-[13%] rounded-2xl border-t border-white/10 bg-gradient-to-b from-[#1a2132] to-[#0c1019] shadow-[0_30px_80px_-30px_#000]"
-        />
-        <div
-          aria-hidden
-          className="absolute inset-x-[3%] top-[63%] h-[2px] rounded bg-gradient-to-r from-transparent via-neon/40 to-transparent"
-        />
-        <div
-          aria-hidden
-          className="absolute inset-x-[8%] bottom-[2%] h-10 rounded-[50%] bg-black/40 blur-xl"
-        />
-
-        {workshopObjects.map((def) => (
-          <WorkshopObject
+    <div className="grid grid-cols-2 gap-3">
+      {workshopObjects.map((def, i) => {
+        const a = getAccent(def.accent);
+        const Icon = iconMap[def.icon] ?? MonitorIcon;
+        return (
+          <motion.button
             key={def.id}
-            def={def}
-            art={(active) => renderArt(def.id, active)}
-            onSelect={onSelect}
-          />
-        ))}
-      </div>
-
-      {/* ---------- Mobile: tap-friendly portal grid ---------- */}
-      <div className="grid grid-cols-2 gap-3 md:hidden">
-        {workshopObjects.map((def, i) => {
-          const a = getAccent(def.accent);
-          const Icon = iconMap[def.icon] ?? MonitorIcon;
-          return (
-            <motion.button
-              key={def.id}
-              type="button"
-              onClick={(e) =>
-                onSelect(def, e.currentTarget.getBoundingClientRect())
-              }
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
-              whileTap={{ scale: 0.97 }}
-              aria-label={`${def.label}: ${def.caption}. Open page.`}
-              className={cn(
-                "group panel flex min-h-[8.5rem] flex-col gap-3 rounded-2xl border p-4 text-left transition-colors",
-                a.borderHover,
-              )}
-            >
-              <span
-                className={cn(
-                  "grid h-11 w-11 place-items-center rounded-xl border",
-                  a.border,
-                  a.bgSoft,
-                )}
-              >
-                <Icon className={cn("h-5 w-5", a.text)} aria-hidden />
-              </span>
-              <span className="mt-auto">
-                <span className="block text-sm font-semibold text-ink">
-                  {def.label}
-                </span>
-                <span className="mt-0.5 block text-xs text-muted">
-                  {def.caption}
-                </span>
-              </span>
-              <MoveRight
-                className={cn("h-4 w-4 transition-transform group-hover:translate-x-1", a.text)}
-                aria-hidden
-              />
-            </motion.button>
-          );
-        })}
-      </div>
+            type="button"
+            onClick={(e) => onSelect(def, e.currentTarget.getBoundingClientRect())}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: i * 0.05 }}
+            whileTap={{ scale: 0.97 }}
+            aria-label={`${def.label}: ${def.caption}. Open page.`}
+            className={cn(
+              "group panel flex min-h-[8.5rem] flex-col gap-3 rounded-2xl border p-4 text-left transition-colors",
+              a.borderHover,
+            )}
+          >
+            <span className={cn("grid h-11 w-11 place-items-center rounded-xl border", a.border, a.bgSoft)}>
+              <Icon className={cn("h-5 w-5", a.text)} aria-hidden />
+            </span>
+            <span className="mt-auto">
+              <span className="block text-sm font-semibold text-ink">{def.label}</span>
+              <span className="mt-0.5 block text-xs text-muted">{def.caption}</span>
+            </span>
+            <MoveRight className={cn("h-4 w-4 transition-transform group-hover:translate-x-1", a.text)} aria-hidden />
+          </motion.button>
+        );
+      })}
     </div>
   );
 }

@@ -356,3 +356,76 @@
 .neon-flicker {
   animation: neonFlicker 9s linear infinite;
 }
+
+/* ------------------------------------------------------------------ */
+/*  Sleeping desk cat — breathe, tail flick, ear twitch, dream         */
+/* ------------------------------------------------------------------ */
+@keyframes catBreathe {
+  0%,
+  100% {
+    transform: scaleY(1) translateY(0);
+  }
+  50% {
+    transform: scaleY(1.035) translateY(-1px);
+  }
+}
+@keyframes catTail {
+  0%,
+  68%,
+  100% {
+    transform: rotate(0deg);
+  }
+  76% {
+    transform: rotate(-10deg);
+  }
+  84% {
+    transform: rotate(6deg);
+  }
+  92% {
+    transform: rotate(-3deg);
+  }
+}
+@keyframes catEar {
+  0%,
+  82%,
+  100% {
+    transform: rotate(0deg);
+  }
+  87% {
+    transform: rotate(-8deg);
+  }
+  91% {
+    transform: rotate(4deg);
+  }
+}
+@keyframes catDream {
+  0%,
+  88%,
+  100% {
+    opacity: 0;
+  }
+  93% {
+    opacity: 0.85;
+  }
+  97% {
+    opacity: 0;
+  }
+}
+.cat-breathe {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  animation: catBreathe 4.4s ease-in-out infinite;
+}
+.cat-tail {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: catTail 7.5s ease-in-out infinite;
+}
+.cat-ear {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  animation: catEar 6.5s ease-in-out infinite;
+}
+.cat-dream {
+  animation: catDream 8s ease-in-out infinite;
+}
