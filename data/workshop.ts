@@ -4,9 +4,8 @@ import type { WorkshopObjectDef } from "@/lib/types";
  * The six interactive objects in the workshop hub. Each is a PORTAL that
  * navigates (with a zoom transition) to its own dedicated page.
  *
- * `area` positions each object inside the scene box as percentages
- * (left/top of the object's box, and its width). On mobile these become
- * a tap-friendly card grid instead.
+ * `area` positions each object inside the room as percentages (left/top of the
+ * object's box, and its width). On mobile these become a tap-friendly card grid.
  */
 export const workshopObjects: WorkshopObjectDef[] = [
   {
@@ -16,7 +15,7 @@ export const workshopObjects: WorkshopObjectDef[] = [
     target: "/research",
     accent: "mint",
     icon: "Brain",
-    area: { left: 3.5, top: 7, width: 27 },
+    area: { left: 1.5, top: 19, width: 20 },
   },
   {
     id: "trophy-shelf",
@@ -25,7 +24,7 @@ export const workshopObjects: WorkshopObjectDef[] = [
     target: "/awards",
     accent: "iris",
     icon: "Trophy",
-    area: { left: 70.5, top: 6, width: 26 },
+    area: { left: 80.5, top: 12, width: 18 },
   },
   {
     id: "monitor",
@@ -34,7 +33,7 @@ export const workshopObjects: WorkshopObjectDef[] = [
     target: "/projects",
     accent: "neon",
     icon: "Monitor",
-    area: { left: 35.5, top: 30, width: 30 },
+    area: { left: 33, top: 27, width: 35 },
   },
   {
     id: "soldering-station",
@@ -43,16 +42,7 @@ export const workshopObjects: WorkshopObjectDef[] = [
     target: "/hardware",
     accent: "heat",
     icon: "CircuitBoard",
-    area: { left: 69, top: 50, width: 24 },
-  },
-  {
-    id: "desk-phone",
-    label: "Desk Phone",
-    caption: "Get in touch",
-    target: "/contact",
-    accent: "neon",
-    icon: "Phone",
-    area: { left: 9, top: 63, width: 17 },
+    area: { left: 0.5, top: 47, width: 21 },
   },
   {
     id: "toolbox",
@@ -61,7 +51,16 @@ export const workshopObjects: WorkshopObjectDef[] = [
     target: "/skills",
     accent: "heat",
     icon: "Wrench",
-    area: { left: 30, top: 67, width: 23 },
+    area: { left: 70, top: 53, width: 23 },
+  },
+  {
+    id: "desk-phone",
+    label: "Desk Phone",
+    caption: "Get in touch",
+    target: "/contact",
+    accent: "neon",
+    icon: "Phone",
+    area: { left: 85.5, top: 58, width: 14 },
   },
 ];
 

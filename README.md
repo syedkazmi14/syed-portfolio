@@ -143,10 +143,13 @@ app/
   skills/page.tsx         # │
   contact/page.tsx        # ┘
 components/
-  WorkshopHub.tsx         # hub: identity, scene, zoom-into-object → router.push
-  WorkshopScene.tsx       # desktop room + mobile portal-card grid
+  WorkshopHub.tsx         # hub: overlaid header, immersive room, zoom → router.push
+  WorkshopScene.tsx       # WorkshopRoom (desktop diorama) + PortalCardGrid (mobile)
   WorkshopObject.tsx      # one interactive portal (hover/focus/click + rect)
-  workshop/               # the 6 object SVGs (swappable artwork)
+  parallax/Parallax.tsx   # mouse-driven 2.5D depth layers (ParallaxStage/Layer)
+  workshop/               # the 6 portal SVGs + room props:
+                          #   Environment (brick wall + workbench), SleepingCat,
+                          #   props.tsx (keyboard, mug, PCBs, sticky notes, …)
   PageShell.tsx           # themed page chrome: back button, entrance, footer
   ProjectGrid.tsx ProjectCard.tsx ProjectVisual.tsx
   ExperienceTimeline.tsx ResearchBoard.tsx AwardsShelf.tsx

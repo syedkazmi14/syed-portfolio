@@ -12,7 +12,7 @@ import { buttonVariants } from "@/components/ui/Button";
 import { GithubIcon, LinkedinIcon } from "@/components/icons/BrandIcons";
 import { AmbientBackground } from "@/components/effects/AmbientBackground";
 import { Particles } from "@/components/effects/Particles";
-import { WorkshopScene } from "@/components/WorkshopScene";
+import { PortalCardGrid, WorkshopRoom } from "@/components/WorkshopScene";
 import { CatMascot } from "@/components/CatMascot";
 import { NeonSign } from "@/components/NeonSign";
 
@@ -38,7 +38,6 @@ export function WorkshopHub() {
   const reduce = useReducedMotion();
   const [zoom, setZoom] = useState<ZoomState | null>(null);
 
-  // Prefetch destination pages so the zoom feels instant.
   useEffect(() => {
     workshopObjects.forEach((o) => router.prefetch(o.target));
   }, [router]);
@@ -48,7 +47,7 @@ export function WorkshopHub() {
       router.push(def.target);
       return;
     }
-    if (zoom) return; // a transition is already running
+    if (zoom) return;
     setZoom({
       rect,
       vw: window.innerWidth,
@@ -64,18 +63,23 @@ export function WorkshopHub() {
       initial={{ opacity: 0, scale: reduce ? 1 : 1.03 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="relative flex min-h-dvh w-full flex-col md:h-dvh md:overflow-hidden"
+      className="relative min-h-dvh w-full overflow-hidden md:h-dvh"
     >
       <AmbientBackground intense />
-      <Particles count={26} />
+      <Particles count={18} />
 
       <motion.div
-        animate={{ opacity: zoom ? 0 : 1, scale: zoom ? 1.06 : 1 }}
+        animate={{ opacity: zoom ? 0 : 1, scale: zoom ? 1.05 : 1 }}
         transition={{ duration: 0.4 }}
-        className="relative z-10 flex min-h-dvh flex-col md:h-dvh"
+        className="relative z-10 min-h-dvh md:h-dvh"
       >
-        {/* ---- identity bar ---- */}
-        <header className="flex items-center justify-between gap-4 px-5 py-5 sm:px-8">
+        {/* desktop immersive room fills the viewport */}
+        <div className="absolute inset-0 hidden md:block">
+          <WorkshopRoom onSelect={handleSelect} />
+        </div>
+
+        {/* overlaid identity bar */}
+        <header className="absolute inset-x-0 top-0 z-30 flex items-center justify-between gap-4 px-5 py-4 sm:px-8 sm:py-5">
           <div className="flex items-center gap-3">
             <CatMascot className="h-11 w-11" idle />
             <div className="leading-tight">
@@ -94,7 +98,7 @@ export function WorkshopHub() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
-              className="grid h-10 w-10 place-items-center rounded-lg border border-line text-muted transition-all hover:border-neon/50 hover:text-neon"
+              className="grid h-10 w-10 place-items-center rounded-lg border border-line bg-base/40 text-muted backdrop-blur-sm transition-all hover:border-neon/50 hover:text-neon"
             >
               <GithubIcon className="h-4 w-4" aria-hidden />
             </a>
@@ -103,14 +107,14 @@ export function WorkshopHub() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="grid h-10 w-10 place-items-center rounded-lg border border-line text-muted transition-all hover:border-neon/50 hover:text-neon"
+              className="grid h-10 w-10 place-items-center rounded-lg border border-line bg-base/40 text-muted backdrop-blur-sm transition-all hover:border-neon/50 hover:text-neon"
             >
               <LinkedinIcon className="h-4 w-4" aria-hidden />
             </a>
             <a
               href={siteConfig.links.email}
               aria-label="Email"
-              className="hidden h-10 w-10 place-items-center rounded-lg border border-line text-muted transition-all hover:border-neon/50 hover:text-neon sm:grid"
+              className="hidden h-10 w-10 place-items-center rounded-lg border border-line bg-base/40 text-muted backdrop-blur-sm transition-all hover:border-neon/50 hover:text-neon sm:grid"
             >
               <Mail className="h-4 w-4" aria-hidden />
             </a>
@@ -118,7 +122,7 @@ export function WorkshopHub() {
               href={siteConfig.links.resume}
               target="_blank"
               rel="noopener noreferrer"
-              className={buttonVariants({ variant: "secondary", size: "sm" })}
+              className={`${buttonVariants({ variant: "secondary", size: "sm" })} backdrop-blur-sm`}
             >
               <FileText className="h-4 w-4" aria-hidden />
               Resume
@@ -126,21 +130,24 @@ export function WorkshopHub() {
           </div>
         </header>
 
-        {/* ---- the workshop ---- */}
-        <div className="flex flex-1 flex-col items-center justify-center px-4 pb-8 sm:px-6">
-          <div className="w-full">
-            <NeonSign />
-          </div>
-          <p className="mb-6 mt-3 flex items-center justify-center gap-2 text-center font-mono text-xs text-muted sm:mt-4 sm:text-sm">
-            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-neon anim-pulse-glow" />
-            Welcome to my garage — select a station to learn more about me.
-          </p>
+        {/* desktop welcome caption */}
+        <p className="absolute inset-x-0 bottom-4 z-30 hidden items-center justify-center gap-2 px-6 text-center font-mono text-xs text-muted/90 md:flex">
+          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-neon anim-pulse-glow" />
+          Welcome to my garage — select a station to learn more about me.
+        </p>
 
-          <WorkshopScene onSelect={handleSelect} />
+        {/* mobile: sign + cards */}
+        <div className="relative z-10 px-5 pb-12 pt-24 md:hidden">
+          <NeonSign />
+          <p className="mb-6 mt-3 flex items-center justify-center gap-2 text-center font-mono text-xs text-muted">
+            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-neon anim-pulse-glow" />
+            Welcome to my garage — tap a station to explore.
+          </p>
+          <PortalCardGrid onSelect={handleSelect} />
         </div>
       </motion.div>
 
-      {/* ---- zoom-into-object transition ---- */}
+      {/* zoom-into-object transition */}
       <AnimatePresence>
         {zoom ? (
           <motion.div
