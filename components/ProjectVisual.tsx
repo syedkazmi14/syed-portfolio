@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
 import { getAccent } from "@/lib/accents";
 import type { Accent, ProjectVisualKind } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -9,11 +13,21 @@ interface ProjectVisualProps {
   image?: string;
   alt?: string;
   className?: string;
+  /**
+   * Passed to next/image's `sizes` attribute so the browser requests the
+   * right resolution from the srcset. Defaults to project-card grid breakpoints.
+   */
+  sizes?: string;
 }
 
+const DEFAULT_SIZES =
+  "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw";
+
 /**
- * Placeholder artwork for a project card header. Each `kind` is an abstract
- * SVG tinted with the project accent. To use a real screenshot, pass `image`.
+ * Project artwork. Renders a real screenshot via next/image when `image` is
+ * provided — automatic WebP conversion, lazy loading, and responsive srcset.
+ * Falls back to an accent-tinted abstract SVG if the file is missing or fails.
+ * Drop screenshots in /public/projects/.
  */
 export function ProjectVisual({
   kind,
@@ -21,17 +35,24 @@ export function ProjectVisual({
   image,
   alt = "",
   className,
+  sizes = DEFAULT_SIZES,
 }: ProjectVisualProps) {
   const c = getAccent(accent).hex;
+  const [failed, setFailed] = useState(false);
 
-  if (image) {
+  if (image && !failed) {
     return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        src={image}
-        alt={alt}
-        className={cn("h-full w-full object-cover", className)}
-      />
+      // Wrapper must be `relative` so next/image fill can position against it.
+      <div className={cn("relative h-full w-full overflow-hidden", className)}>
+        <Image
+          src={image}
+          alt={alt}
+          fill
+          sizes={sizes}
+          className="object-cover"
+          onError={() => setFailed(true)}
+        />
+      </div>
     );
   }
 

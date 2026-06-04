@@ -132,10 +132,13 @@ export function DevBoard({ className }: P) {
 export function StickyNote({
   lines,
   accent = "heat",
+  doodle,
   className,
 }: {
   lines: string[];
   accent?: Accent;
+  /** small hand-drawn mark in the corner */
+  doodle?: "cat";
   className?: string;
 }) {
   const a = getAccent(accent);
@@ -157,6 +160,23 @@ export function StickyNote({
           </text>
         ))}
       </g>
+      {doodle === "cat" ? (
+        <g
+          transform="translate(67 70)"
+          stroke="#0b0f17"
+          strokeWidth="1.4"
+          fill="none"
+          strokeLinejoin="round"
+          strokeLinecap="round"
+        >
+          <path d="M-6 -3 L-8 -10 L-2 -5 Z" />
+          <path d="M6 -3 L8 -10 L2 -5 Z" />
+          <circle cx="0" cy="2" r="7" />
+          <circle cx="-2.6" cy="1" r="0.7" fill="#0b0f17" />
+          <circle cx="2.6" cy="1" r="0.7" fill="#0b0f17" />
+          <path d="M-7 1 l-5 -1 M-7 3 l-5 1 M7 1 l5 -1 M7 3 l5 1" />
+        </g>
+      ) : null}
     </svg>
   );
 }

@@ -97,6 +97,19 @@ export function ToolboxArt({
       </text>
       {/* status dot */}
       <circle cx="226" cy="128" r="2.6" fill="#ffd27a" className="anim-blink" />
+
+      {/* cat sticker decal */}
+      <g transform="translate(86 150)">
+        <circle cx="0" cy="1" r="11" fill="#0b0f17" opacity="0.55" />
+        <g stroke="#3ee0ff" strokeWidth="1.4" fill="none">
+          <path d="M-6 -2 L-8 -9 L-2 -4 Z" />
+          <path d="M6 -2 L8 -9 L2 -4 Z" />
+          <circle cx="0" cy="2" r="6.5" />
+        </g>
+        <circle cx="-2.6" cy="1" r="1" fill="#3ee0ff" />
+        <circle cx="2.6" cy="1" r="1" fill="#3ee0ff" />
+        <path d="M0 3.5 l-1.4 -1.6 h2.8 Z" fill="#ad93ff" />
+      </g>
     </svg>
   );
 }

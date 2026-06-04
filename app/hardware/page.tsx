@@ -4,6 +4,7 @@ import { projects } from "@/data/projects";
 import { PageShell, Subhead } from "@/components/PageShell";
 import { ExperienceTimeline } from "@/components/ExperienceTimeline";
 import { ProjectGrid } from "@/components/ProjectGrid";
+import { HardwareBench } from "@/components/workshop/storytelling";
 
 export const metadata: Metadata = {
   title: "Hardware Experience",
@@ -28,7 +29,18 @@ export default function HardwarePage() {
       title="Hardware & Systems"
       description="Board-level diagnostics and soldering, enterprise IT infrastructure, and the hardware-software builds that sit between bits and atoms."
     >
-      <ExperienceTimeline items={hardwareExperience} accent="heat" />
+      <HardwareBench />
+
+      <div className="mt-16">
+        <Subhead
+          title="Experience"
+          description="Roles where I work with hardware and infrastructure day to day."
+          accent="heat"
+        />
+        <div className="mt-8">
+          <ExperienceTimeline items={hardwareExperience} accent="heat" />
+        </div>
+      </div>
 
       <div className="mt-20">
         <Subhead

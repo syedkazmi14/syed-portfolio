@@ -429,3 +429,24 @@
 .cat-dream {
   animation: catDream 8s ease-in-out infinite;
 }
+
+/* solder spark burst (on hover) */
+@keyframes sparkBurst {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+.spark-burst {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sparkBurst 0.7s ease-out infinite;
+}

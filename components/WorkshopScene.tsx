@@ -25,8 +25,6 @@ import {
   BlueprintSheet,
   CableDrape,
   CircuitBoard,
-  CommitsCalendar,
-  DerivedNote,
   DeskLamp,
   DevBoard,
   Keyboard,
@@ -35,7 +33,9 @@ import {
   Plant,
   StickyNote,
 } from "@/components/workshop/props";
-import { MonitorArt } from "@/components/workshop/MonitorArt";
+import { IbmBadge, InfosysBadge } from "@/components/workshop/storytelling";
+import { EasterEgg, ENGINEER_QUOTES } from "@/components/workshop/EasterEgg";
+import { MonitorStation } from "@/components/workshop/MonitorScreen";
 import { SolderingArt } from "@/components/workshop/SolderingArt";
 import { WhiteboardArt } from "@/components/workshop/WhiteboardArt";
 import { TrophyShelfArt } from "@/components/workshop/TrophyShelfArt";
@@ -45,7 +45,7 @@ import { DeskPhoneArt } from "@/components/workshop/DeskPhoneArt";
 function renderArt(id: string, active: boolean) {
   switch (id) {
     case "monitor":
-      return <MonitorArt active={active} />;
+      return <MonitorStation active={active} />;
     case "soldering-station":
       return <SolderingArt active={active} />;
     case "whiteboard":
@@ -140,14 +140,21 @@ export function WorkshopRoom({ onSelect }: SelectFn) {
         <Placed left={1.5} top={62} width={11} rotate={-2}>
           <BlueprintSheet variant="arch" className="opacity-80" />
         </Placed>
-        <Placed left={82} top={38} width={16}>
-          <CommitsCalendar />
-        </Placed>
         <Placed left={20.5} top={30} width={6.5} rotate={-7}>
-          <StickyNote accent="iris" lines={["ship", "build", "repeat"]} />
+          <StickyNote accent="iris" lines={["watsonx", "orchestrate", "BYO agents"]} />
         </Placed>
         <Placed left={70} top={9} width={6.5} rotate={5}>
           <StickyNote accent="mint" lines={["focus", "build", "grow"]} />
+        </Placed>
+
+        {/* employee badges — right wall, below trophy shelf */}
+        {/* Infosys (past) behind — rendered first, lower z-order */}
+        <Placed left={87.5} top={41} width={4.0} rotate={8}>
+          <InfosysBadge />
+        </Placed>
+        {/* IBM (current) in front — rendered second, on top */}
+        <Placed left={84.5} top={38.5} width={4.3} rotate={-5}>
+          <IbmBadge />
         </Placed>
       </ParallaxLayer>
 
@@ -183,7 +190,9 @@ export function WorkshopRoom({ onSelect }: SelectFn) {
           <DevBoard />
         </Placed>
         <Placed left={22} top={69} width={6.5}>
-          <Mug />
+          <EasterEgg message="Caffeine level: 87% ☕" accent="heat" label="Coffee mug">
+            <Mug />
+          </EasterEgg>
         </Placed>
 
         {/* center-front: keyboard + mouse + sleeping cat */}
@@ -194,18 +203,34 @@ export function WorkshopRoom({ onSelect }: SelectFn) {
           <Mouse />
         </Placed>
         <Placed left={40} top={62} width={21} z={6}>
-          <SleepingCat />
+          <EasterEgg
+            message="Louise: Workshop Supervisor 🐾"
+            accent="neon"
+            label="The workshop cat"
+          >
+            <SleepingCat />
+          </EasterEgg>
         </Placed>
 
-        {/* a sticky note + components on the desk */}
-        <Placed left={62} top={66} width={6.5} rotate={6}>
-          <StickyNote accent="heat" lines={["make it", "useful.", "ship it"]} />
+        {/* clickable quote note, with a cat doodle */}
+        <Placed left={62} top={64} width={6.5} rotate={6}>
+          <EasterEgg
+            message={() =>
+              ENGINEER_QUOTES[Math.floor(Math.random() * ENGINEER_QUOTES.length)]
+            }
+            accent="heat"
+            label="Sticky note"
+          >
+            <StickyNote
+              accent="heat"
+              lines={["Bedrock", "+ ChromaDB"]}
+              doodle="cat"
+            />
+          </EasterEgg>
         </Placed>
+
         <Placed left={91} top={70} width={8}>
           <Plant />
-        </Placed>
-        <Placed left={5} top={86} width={7} rotate={2}>
-          <DerivedNote />
         </Placed>
 
         {/* foreground portals */}

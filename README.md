@@ -89,11 +89,27 @@ sized to fill its container). The interactive wrapper, hover glow, tooltip, and
 [`components/WorkshopHub.tsx`](components/WorkshopHub.tsx). Reposition objects in
 the scene via the `area` percentages in [`data/workshop.ts`](data/workshop.ts).
 
-### Project images
+### Project screenshots (monitor slideshow + cards)
 
-Each project renders an abstract SVG by default. Add `image: "/projects/x.png"`
-to a project in [`data/projects.ts`](data/projects.ts) and
-[`ProjectVisual.tsx`](components/ProjectVisual.tsx) uses it instead.
+The workshop **monitor** runs an auto-rotating slideshow of your projects, and
+the `/projects` cards use the same artwork. Each project already points at
+`image: "/projects/<id>.png"` in [`data/projects.ts`](data/projects.ts) — **drop
+your real screenshots** in [`public/projects/`](public/projects) using the
+filenames listed in that folder's README. Until a file exists,
+[`ProjectVisual.tsx`](components/ProjectVisual.tsx) shows a built-in abstract SVG
+(no broken images), so it looks complete immediately.
+
+### Environmental storytelling & easter eggs
+
+The room is full of intentional details (IBM badge, "watsonx / BYO agents" note,
+Infosys "AI Advisor" folder + "Bedrock + ChromaDB", an AI-Track mini-trophy,
+GuardianGram notification, engineering books, cat references). Hidden clicks live
+in [`components/workshop/EasterEgg.tsx`](components/workshop/EasterEgg.tsx) —
+click the **mug**, the **cat** (Louise 🐾), or the sticky note for a surprise;
+hover the **soldering station** for a spark. Edit/add props in
+[`components/workshop/storytelling.tsx`](components/workshop/storytelling.tsx) and
+place them in [`components/WorkshopScene.tsx`](components/WorkshopScene.tsx). The
+SC300 sticker + repair bench live on the `/hardware` page.
 
 ### Branding — neon sign, cat mascot & favicon
 
