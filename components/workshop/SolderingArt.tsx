@@ -94,6 +94,20 @@ export function SolderingArt({
       {/* glowing tip dot */}
       <circle cx="206" cy="62" r="4.5" fill="#ffd27a" className="anim-pulse-glow" />
 
+      {/* spark burst on hover */}
+      {active ? (
+        <g className="spark-burst">
+          <g stroke="#ffe08a" strokeWidth="1.4" strokeLinecap="round">
+            <line x1="206" y1="62" x2="206" y2="48" />
+            <line x1="206" y1="62" x2="218" y2="55" />
+            <line x1="206" y1="62" x2="195" y2="53" />
+            <line x1="206" y1="62" x2="216" y2="70" />
+            <line x1="206" y1="62" x2="197" y2="71" />
+          </g>
+          <circle cx="206" cy="62" r="2.6" fill="#fff6d0" />
+        </g>
+      ) : null}
+
       {/* smoke wisp */}
       <path
         d="M206 56 q8 -14 -2 -26 q-8 -10 2 -22"

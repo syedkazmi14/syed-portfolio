@@ -68,6 +68,11 @@ export function TrophyShelfArt({
         <rect x="128" y="120" width="44" height="8" rx="2" fill="url(#tr-gold)" />
         <rect x="120" y="128" width="60" height="10" rx="3" fill="#2b3346" />
         <rect x="128" y="130" width="44" height="5" rx="2" fill="#ad93ff" opacity="0.6" />
+        {/* AI Track win plaque (TeleKinetics @ Axxess) */}
+        <rect x="122" y="139" width="56" height="9" rx="1.5" fill="#1a1206" stroke="#7a531a" strokeWidth="0.6" />
+        <text x="150" y="145.6" textAnchor="middle" fontFamily="monospace" fontSize="6" fontWeight="bold" fill="#ffe08a">
+          AI TRACK
+        </text>
       </g>
 
       {/* ---- left medal ---- */}

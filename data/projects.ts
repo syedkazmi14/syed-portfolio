@@ -36,6 +36,7 @@ export const projects: Project[] = [
     accent: "neon",
     featured: true,
     visual: "map",
+    image: "/projects/blue-relief.png",
     // links: [{ label: "View Code", href: "https://github.com/..." }],
   },
   {
@@ -53,6 +54,7 @@ export const projects: Project[] = [
     featured: true,
     badge: "🏆 1st Place · Axxess AI Track",
     visual: "pose",
+    image: "/projects/telekinetics.png",
   },
   {
     id: "guardiangram",
@@ -77,6 +79,7 @@ export const projects: Project[] = [
     featured: true,
     badge: "People's Choice Award",
     visual: "shield",
+    image: "/projects/guardiangram.png",
   },
   {
     id: "witchwatch",
@@ -102,6 +105,7 @@ export const projects: Project[] = [
     accent: "heat",
     badge: "HackUTD 2025",
     visual: "tank",
+    image: "/projects/witchwatch.png",
   },
   {
     id: "trashtrends",
@@ -116,6 +120,7 @@ export const projects: Project[] = [
     tech: ["Python", "C++", "ROS", "Docker", "Computer Vision"],
     accent: "mint",
     visual: "heatmap",
+    image: "/projects/trashtrends.png",
   },
   {
     id: "ecodrive",
@@ -130,6 +135,7 @@ export const projects: Project[] = [
     tech: ["Next.js", "MongoDB", "Arduino", "REST API", "Data Visualization"],
     accent: "neon",
     visual: "gauge",
+    image: "/projects/ecodrive.png",
   },
   {
     id: "hbs-cv",
@@ -144,6 +150,7 @@ export const projects: Project[] = [
     tech: ["Machine Learning", "MATLAB", "Python", "YOLOv8", "Computer Vision"],
     accent: "iris",
     visual: "detect",
+    image: "/projects/hbs-cv.png",
   },
   {
     id: "fps",
@@ -158,6 +165,7 @@ export const projects: Project[] = [
     tech: ["C++", "Unreal Engine", "Blueprint", "UMG", "Chaos Physics"],
     accent: "heat",
     visual: "fps",
+    image: "/projects/fps.png",
   },
 ];
 
