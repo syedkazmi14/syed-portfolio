@@ -193,28 +193,31 @@ export function CarSticker({ className }: P) {
 
 /* -------- real SC300 photo as a die-cut sticker ------------------------- */
 export function CarPhotoSticker({ className }: P) {
+  // 8 directional zero-blur drop-shadows produce a solid white outline that
+  // traces the PNG's actual alpha channel — no rectangular white background.
+  const stickerFilter = [
+    "drop-shadow(0 4px 0 #fff)",
+    "drop-shadow(0 -4px 0 #fff)",
+    "drop-shadow(4px 0 0 #fff)",
+    "drop-shadow(-4px 0 0 #fff)",
+    "drop-shadow(3px 3px 0 #fff)",
+    "drop-shadow(-3px 3px 0 #fff)",
+    "drop-shadow(3px -3px 0 #fff)",
+    "drop-shadow(-3px -3px 0 #fff)",
+    "drop-shadow(0 5px 16px rgba(0,0,0,0.65))",
+  ].join(" ");
+
   return (
     <div className={cn("w-full", className)}>
-      {/* white sticker backing — padding + background mimics a printed sticker */}
-      <div
-        style={{
-          padding: 4,
-          background: "#ffffff",
-          borderRadius: 12,
-          boxShadow:
-            "0 4px 20px rgba(0,0,0,.70), 0 0 0 1px rgba(255,255,255,.25)",
-        }}
-      >
-        <div
-          className="relative overflow-hidden"
-          style={{ borderRadius: 8, aspectRatio: "1 / 1" }}
-        >
+      {/* filter wrapper — outline follows the PNG alpha, not the bounding box */}
+      <div style={{ filter: stickerFilter }}>
+        <div className="relative" style={{ aspectRatio: "1 / 1" }}>
           <Image
             src="/photos/sc300.png"
             alt="'95 Lexus SC300 — the weekend project"
             fill
             sizes="20vw"
-            className="object-cover"
+            className="object-contain"
           />
         </div>
       </div>
@@ -360,7 +363,7 @@ export function HardwareBench({ className }: P) {
             <line x1="90" y1="14" x2="106" y2="14" />
           </g>
         </svg>
-        <Bit left={64} top={20} width={30} rotate={3}>
+        <Bit left={69} top={-5} width={30} rotate={3}>
           <CarPhotoSticker />
         </Bit>
         <Bit left={70} top={2} width={11} rotate={-5}>
