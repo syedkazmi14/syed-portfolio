@@ -1,10 +1,10 @@
 import { GraduationCap, MapPin, Sparkles } from "lucide-react";
+import Image from "next/image";
 import { projects } from "@/data/projects";
 import { experience } from "@/data/experience";
 import { awards } from "@/data/awards";
 import { siteConfig } from "@/data/site";
 import { Reveal } from "@/components/ui/Reveal";
-import { CatMascot } from "@/components/CatMascot";
 
 const stats = [
   { value: `${projects.length}`, label: "Projects shipped" },
@@ -25,11 +25,23 @@ export function AboutIntro() {
       {/* identity rail */}
       <Reveal>
         <div className="panel rounded-2xl border border-line p-6">
-          {/*
-            The cat mascot doubles as the avatar. To use a real photo instead:
-            <img src="/me.jpg" alt="Syed Kazmi" className="h-24 w-24 rounded-2xl object-cover" />
-          */}
-          <CatMascot className="h-24 w-24" idle label="Syed Kazmi" />
+          {/* headshot — only on the contact page; cat mascot is unchanged elsewhere */}
+          <div
+            className="relative h-24 w-24 overflow-hidden rounded-full"
+            style={{
+              boxShadow:
+                "0 0 0 2px rgba(62,224,255,0.35), 0 0 0 4px rgba(62,224,255,0.08), 0 0 22px rgba(62,224,255,0.22)",
+            }}
+          >
+            <Image
+              src="/photos/syedheadshot.png"
+              alt="Syed Kazmi"
+              fill
+              sizes="96px"
+              className="object-cover"
+              priority
+            />
+          </div>
           <h2 className="mt-5 text-xl font-semibold tracking-tight text-ink">
             {siteConfig.name}
           </h2>

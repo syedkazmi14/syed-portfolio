@@ -131,13 +131,31 @@ function MonitorScreen({ active }: { active: boolean }) {
 }
 
 /** Monitor frame (SVG) with the live slideshow overlaid on its screen. */
-export function MonitorStation({ active }: { active: boolean }) {
+export function MonitorStation({
+  active,
+  wallMounted = false,
+}: {
+  active: boolean;
+  /** Mobile-only: hide the stand and show a wall-mount bracket instead. */
+  wallMounted?: boolean;
+}) {
+  // The screen area in SVG coords: x=26 y=20 w=268 h=150, viewBox width=320.
+  // desktop viewBox 0 0 320 250 → top=20/250=8%  height=150/250=60%
+  // wall-mount viewBox 0 0 320 198 → top=20/198≈10.1% height=150/198≈75.76%
+  const overlayTop = wallMounted ? "10.1%" : "8%";
+  const overlayHeight = wallMounted ? "75.76%" : "60%";
+
   return (
     <div className="relative w-full">
-      <MonitorArt active={active} />
+      <MonitorArt active={active} wallMounted={wallMounted} />
       <div
         className="absolute overflow-hidden rounded-[4px]"
-        style={{ left: "8.125%", top: "8%", width: "83.75%", height: "60%" }}
+        style={{
+          left: "8.125%",
+          top: overlayTop,
+          width: "83.75%",
+          height: overlayHeight,
+        }}
       >
         <MonitorScreen active={active} />
       </div>

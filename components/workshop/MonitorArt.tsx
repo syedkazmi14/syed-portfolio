@@ -3,14 +3,17 @@ import { cn } from "@/lib/utils";
 /** Main monitor → Software Projects. Cyan screen glow + scanline + power LED. */
 export function MonitorArt({
   active = false,
+  wallMounted = false,
   className,
 }: {
   active?: boolean;
+  /** Mobile-only: hide the stand and render a wall-mount bracket instead. */
+  wallMounted?: boolean;
   className?: string;
 }) {
   return (
     <svg
-      viewBox="0 0 320 250"
+      viewBox={wallMounted ? "0 0 320 198" : "0 0 320 250"}
       className={cn("h-auto w-full", className)}
       role="presentation"
     >
@@ -47,10 +50,30 @@ export function MonitorArt({
         className="transition-opacity duration-300"
       />
 
-      {/* stand */}
-      <rect x="150" y="168" width="20" height="40" fill="url(#mon-stand)" />
-      <path d="M120 214 h80 l-10 -10 H130 Z" fill="url(#mon-stand)" />
-      <rect x="116" y="212" width="88" height="8" rx="4" fill="#2a3247" />
+      {/* stand (desktop only) */}
+      {!wallMounted && (
+        <>
+          <rect x="150" y="168" width="20" height="40" fill="url(#mon-stand)" />
+          <path d="M120 214 h80 l-10 -10 H130 Z" fill="url(#mon-stand)" />
+          <rect x="116" y="212" width="88" height="8" rx="4" fill="#2a3247" />
+        </>
+      )}
+
+      {/* wall-mount bracket (mobile only) */}
+      {wallMounted && (
+        <>
+          {/* short arm connecting bezel bottom to mounting plate */}
+          <rect x="152" y="182" width="16" height="8" rx="2.5" fill="#2a3247" />
+          {/* horizontal mounting plate */}
+          <rect x="138" y="188" width="44" height="7" rx="2" fill="#313d57" stroke="#39435e" strokeWidth="0.8" />
+          {/* mounting screws */}
+          <circle cx="148" cy="191.5" r="2.2" fill="#1a2135" stroke="#3ee0ff" strokeWidth="0.5" strokeOpacity="0.5" />
+          <circle cx="172" cy="191.5" r="2.2" fill="#1a2135" stroke="#3ee0ff" strokeWidth="0.5" strokeOpacity="0.5" />
+          {/* screw slot lines */}
+          <line x1="146.8" y1="191.5" x2="149.2" y2="191.5" stroke="#39435e" strokeWidth="0.7" />
+          <line x1="170.8" y1="191.5" x2="173.2" y2="191.5" stroke="#39435e" strokeWidth="0.7" />
+        </>
+      )}
 
       {/* bezel */}
       <rect

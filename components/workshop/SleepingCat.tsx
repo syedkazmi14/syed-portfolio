@@ -110,18 +110,20 @@ export function SleepingCat({
 
         {/* ── OPEN eyes (hovered / alert) ── */}
         <g style={{ opacity: hovered ? 1 : 0, transition: "opacity 0.18s" }}>
-          {/* left eye */}
-          <ellipse cx="46" cy="64.5" rx="6.5" ry="5" fill="#3ee0ff" opacity="0.14" />
-          <ellipse cx="46" cy="64.5" rx="5" ry="3.8" fill="#0d1422" />
-          <ellipse cx="46" cy="64.5" rx="3.4" ry="2.6" fill="#3ee0ff" opacity="0.9" />
-          <ellipse cx="46" cy="64.5" rx="1.9" ry="1.5" fill="#050810" />
-          <circle cx="47.5" cy="63.4" r="0.85" fill="#ffffff" opacity="0.85" />
-          {/* right eye */}
-          <ellipse cx="61.5" cy="64.5" rx="5.5" ry="4.2" fill="#3ee0ff" opacity="0.14" />
-          <ellipse cx="61.5" cy="64.5" rx="4.2" ry="3.2" fill="#0d1422" />
-          <ellipse cx="61.5" cy="64.5" rx="2.9" ry="2.2" fill="#3ee0ff" opacity="0.9" />
-          <ellipse cx="61.5" cy="64.5" rx="1.6" ry="1.2" fill="#050810" />
-          <circle cx="63" cy="63.4" r="0.75" fill="#ffffff" opacity="0.85" />
+          {/* left eye — soft green underglow, round iris, double sparkle */}
+          <ellipse cx="46" cy="64.5" rx="6.5" ry="5.5" fill="#45e6a6" opacity="0.18" />
+          <ellipse cx="46" cy="64.5" rx="5.2" ry="4.4" fill="#0d1422" />
+          <ellipse cx="46" cy="64.5" rx="3.6" ry="3.1" fill="#4ef0a6" opacity="0.92" />
+          <ellipse cx="46" cy="64.5" rx="2" ry="1.8" fill="#07140e" />
+          <circle cx="47.4" cy="63.2" r="0.9" fill="#ffffff" opacity="0.9" />
+          <circle cx="45.1" cy="65.5" r="0.5" fill="#ffffff" opacity="0.65" />
+          {/* right eye — same palette, slightly smaller for perspective */}
+          <ellipse cx="61.5" cy="64.5" rx="5.8" ry="4.8" fill="#45e6a6" opacity="0.18" />
+          <ellipse cx="61.5" cy="64.5" rx="4.6" ry="3.9" fill="#0d1422" />
+          <ellipse cx="61.5" cy="64.5" rx="3.1" ry="2.7" fill="#4ef0a6" opacity="0.92" />
+          <ellipse cx="61.5" cy="64.5" rx="1.7" ry="1.5" fill="#07140e" />
+          <circle cx="62.8" cy="63.2" r="0.8" fill="#ffffff" opacity="0.9" />
+          <circle cx="60.6" cy="65.5" r="0.45" fill="#ffffff" opacity="0.65" />
         </g>
 
         {/* nose + whiskers (always visible) */}
