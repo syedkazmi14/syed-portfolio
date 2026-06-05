@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { CircuitBoard, DevBoard, StickyNote } from "@/components/workshop/props";
 
@@ -190,6 +191,48 @@ export function CarSticker({ className }: P) {
   );
 }
 
+/* -------- real SC300 photo as a die-cut sticker ------------------------- */
+export function CarPhotoSticker({ className }: P) {
+  return (
+    <div className={cn("w-full", className)}>
+      {/* white sticker backing — padding + background mimics a printed sticker */}
+      <div
+        style={{
+          padding: 4,
+          background: "#ffffff",
+          borderRadius: 12,
+          boxShadow:
+            "0 4px 20px rgba(0,0,0,.70), 0 0 0 1px rgba(255,255,255,.25)",
+        }}
+      >
+        <div
+          className="relative overflow-hidden"
+          style={{ borderRadius: 8, aspectRatio: "1 / 1" }}
+        >
+          <Image
+            src="/photos/sc300.png"
+            alt="'95 Lexus SC300 — the weekend project"
+            fill
+            sizes="20vw"
+            className="object-cover"
+          />
+        </div>
+      </div>
+      <p
+        className="mt-1 text-center"
+        style={{
+          fontFamily: "var(--font-geist-mono), monospace",
+          fontSize: "0.5rem",
+          color: "#9fc6ff",
+          lineHeight: 1.4,
+        }}
+      >
+        &apos;95 SC300 · the weekend project
+      </p>
+    </div>
+  );
+}
+
 /* -------- repair tools -------------------------------------------------- */
 export function Multimeter({ className }: P) {
   return (
@@ -318,7 +361,7 @@ export function HardwareBench({ className }: P) {
           </g>
         </svg>
         <Bit left={64} top={20} width={30} rotate={3}>
-          <CarSticker />
+          <CarPhotoSticker />
         </Bit>
         <Bit left={70} top={2} width={11} rotate={-5}>
           <StickyNote accent="heat" lines={["boards by", "day, SC300", "by weekend"]} />

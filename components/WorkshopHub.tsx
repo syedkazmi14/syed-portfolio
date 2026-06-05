@@ -40,6 +40,7 @@ export function WorkshopHub() {
 
   useEffect(() => {
     workshopObjects.forEach((o) => router.prefetch(o.target));
+    router.prefetch("/cats");
   }, [router]);
 
   function handleSelect(def: WorkshopObjectDef, rect: DOMRect) {
@@ -55,6 +56,22 @@ export function WorkshopHub() {
       hex: getAccent(def.accent).hex,
       target: def.target,
       label: def.label,
+    });
+  }
+
+  function handleSelectCat(rect: DOMRect) {
+    if (reduce) {
+      router.push("/cats");
+      return;
+    }
+    if (zoom) return;
+    setZoom({
+      rect,
+      vw: window.innerWidth,
+      vh: window.innerHeight,
+      hex: getAccent("iris").hex,
+      target: "/cats",
+      label: "Cat Archive",
     });
   }
 
@@ -75,7 +92,7 @@ export function WorkshopHub() {
       >
         {/* desktop immersive room fills the viewport */}
         <div className="absolute inset-0 hidden md:block">
-          <WorkshopRoom onSelect={handleSelect} />
+          <WorkshopRoom onSelect={handleSelect} onSelectCat={handleSelectCat} />
         </div>
 
         {/* overlaid identity bar */}
@@ -143,7 +160,7 @@ export function WorkshopHub() {
             <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-neon anim-pulse-glow" />
             Welcome to my garage — tap a station to explore.
           </p>
-          <PortalCardGrid onSelect={handleSelect} />
+          <PortalCardGrid onSelect={handleSelect} onSelectCat={handleSelectCat} />
         </div>
       </motion.div>
 

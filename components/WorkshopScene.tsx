@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties, ReactNode } from "react";
+import { useState, type CSSProperties, type ReactNode } from "react";
 import {
   Brain,
   CircuitBoard as CircuitIcon,
@@ -11,7 +11,7 @@ import {
   Wrench,
   type LucideIcon,
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { getAccent } from "@/lib/accents";
 import { workshopObjects } from "@/data/workshop";
 import type { WorkshopObjectDef } from "@/lib/types";
@@ -67,6 +67,8 @@ const byId = (id: string) => workshopObjects.find((o) => o.id === id)!;
 
 interface SelectFn {
   onSelect: (def: WorkshopObjectDef, rect: DOMRect) => void;
+  /** Cat easter-egg portal — fires the same zoom transition as a regular portal. */
+  onSelectCat: (rect: DOMRect) => void;
 }
 
 /** absolutely-positioned decoration */
@@ -99,10 +101,75 @@ function Placed({
   );
 }
 
+/**
+ * The sleeping cat as a clickable portal — matches the hover/tooltip/zoom
+ * behaviour of WorkshopObject but uses the iris accent and /cats target.
+ */
+function CatPortal({ onSelect }: { onSelect: (rect: DOMRect) => void }) {
+  const [active, setActive] = useState(false);
+  const reduce = useReducedMotion();
+  const a = getAccent("iris");
+  const hover = reduce ? undefined : { scale: 1.05, y: -5 };
+
+  return (
+    <motion.button
+      type="button"
+      onClick={(e) => onSelect(e.currentTarget.getBoundingClientRect())}
+      onHoverStart={() => setActive(true)}
+      onHoverEnd={() => setActive(false)}
+      onFocus={() => setActive(true)}
+      onBlur={() => setActive(false)}
+      aria-label="Louise & Bailey: cat archive. Open gallery."
+      className="pointer-events-auto relative w-full cursor-pointer rounded-xl outline-none"
+      whileHover={hover}
+      whileFocus={hover}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: "spring", stiffness: 300, damping: 22 }}
+    >
+      {/* iris halo — same pattern as WorkshopObject */}
+      <div
+        aria-hidden
+        className={cn(
+          "pointer-events-none absolute -inset-2 -z-10 rounded-[36%] blur-2xl transition-opacity duration-300",
+          a.bgSolid,
+        )}
+        style={{ opacity: active ? 0.24 : 0 }}
+      />
+
+      <SleepingCat hovered={active} />
+
+      {/* tooltip — appears above the cat */}
+      <AnimatePresence>
+        {active ? (
+          <motion.div
+            initial={{ opacity: 0, y: 6, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 6, scale: 0.96 }}
+            transition={{ duration: 0.16 }}
+            className="pointer-events-none absolute bottom-full left-1/2 z-30 mb-3 w-max -translate-x-1/2"
+          >
+            <div
+              className={cn(
+                "panel flex items-center gap-2 rounded-lg border px-3 py-2",
+                a.border,
+              )}
+            >
+              <span className={cn("h-1.5 w-1.5 shrink-0 rounded-full", a.bgSolid)} />
+              <span className="text-xs font-semibold text-ink">Louise &amp; Bailey</span>
+              <span className="text-[0.7rem] text-muted">· cat archive</span>
+              <span className={cn("ml-1 text-[0.7rem] font-medium", a.text)}>→</span>
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    </motion.button>
+  );
+}
+
 /* ===================================================================== */
 /*  Desktop: the immersive parallax room                                 */
 /* ===================================================================== */
-export function WorkshopRoom({ onSelect }: SelectFn) {
+export function WorkshopRoom({ onSelect, onSelectCat }: SelectFn) {
   const portal = (id: string) => (
     <WorkshopObject
       key={id}
@@ -148,11 +215,9 @@ export function WorkshopRoom({ onSelect }: SelectFn) {
         </Placed>
 
         {/* employee badges — right wall, below trophy shelf */}
-        {/* Infosys (past) behind — rendered first, lower z-order */}
         <Placed left={87.5} top={41} width={4.0} rotate={8}>
           <InfosysBadge />
         </Placed>
-        {/* IBM (current) in front — rendered second, on top */}
         <Placed left={84.5} top={38.5} width={4.3} rotate={-5}>
           <IbmBadge />
         </Placed>
@@ -195,7 +260,7 @@ export function WorkshopRoom({ onSelect }: SelectFn) {
           </EasterEgg>
         </Placed>
 
-        {/* center-front: keyboard + mouse + sleeping cat */}
+        {/* center-front: keyboard + mouse + cat portal */}
         <Placed left={28} top={82} width={27}>
           <Keyboard />
         </Placed>
@@ -203,13 +268,7 @@ export function WorkshopRoom({ onSelect }: SelectFn) {
           <Mouse />
         </Placed>
         <Placed left={40} top={62} width={21} z={6}>
-          <EasterEgg
-            message="Louise: Workshop Supervisor 🐾"
-            accent="neon"
-            label="The workshop cat"
-          >
-            <SleepingCat />
-          </EasterEgg>
+          <CatPortal onSelect={onSelectCat} />
         </Placed>
 
         {/* clickable quote note, with a cat doodle */}
@@ -262,7 +321,7 @@ const iconMap: Record<string, LucideIcon> = {
   Phone,
 };
 
-export function PortalCardGrid({ onSelect }: SelectFn) {
+export function PortalCardGrid({ onSelect, onSelectCat }: SelectFn) {
   return (
     <div className="grid grid-cols-2 gap-3">
       {workshopObjects.map((def, i) => {
@@ -294,6 +353,29 @@ export function PortalCardGrid({ onSelect }: SelectFn) {
           </motion.button>
         );
       })}
+      {/* Cat archive card for mobile */}
+      <motion.button
+        type="button"
+        onClick={(e) => onSelectCat(e.currentTarget.getBoundingClientRect())}
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: workshopObjects.length * 0.05 }}
+        whileTap={{ scale: 0.97 }}
+        aria-label="Cat Archive: Louise & Bailey. Open gallery."
+        className={cn(
+          "group panel flex min-h-[8.5rem] flex-col gap-3 rounded-2xl border p-4 text-left transition-colors",
+          "hover:border-iris/70",
+        )}
+      >
+        <span className="grid h-11 w-11 place-items-center rounded-xl border border-iris/30 bg-iris/10 text-2xl">
+          🐱
+        </span>
+        <span className="mt-auto">
+          <span className="block text-sm font-semibold text-ink">Cat Archive</span>
+          <span className="mt-0.5 block text-xs text-muted">Louise &amp; Bailey</span>
+        </span>
+        <MoveRight className="h-4 w-4 text-iris transition-transform group-hover:translate-x-1" aria-hidden />
+      </motion.button>
     </div>
   );
 }
