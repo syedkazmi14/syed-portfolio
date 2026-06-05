@@ -5,9 +5,9 @@ import { ProjectGrid } from "@/components/ProjectGrid";
 import { ExperienceTimeline } from "@/components/ExperienceTimeline";
 
 export const metadata: Metadata = {
-  title: "Software Projects",
+  title: "Software Experience",
   description:
-    "Full-stack products, AI systems, and hardware-software builds by Syed Kazmi — BlueRelief, TeleKinetics, GuardianGram and more.",
+    "Software engineering experience and projects by Syed Kazmi — IBM watsonx, Infosys, BlueRelief, TeleKinetics, GuardianGram and more.",
 };
 
 const softwareExperience = experience.filter((e) => e.type === "software");
@@ -17,19 +17,21 @@ export default function ProjectsPage() {
     <PageShell
       accent="neon"
       eyebrow="// the main monitor"
-      title="Software Projects"
-      description="Full-stack products, AI systems, and hardware-software builds. Open any card for the problem, the solution, and the full stack."
+      title="Software Experience"
+      description="Where I've built software professionally, and what I've shipped on the side."
     >
-      <ProjectGrid />
+      {/* Experience — no redundant subhead since the page title says it */}
+      <ExperienceTimeline items={softwareExperience} accent="neon" />
 
+      {/* Projects underneath */}
       <div className="mt-20">
         <Subhead
-          title="Software Experience"
-          description="Where I build software professionally."
+          title="Projects"
+          description="Side projects, hackathon builds, and research systems."
           accent="neon"
         />
         <div className="mt-8">
-          <ExperienceTimeline items={softwareExperience} accent="neon" />
+          <ProjectGrid />
         </div>
       </div>
     </PageShell>

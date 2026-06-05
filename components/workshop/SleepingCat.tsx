@@ -1,11 +1,19 @@
 import { cn } from "@/lib/utils";
 
 /**
- * The workshop mascot, curled up asleep on the desk. Pure-CSS "alive" loops:
- * breathing, an occasional tail flick, an ear twitch, and a faint dreaming
- * glow. Decorative (non-interactive).
+ * The workshop mascot, curled up asleep on the desk.
+ *
+ * Pass `hovered={true}` to make the cat's eyes snap open (neon-cyan irises)
+ * instead of the usual sleepy-closed state — used by CatPortal in WorkshopScene
+ * to signal that the cat is a clickable link.
  */
-export function SleepingCat({ className }: { className?: string }) {
+export function SleepingCat({
+  className,
+  hovered = false,
+}: {
+  className?: string;
+  hovered?: boolean;
+}) {
   return (
     <svg
       viewBox="0 0 180 100"
@@ -92,13 +100,31 @@ export function SleepingCat({ className }: { className?: string }) {
         {/* head */}
         <circle cx="52" cy="67" r="18" fill="url(#cat-body)" stroke="url(#cat-rim)" strokeWidth="1.1" strokeOpacity="0.6" />
 
-        {/* closed sleepy eyes */}
-        <path d="M41 65 Q46 69 51 65" fill="none" stroke="#aeb8d0" strokeWidth="1.8" strokeLinecap="round" />
-        <path d="M57 65 Q62 68 66 65" fill="none" stroke="#aeb8d0" strokeWidth="1.6" strokeLinecap="round" />
-        {/* dreaming glint */}
-        <circle className="cat-dream" cx="48" cy="64" r="1.6" fill="#3ee0ff" />
+        {/* ── CLOSED eyes (sleeping default) ── */}
+        <g style={{ opacity: hovered ? 0 : 1, transition: "opacity 0.18s" }}>
+          <path d="M41 65 Q46 69 51 65" fill="none" stroke="#aeb8d0" strokeWidth="1.8" strokeLinecap="round" />
+          <path d="M57 65 Q62 68 66 65" fill="none" stroke="#aeb8d0" strokeWidth="1.6" strokeLinecap="round" />
+          {/* dreaming glint */}
+          <circle className="cat-dream" cx="48" cy="64" r="1.6" fill="#3ee0ff" />
+        </g>
 
-        {/* nose + whiskers */}
+        {/* ── OPEN eyes (hovered / alert) ── */}
+        <g style={{ opacity: hovered ? 1 : 0, transition: "opacity 0.18s" }}>
+          {/* left eye */}
+          <ellipse cx="46" cy="64.5" rx="6.5" ry="5" fill="#3ee0ff" opacity="0.14" />
+          <ellipse cx="46" cy="64.5" rx="5" ry="3.8" fill="#0d1422" />
+          <ellipse cx="46" cy="64.5" rx="3.4" ry="2.6" fill="#3ee0ff" opacity="0.9" />
+          <ellipse cx="46" cy="64.5" rx="1.9" ry="1.5" fill="#050810" />
+          <circle cx="47.5" cy="63.4" r="0.85" fill="#ffffff" opacity="0.85" />
+          {/* right eye */}
+          <ellipse cx="61.5" cy="64.5" rx="5.5" ry="4.2" fill="#3ee0ff" opacity="0.14" />
+          <ellipse cx="61.5" cy="64.5" rx="4.2" ry="3.2" fill="#0d1422" />
+          <ellipse cx="61.5" cy="64.5" rx="2.9" ry="2.2" fill="#3ee0ff" opacity="0.9" />
+          <ellipse cx="61.5" cy="64.5" rx="1.6" ry="1.2" fill="#050810" />
+          <circle cx="63" cy="63.4" r="0.75" fill="#ffffff" opacity="0.85" />
+        </g>
+
+        {/* nose + whiskers (always visible) */}
         <path d="M50 72 L48.4 70.4 Q50 69.7 51.6 70.4 Z" fill="#ad93ff" />
         <g stroke="#ffffff" strokeOpacity="0.14" strokeWidth="0.8" strokeLinecap="round">
           <line x1="30" y1="71" x2="44" y2="72" />
