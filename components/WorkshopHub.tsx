@@ -43,7 +43,8 @@ export function WorkshopHub() {
   }, [router]);
 
   function handleSelect(def: WorkshopObjectDef, rect: DOMRect) {
-    if (reduce) {
+    // On mobile, skip the expand animation and navigate immediately.
+    if (reduce || window.innerWidth < 768) {
       router.push(def.target);
       return;
     }
@@ -59,7 +60,8 @@ export function WorkshopHub() {
   }
 
   function handleSelectCat(rect: DOMRect) {
-    if (reduce) {
+    // On mobile, skip the expand animation and navigate immediately.
+    if (reduce || window.innerWidth < 768) {
       router.push("/cats");
       return;
     }

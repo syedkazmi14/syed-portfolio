@@ -480,23 +480,17 @@ export function MobileWorkshop({ onSelect, onSelectCat }: SelectFn) {
           </p>
         </div>
 
-        {/* 2 ── WORKSTATION: monitor (focal) + cat + keyboard on the desk ─ */}
+        {/* 2 ── WORKSTATION: monitor on desk ledge ───────────────────────── */}
         <section className="w-full max-w-sm">
           {station("monitor", (p) => <MonitorStation active={p} />)}
-
-          {/* the desk surface, with the cat + keyboard resting on it */}
-          <div className="relative mt-4">
+          <div className="relative mt-1">
             <Ledge accent="neon" />
-            <div className="relative flex items-end justify-center gap-3 px-2">
-              <MobileStation
-                label="Louise & Bailey"
-                accent="iris"
-                onTap={onSelectCat}
-                art={(p) => <SleepingCat hovered={p} />}
-                className="w-[52%] pb-1"
-              />
-              <div aria-hidden className="w-[40%] pb-2 opacity-90">
+            <div className="relative flex items-end justify-center gap-2 px-3 pb-2">
+              <div aria-hidden className="w-[46%] pb-1 opacity-85">
                 <Keyboard />
+              </div>
+              <div aria-hidden className="w-[9%] pb-1 opacity-85">
+                <Mouse />
               </div>
             </div>
           </div>
@@ -508,17 +502,20 @@ export function MobileWorkshop({ onSelect, onSelectCat }: SelectFn) {
           {station("trophy-shelf", (p) => <TrophyShelfArt active={p} />)}
         </section>
 
-        {/* 4 ── THE BENCH: soldering + toolbox + phone ────────────────── */}
+        {/* 4 ── THE BENCH: soldering + toolbox + phone + cat ────────────── */}
         <section className="relative w-full max-w-sm">
           <Ledge accent="heat" />
           <div className="relative grid grid-cols-2 items-end gap-5 px-2 pb-2">
             {station("soldering-station", (p) => <SolderingArt active={p} />)}
             {station("toolbox", (p) => <ToolboxArt active={p} />)}
-            {station(
-              "desk-phone",
-              (p) => <DeskPhoneArt active={p} />,
-              "col-span-2 mx-auto w-1/2",
-            )}
+            {/* phone + cat side by side — cat rests near the contact station */}
+            {station("desk-phone", (p) => <DeskPhoneArt active={p} />)}
+            <MobileStation
+              label="Louise & Bailey"
+              accent="iris"
+              onTap={onSelectCat}
+              art={(p) => <SleepingCat hovered={p} />}
+            />
           </div>
         </section>
       </div>
