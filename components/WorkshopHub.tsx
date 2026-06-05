@@ -12,9 +12,8 @@ import { buttonVariants } from "@/components/ui/Button";
 import { GithubIcon, LinkedinIcon } from "@/components/icons/BrandIcons";
 import { AmbientBackground } from "@/components/effects/AmbientBackground";
 import { Particles } from "@/components/effects/Particles";
-import { PortalCardGrid, WorkshopRoom } from "@/components/WorkshopScene";
+import { MobileWorkshop, WorkshopRoom } from "@/components/WorkshopScene";
 import { CatMascot } from "@/components/CatMascot";
-import { NeonSign } from "@/components/NeonSign";
 
 interface ZoomState {
   rect: DOMRect;
@@ -153,14 +152,9 @@ export function WorkshopHub() {
           Welcome to my garage — select a station to learn more about me.
         </p>
 
-        {/* mobile: sign + cards */}
-        <div className="relative z-10 px-5 pb-12 pt-24 md:hidden">
-          <NeonSign />
-          <p className="mb-6 mt-3 flex items-center justify-center gap-2 text-center font-mono text-xs text-muted">
-            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-neon anim-pulse-glow" />
-            Welcome to my garage — tap a station to explore.
-          </p>
-          <PortalCardGrid onSelect={handleSelect} onSelectCat={handleSelectCat} />
+        {/* mobile: a compact, scrollable version of the same workshop room */}
+        <div className="relative z-10 md:hidden">
+          <MobileWorkshop onSelect={handleSelect} onSelectCat={handleSelectCat} />
         </div>
       </motion.div>
 

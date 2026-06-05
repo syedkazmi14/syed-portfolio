@@ -1,20 +1,10 @@
 "use client";
 
 import { useState, type CSSProperties, type ReactNode } from "react";
-import {
-  Brain,
-  CircuitBoard as CircuitIcon,
-  Monitor as MonitorIcon,
-  MoveRight,
-  Phone,
-  Trophy,
-  Wrench,
-  type LucideIcon,
-} from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { getAccent } from "@/lib/accents";
 import { workshopObjects } from "@/data/workshop";
-import type { WorkshopObjectDef } from "@/lib/types";
+import type { Accent, WorkshopObjectDef } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { ParallaxLayer, ParallaxStage } from "@/components/parallax/Parallax";
 import { WorkshopObject } from "@/components/WorkshopObject";
@@ -310,72 +300,228 @@ export function WorkshopRoom({ onSelect, onSelectCat }: SelectFn) {
 }
 
 /* ===================================================================== */
-/*  Mobile: tap-friendly portal cards                                    */
+/*  Mobile: a compact, scrollable version of the SAME room               */
 /* ===================================================================== */
-const iconMap: Record<string, LucideIcon> = {
-  Monitor: MonitorIcon,
-  CircuitBoard: CircuitIcon,
-  Brain,
-  Trophy,
-  Wrench,
-  Phone,
-};
 
-export function PortalCardGrid({ onSelect, onSelectCat }: SelectFn) {
+/** Tiled dark-brick wall (data-URI so it tiles cleanly at any height). */
+const BRICK_SVG =
+  "<svg xmlns='http://www.w3.org/2000/svg' width='84' height='44'>" +
+  "<rect width='84' height='44' fill='#0b0908'/>" +
+  "<g fill='#181210'>" +
+  "<rect x='2' y='2' width='38' height='17' rx='2'/>" +
+  "<rect x='44' y='2' width='38' height='17' rx='2'/>" +
+  "<rect x='-19' y='24' width='38' height='17' rx='2'/>" +
+  "<rect x='23' y='24' width='38' height='17' rx='2'/>" +
+  "<rect x='65' y='24' width='38' height='17' rx='2'/>" +
+  "</g></svg>";
+const BRICK_TILE = `data:image/svg+xml,${encodeURIComponent(BRICK_SVG)}`;
+
+/** Full-height room shell that sits behind the scrolling mobile content. */
+function MobileRoomShell() {
   return (
-    <div className="grid grid-cols-2 gap-3">
-      {workshopObjects.map((def, i) => {
-        const a = getAccent(def.accent);
-        const Icon = iconMap[def.icon] ?? MonitorIcon;
-        return (
-          <motion.button
-            key={def.id}
-            type="button"
-            onClick={(e) => onSelect(def, e.currentTarget.getBoundingClientRect())}
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: i * 0.05 }}
-            whileTap={{ scale: 0.97 }}
-            aria-label={`${def.label}: ${def.caption}. Open page.`}
-            className={cn(
-              "group panel flex min-h-[8.5rem] flex-col gap-3 rounded-2xl border p-4 text-left transition-colors",
-              a.borderHover,
-            )}
-          >
-            <span className={cn("grid h-11 w-11 place-items-center rounded-xl border", a.border, a.bgSoft)}>
-              <Icon className={cn("h-5 w-5", a.text)} aria-hidden />
-            </span>
-            <span className="mt-auto">
-              <span className="block text-sm font-semibold text-ink">{def.label}</span>
-              <span className="mt-0.5 block text-xs text-muted">{def.caption}</span>
-            </span>
-            <MoveRight className={cn("h-4 w-4 transition-transform group-hover:translate-x-1", a.text)} aria-hidden />
-          </motion.button>
-        );
-      })}
-      {/* Cat archive card for mobile */}
-      <motion.button
-        type="button"
-        onClick={(e) => onSelectCat(e.currentTarget.getBoundingClientRect())}
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: workshopObjects.length * 0.05 }}
-        whileTap={{ scale: 0.97 }}
-        aria-label="Cat Archive: Louise & Bailey. Open gallery."
+    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+      {/* tiled brick */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundColor: "#0b0908",
+          backgroundImage: `url("${BRICK_TILE}")`,
+          backgroundSize: "116px 61px",
+        }}
+      />
+      {/* depth darkening top→bottom */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(8,8,12,0.35) 0%, rgba(6,6,10,0.72) 60%, rgba(5,5,9,0.9) 100%)",
+        }}
+      />
+      {/* neon spill behind the sign */}
+      <div
+        className="neon-breathe absolute left-1/2 top-[7%] h-52 w-[82%] -translate-x-1/2 rounded-[42%] blur-[64px]"
+        style={{
+          background:
+            "radial-gradient(50% 60% at 50% 50%, rgba(62,224,255,0.30), rgba(140,108,255,0.16) 55%, transparent 80%)",
+        }}
+      />
+      {/* edge vignette */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(120% 70% at 50% 26%, transparent 52%, rgba(4,5,9,0.72) 100%)",
+        }}
+      />
+    </div>
+  );
+}
+
+/**
+ * One interactive object in the mobile room. It is the object ITSELF (its SVG
+ * art) sitting on the wall — never a card. A small name-tag teaches what it is,
+ * a pulsing accent dot signals it's interactive, and pressing highlights it
+ * before the shared zoom transition fires.
+ */
+function MobileStation({
+  label,
+  accent,
+  onTap,
+  art,
+  className,
+}: {
+  label: string;
+  accent: Accent;
+  onTap: (rect: DOMRect) => void;
+  /** receives the pressed state so the artwork can light up on touch */
+  art: (pressed: boolean) => ReactNode;
+  className?: string;
+}) {
+  const [pressed, setPressed] = useState(false);
+  const a = getAccent(accent);
+
+  return (
+    <button
+      type="button"
+      onClick={(e) => onTap(e.currentTarget.getBoundingClientRect())}
+      onPointerDown={() => setPressed(true)}
+      onPointerUp={() => setPressed(false)}
+      onPointerLeave={() => setPressed(false)}
+      onPointerCancel={() => setPressed(false)}
+      aria-label={`${label}. Open.`}
+      className={cn(
+        "pointer-events-auto relative flex flex-col items-center outline-none transition-transform duration-200 active:scale-95",
+        className,
+      )}
+    >
+      {/* faint always-on glow so the object reads as interactive */}
+      <span
+        aria-hidden
         className={cn(
-          "group panel flex min-h-[8.5rem] flex-col gap-3 rounded-2xl border p-4 text-left transition-colors",
-          "hover:border-iris/70",
+          "pointer-events-none absolute left-1/2 top-[44%] -z-10 h-[72%] w-[78%] -translate-x-1/2 -translate-y-1/2 rounded-[44%] opacity-[0.10] blur-2xl",
+          a.bgSolid,
+        )}
+      />
+      {/* press highlight */}
+      <span
+        aria-hidden
+        className={cn(
+          "pointer-events-none absolute left-1/2 top-[44%] -z-10 h-[84%] w-[88%] -translate-x-1/2 -translate-y-1/2 rounded-[44%] blur-2xl transition-opacity duration-200",
+          a.bgSolid,
+        )}
+        style={{ opacity: pressed ? 0.42 : 0 }}
+      />
+
+      <span className="w-full">{art(pressed)}</span>
+
+      {/* name tag (the mobile equivalent of the desktop hover label) */}
+      <span
+        className={cn(
+          "mt-2 inline-flex items-center gap-1.5 rounded-full border bg-base/55 px-2.5 py-1 backdrop-blur-sm",
+          a.border,
         )}
       >
-        <span className="grid h-11 w-11 place-items-center rounded-xl border border-iris/30 bg-iris/10 text-2xl">
-          🐱
+        <span className={cn("anim-pulse-glow h-1.5 w-1.5 shrink-0 rounded-full", a.bgSolid)} />
+        <span className="whitespace-nowrap text-[0.72rem] font-semibold text-ink">
+          {label}
         </span>
-        <span className="mt-auto">
-          <span className="block text-sm font-semibold text-ink">Cat Archive</span>
-          <span className="mt-0.5 block text-xs text-muted">Louise &amp; Bailey</span>
-        </span>
-        <MoveRight className="h-4 w-4 text-iris transition-transform group-hover:translate-x-1" aria-hidden />
-      </motion.button>
+      </span>
+    </button>
+  );
+}
+
+/** A grounding ledge (desk / bench surface) the objects sit on. */
+function Ledge({ accent = "neon" }: { accent?: Accent }) {
+  const a = getAccent(accent);
+  return (
+    <div
+      aria-hidden
+      className="absolute inset-x-0 bottom-2 -z-0 h-14 rounded-lg"
+      style={{
+        background:
+          "linear-gradient(180deg, #221a15 0%, #15100d 65%, #0d0a08 100%)",
+      }}
+    >
+      <div className={cn("absolute inset-x-3 top-0 h-px", a.bgSolid, "opacity-50")} />
+      <div className="absolute inset-x-0 -top-3 h-3 bg-gradient-to-b from-black/50 to-transparent" />
+    </div>
+  );
+}
+
+export function MobileWorkshop({ onSelect, onSelectCat }: SelectFn) {
+  const station = (
+    id: string,
+    art: (pressed: boolean) => ReactNode,
+    className?: string,
+  ) => {
+    const d = byId(id);
+    return (
+      <MobileStation
+        label={d.label}
+        accent={d.accent}
+        onTap={(rect) => onSelect(d, rect)}
+        art={art}
+        className={className}
+      />
+    );
+  };
+
+  return (
+    <div className="relative w-full overflow-hidden">
+      <MobileRoomShell />
+
+      <div className="relative z-10 flex flex-col items-center gap-12 px-5 pb-24 pt-24">
+        {/* 1 ── NEON SIGN (hero) ──────────────────────────────────────── */}
+        <div className="w-full max-w-sm">
+          <NeonSign />
+          <p className="mt-3 flex items-center justify-center gap-2 text-center font-mono text-xs text-muted">
+            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-neon anim-pulse-glow" />
+            Welcome to my garage — tap a station to explore.
+          </p>
+        </div>
+
+        {/* 2 ── WORKSTATION: monitor (focal) + cat + keyboard on the desk ─ */}
+        <section className="w-full max-w-sm">
+          {station("monitor", (p) => <MonitorStation active={p} />)}
+
+          {/* the desk surface, with the cat + keyboard resting on it */}
+          <div className="relative mt-4">
+            <Ledge accent="neon" />
+            <div className="relative flex items-end justify-center gap-3 px-2">
+              <MobileStation
+                label="Louise & Bailey"
+                accent="iris"
+                onTap={onSelectCat}
+                art={(p) => <SleepingCat hovered={p} />}
+                className="w-[52%] pb-1"
+              />
+              <div aria-hidden className="w-[40%] pb-2 opacity-90">
+                <Keyboard />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 3 ── THE WALL: whiteboard + trophy shelf ───────────────────── */}
+        <section className="grid w-full max-w-sm grid-cols-2 items-end gap-5">
+          {station("whiteboard", (p) => <WhiteboardArt active={p} />)}
+          {station("trophy-shelf", (p) => <TrophyShelfArt active={p} />)}
+        </section>
+
+        {/* 4 ── THE BENCH: soldering + toolbox + phone ────────────────── */}
+        <section className="relative w-full max-w-sm">
+          <Ledge accent="heat" />
+          <div className="relative grid grid-cols-2 items-end gap-5 px-2 pb-2">
+            {station("soldering-station", (p) => <SolderingArt active={p} />)}
+            {station("toolbox", (p) => <ToolboxArt active={p} />)}
+            {station(
+              "desk-phone",
+              (p) => <DeskPhoneArt active={p} />,
+              "col-span-2 mx-auto w-1/2",
+            )}
+          </div>
+        </section>
+      </div>
     </div>
   );
 }
