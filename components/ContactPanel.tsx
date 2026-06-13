@@ -44,7 +44,9 @@ const methods: {
 /** Contact methods + frontend-only message form. */
 export function ContactPanel() {
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
+    // explicit cols-1: an implicit auto track sizes to max-content and lets
+    // the nowrap link values overflow narrow screens
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
       <Reveal>
         <div className="flex h-full flex-col gap-3">
           {methods.map(({ Icon, label, value, href }) => (
@@ -59,7 +61,10 @@ export function ContactPanel() {
               <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-line bg-white/[0.03] text-muted transition-colors group-hover:border-neon/50 group-hover:text-neon">
                 <Icon className="h-5 w-5" aria-hidden />
               </span>
-              <span className="min-w-0">
+              {/* must be block-level: min-width is ignored on inline elements,
+                  which let the nowrap value below blow out the column on small
+                  screens */}
+              <span className="block min-w-0 flex-1">
                 <span className="block text-sm font-medium text-ink">
                   {label}
                 </span>
