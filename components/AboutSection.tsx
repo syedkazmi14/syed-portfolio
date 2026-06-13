@@ -21,7 +21,7 @@ const facts = [
 /** "About" intro: identity rail + confident bio + quick stats. */
 export function AboutIntro() {
   return (
-    <div className="grid gap-8 lg:grid-cols-[300px_1fr]">
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-[300px_1fr]">
       {/* identity rail */}
       <Reveal>
         <div className="panel rounded-2xl border border-line p-6">

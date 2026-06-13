@@ -17,7 +17,7 @@ const iconById: Record<string, LucideIcon> = {
 export function AwardsShelf() {
   return (
     <div>
-      <StaggerGroup className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <StaggerGroup className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {awards.map((award) => {
           const a = getAccent(award.accent);
           const Icon = iconById[award.id] ?? Trophy;

@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowLeft, Mail } from "lucide-react";
+import { ArrowLeft, FileText, Mail } from "lucide-react";
 import { getAccent } from "@/lib/accents";
 import type { Accent } from "@/lib/types";
 import { siteConfig } from "@/data/site";
@@ -63,19 +63,37 @@ export function PageShell({
               )}
               aria-hidden
             />
-            Back to Workshop
+            <span>
+              <span className="hidden sm:inline">Back to&nbsp;</span>Workshop
+            </span>
           </Link>
 
-          <Link
-            href="/"
-            aria-label="Back to workshop"
-            className="flex items-center gap-2.5"
-          >
-            <span className="hidden font-mono text-xs text-muted sm:block">
-              {siteConfig.name}
-            </span>
-            <CatMascot className="h-9 w-9" />
-          </Link>
+          <div className="flex items-center gap-3">
+            <a
+              href={siteConfig.links.resume}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Resume (PDF)"
+              className={cn(
+                "inline-flex h-9 w-9 items-center justify-center rounded-lg border border-line text-muted transition-all hover:text-ink",
+                "sm:w-auto sm:gap-2 sm:px-3 sm:text-sm sm:text-ink",
+                a.borderHover,
+              )}
+            >
+              <FileText className="h-4 w-4" aria-hidden />
+              <span className="hidden sm:inline">Resume</span>
+            </a>
+            <Link
+              href="/"
+              aria-label="Back to workshop"
+              className="flex items-center gap-2.5"
+            >
+              <span className="hidden font-mono text-xs text-muted md:block">
+                {siteConfig.name}
+              </span>
+              <CatMascot className="h-9 w-9" />
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -111,6 +129,15 @@ export function PageShell({
             TypeScript, Tailwind &amp; Framer Motion.
           </p>
           <div className="flex items-center gap-2">
+            <a
+              href={siteConfig.links.resume}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-9 items-center gap-2 rounded-lg border border-line px-3 text-xs text-muted transition-all hover:border-neon/50 hover:text-neon"
+            >
+              <FileText className="h-4 w-4" aria-hidden />
+              Resume
+            </a>
             <a
               href={siteConfig.links.github}
               target="_blank"

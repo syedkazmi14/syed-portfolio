@@ -27,7 +27,7 @@ const iconMap: Record<string, LucideIcon> = {
 /** Skill categories rendered as toolbox "drawers". */
 export function SkillsToolbox() {
   return (
-    <StaggerGroup className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <StaggerGroup className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {skills.map((cat) => {
         const a = getAccent(cat.accent);
         const Icon = iconMap[cat.icon] ?? Wrench;

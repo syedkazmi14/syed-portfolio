@@ -100,7 +100,8 @@ export function WorkshopHub() {
         <header className="absolute inset-x-0 top-0 z-30 flex items-center justify-between gap-4 px-5 py-4 sm:px-8 sm:py-5">
           <div className="flex items-center gap-3">
             <CatMascot className="h-11 w-11" idle />
-            <div className="leading-tight">
+            {/* on phones the neon sign carries the identity — text returns at sm: */}
+            <div className="hidden leading-tight sm:block">
               <p className="text-sm font-semibold tracking-tight text-ink">
                 {siteConfig.name}
               </p>
@@ -125,7 +126,7 @@ export function WorkshopHub() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="grid h-10 w-10 place-items-center rounded-lg border border-line bg-base/40 text-muted backdrop-blur-sm transition-all hover:border-neon/50 hover:text-neon"
+              className="hidden h-10 w-10 place-items-center rounded-lg border border-line bg-base/40 text-muted backdrop-blur-sm transition-all hover:border-neon/50 hover:text-neon sm:grid"
             >
               <LinkedinIcon className="h-4 w-4" aria-hidden />
             </a>
