@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test:e2e": "playwright test",
     "gen:icons": "node scripts/gen-icons.mjs",
     "optimize:images": "node scripts/optimize-images.mjs"
   },
@@ -21,6 +22,7 @@
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",

@@ -2,6 +2,7 @@
 
 import { useState, type CSSProperties, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 import { getAccent } from "@/lib/accents";
 import { workshopObjects } from "@/data/workshop";
 import type { Accent, WorkshopObjectDef } from "@/lib/types";
@@ -486,6 +487,7 @@ function MobileCat({ onTap }: { onTap: (rect: DOMRect) => void }) {
 }
 
 export function MobileWorkshop({ onSelect, onSelectCat }: SelectFn) {
+  const reduce = useReducedMotion();
   const station = (
     id: string,
     art: (pressed: boolean) => ReactNode,
@@ -514,8 +516,22 @@ export function MobileWorkshop({ onSelect, onSelectCat }: SelectFn) {
           <NeonSign />
           <p className="mt-3 flex items-center justify-center gap-2 text-center font-mono text-xs text-muted">
             <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-neon anim-pulse-glow" />
-            Welcome to my garage — tap a station to explore.
+            Welcome to my garage — explore {workshopObjects.length} stations below.
           </p>
+          {/* scroll cue — only the first station sits above the fold, so hint
+              there's more below (static under reduced motion) */}
+          <div aria-hidden className="mt-4 flex justify-center text-muted/50">
+            {reduce ? (
+              <ChevronDown className="h-5 w-5" />
+            ) : (
+              <motion.span
+                animate={{ y: [0, 6, 0] }}
+                transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <ChevronDown className="h-5 w-5" />
+              </motion.span>
+            )}
+          </div>
         </div>
 
         {/* 2 ── WORKSTATION: monitor on desk ledge ───────────────────────── */}

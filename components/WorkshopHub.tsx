@@ -90,7 +90,10 @@ export function WorkshopHub() {
 
   return (
     <motion.section
-      initial={{ opacity: 0, scale: reduce ? 1 : 1.03 }}
+      // grow IN from just under 1 (not 1.03): a viewport-filling element scaled
+      // above 1 extends past the edges, and transforms count toward scroll
+      // overflow — that briefly widened the page (a horizontal-scrollbar flash).
+      initial={{ opacity: 0, scale: reduce ? 1 : 0.985 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={`relative min-h-dvh w-full overflow-hidden ${isDesktop ? "h-dvh" : ""}`}
