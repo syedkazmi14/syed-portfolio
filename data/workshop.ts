@@ -29,7 +29,9 @@ export const workshopObjects: WorkshopObjectDef[] = [
   {
     id: "monitor",
     label: "Main Monitor",
-    caption: "Software projects",
+    // matches the /projects page h1 ("Software Experience"), like the other
+    // stations' captions match their pages — the door now names its room
+    caption: "Software experience",
     target: "/projects",
     accent: "neon",
     icon: "Monitor",

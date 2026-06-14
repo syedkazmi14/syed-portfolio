@@ -365,12 +365,15 @@ function MobileRoomShell() {
  */
 function MobileStation({
   label,
+  caption,
   accent,
   onTap,
   art,
   className,
 }: {
   label: string;
+  /** where this station leads — the nav signal shown beneath the prop name */
+  caption: string;
   accent: Accent;
   onTap: (rect: DOMRect) => void;
   /** receives the pressed state so the artwork can light up on touch */
@@ -388,7 +391,7 @@ function MobileStation({
       onPointerUp={() => setPressed(false)}
       onPointerLeave={() => setPressed(false)}
       onPointerCancel={() => setPressed(false)}
-      aria-label={`${label}. Open.`}
+      aria-label={`${label}: ${caption}. Open.`}
       className={cn(
         "pointer-events-auto relative flex flex-col items-center outline-none transition-transform duration-200 active:scale-95",
         className,
@@ -414,16 +417,24 @@ function MobileStation({
 
       <span className="w-full">{art(pressed)}</span>
 
-      {/* name tag (the mobile equivalent of the desktop hover label) */}
+      {/* name tag. The prop name is flavor; the caption is the nav signal.
+          Desktop reveals the caption on hover — touch has none, so on mobile it
+          must be on screen. No nowrap on the caption: a long one wraps inside
+          its (minmax-0) grid column rather than forcing horizontal overflow. */}
       <span
         className={cn(
-          "mt-2 inline-flex items-center gap-1.5 rounded-full border bg-base/55 px-2.5 py-1 backdrop-blur-sm",
+          "mt-2 flex max-w-full flex-col items-center gap-0.5 rounded-xl border bg-base/55 px-2.5 py-1.5 text-center backdrop-blur-sm",
           a.border,
         )}
       >
-        <span className={cn("anim-pulse-glow h-1.5 w-1.5 shrink-0 rounded-full", a.bgSolid)} />
-        <span className="whitespace-nowrap text-[0.72rem] font-semibold text-ink">
-          {label}
+        <span className="flex items-center gap-1.5">
+          <span className={cn("anim-pulse-glow h-1.5 w-1.5 shrink-0 rounded-full", a.bgSolid)} />
+          <span className="font-mono text-[0.6rem] uppercase tracking-wide text-muted">
+            {label}
+          </span>
+        </span>
+        <span className="text-[0.74rem] font-semibold leading-tight text-ink">
+          {caption}
         </span>
       </span>
     </button>
@@ -448,6 +459,32 @@ function Ledge({ accent = "neon" }: { accent?: Accent }) {
   );
 }
 
+/**
+ * The sleeping cat as a small, discoverable pet beside the contact phone — an
+ * easter egg, deliberately lighter than the captioned nav stations so it does
+ * not read as a sixth destination.
+ */
+function MobileCat({ onTap }: { onTap: (rect: DOMRect) => void }) {
+  const [pressed, setPressed] = useState(false);
+  return (
+    <button
+      type="button"
+      onClick={(e) => onTap(e.currentTarget.getBoundingClientRect())}
+      onPointerDown={() => setPressed(true)}
+      onPointerUp={() => setPressed(false)}
+      onPointerLeave={() => setPressed(false)}
+      onPointerCancel={() => setPressed(false)}
+      aria-label="Louise & Bailey: cat archive. Open gallery."
+      className="pointer-events-auto relative flex w-[34%] flex-col items-center outline-none transition-transform duration-200 active:scale-95"
+    >
+      <SleepingCat hovered={pressed} />
+      <span className="mt-1 font-mono text-[0.6rem] text-muted/70">
+        Louise &amp; Bailey
+      </span>
+    </button>
+  );
+}
+
 export function MobileWorkshop({ onSelect, onSelectCat }: SelectFn) {
   const station = (
     id: string,
@@ -458,6 +495,7 @@ export function MobileWorkshop({ onSelect, onSelectCat }: SelectFn) {
     return (
       <MobileStation
         label={d.label}
+        caption={d.caption}
         accent={d.accent}
         onTap={(rect) => onSelect(d, rect)}
         art={art}
@@ -496,26 +534,27 @@ export function MobileWorkshop({ onSelect, onSelectCat }: SelectFn) {
           </div>
         </section>
 
-        {/* 3 ── THE WALL: whiteboard + trophy shelf ───────────────────── */}
+        {/* 3 ── THE BENCH WALL: hardware + research ───────────────────── */}
         <section className="grid w-full max-w-sm grid-cols-2 items-end gap-5">
+          {station("soldering-station", (p) => <SolderingArt active={p} />)}
           {station("whiteboard", (p) => <WhiteboardArt active={p} />)}
+        </section>
+
+        {/* 4 ── THE SHELF: skills + awards ────────────── */}
+        <section className="grid w-full max-w-sm grid-cols-2 items-end gap-5">
+          {station("toolbox", (p) => <ToolboxArt active={p} />)}
           {station("trophy-shelf", (p) => <TrophyShelfArt active={p} />)}
         </section>
 
-        {/* 4 ── THE BENCH: soldering + toolbox + phone + cat ────────────── */}
+        {/* 5 ── THE CLOSER: get in touch. The phone sits on its own ledge with
+                the cat curled beside it — a pet, not a sixth destination. */}
         <section className="relative w-full max-w-sm">
-          <Ledge accent="heat" />
-          <div className="relative grid grid-cols-2 items-end gap-5 px-2 pb-2">
-            {station("soldering-station", (p) => <SolderingArt active={p} />)}
-            {station("toolbox", (p) => <ToolboxArt active={p} />)}
-            {/* phone + cat side by side — cat rests near the contact station */}
-            {station("desk-phone", (p) => <DeskPhoneArt active={p} />)}
-            <MobileStation
-              label="Louise & Bailey"
-              accent="iris"
-              onTap={onSelectCat}
-              art={(p) => <SleepingCat hovered={p} />}
-            />
+          <Ledge accent="neon" />
+          <div className="relative flex items-end justify-center gap-3 px-3 pb-2">
+            <div className="w-[56%]">
+              {station("desk-phone", (p) => <DeskPhoneArt active={p} />)}
+            </div>
+            <MobileCat onTap={onSelectCat} />
           </div>
         </section>
       </div>

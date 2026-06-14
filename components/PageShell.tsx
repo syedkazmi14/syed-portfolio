@@ -1,13 +1,15 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowLeft, FileText, Mail } from "lucide-react";
 import { getAccent } from "@/lib/accents";
 import type { Accent } from "@/lib/types";
 import { siteConfig } from "@/data/site";
 import { cn } from "@/lib/utils";
+import { cameFromHub, cameViaZoom } from "@/lib/workshopNav";
 import { GithubIcon, LinkedinIcon } from "@/components/icons/BrandIcons";
 import { CatMascot } from "@/components/CatMascot";
 import { AmbientBackground } from "@/components/effects/AmbientBackground";
@@ -35,6 +37,20 @@ export function PageShell({
 }: PageShellProps) {
   const a = getAccent(accent);
   const reduce = useReducedMotion();
+  const router = useRouter();
+
+  // Read the hub's navigation intent once, on mount (see lib/workshopNav).
+  // fromZoom: arrived via the desktop zoom → bridge it in with the accent flash.
+  // fromHub:  arrived from the hub at all → Back can restore its scroll.
+  const [fromZoom] = useState(cameViaZoom);
+  const [fromHub] = useState(cameFromHub);
+
+  function handleBack() {
+    // When the hub is the previous history entry, go back to it so its scroll
+    // position is preserved; otherwise (direct load / shared link) push home.
+    if (fromHub) router.back();
+    else router.push("/");
+  }
 
   return (
     <div className="relative min-h-dvh">
@@ -49,8 +65,9 @@ export function PageShell({
       {/* sticky top bar */}
       <div className="sticky top-0 z-40 border-b border-line/60 bg-base/70 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
-          <Link
-            href="/"
+          <button
+            type="button"
+            onClick={handleBack}
             className={cn(
               "group inline-flex items-center gap-2 rounded-lg border border-line bg-white/[0.02] px-3.5 py-2 text-sm text-ink transition-all",
               a.borderHover,
@@ -66,7 +83,7 @@ export function PageShell({
             <span>
               <span className="hidden sm:inline">Back to&nbsp;</span>Workshop
             </span>
-          </Link>
+          </button>
 
           <div className="flex items-center gap-3">
             <a
@@ -101,7 +118,7 @@ export function PageShell({
       <motion.main
         initial={{ opacity: 0, y: reduce ? 0 : 18 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.5, delay: fromZoom ? 0.15 : 0, ease: [0.22, 1, 0.36, 1] }}
         className="relative z-10 mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16"
       >
         <header>
@@ -167,8 +184,9 @@ export function PageShell({
         </div>
       </footer>
 
-      {/* accent flash to bridge the zoom from the hub */}
-      {reduce ? null : (
+      {/* accent flash to bridge the zoom from the hub — only when we actually
+          arrived via the zoom (not on direct loads, shared links, or Back) */}
+      {reduce || !fromZoom ? null : (
         <motion.div
           aria-hidden
           initial={{ opacity: 1 }}

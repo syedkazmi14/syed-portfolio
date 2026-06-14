@@ -14,6 +14,8 @@ import { AmbientBackground } from "@/components/effects/AmbientBackground";
 import { Particles } from "@/components/effects/Particles";
 import { MobileWorkshop, WorkshopRoom } from "@/components/WorkshopScene";
 import { CatMascot } from "@/components/CatMascot";
+import { useMediaQuery } from "@/lib/useMediaQuery";
+import { markDirect, markZoom } from "@/lib/workshopNav";
 
 interface ZoomState {
   rect: DOMRect;
@@ -37,14 +39,22 @@ export function WorkshopHub() {
   const reduce = useReducedMotion();
   const [zoom, setZoom] = useState<ZoomState | null>(null);
 
+  // The immersive parallax room is for pointer devices with room to show it;
+  // touch tablets and narrow windows get the scrollable mobile room. Decided in
+  // JS (not just CSS) so we MOUNT only one — no hidden second room running its
+  // monitor slideshow and parallax listeners off-screen.
+  const isDesktop = useMediaQuery("(min-width: 768px) and (hover: hover)");
+
   useEffect(() => {
     workshopObjects.forEach((o) => router.prefetch(o.target));
     router.prefetch("/cats");
   }, [router]);
 
   function handleSelect(def: WorkshopObjectDef, rect: DOMRect) {
-    // On mobile, skip the expand animation and navigate immediately.
-    if (reduce || window.innerWidth < 768) {
+    // No immersive room (mobile / touch / reduced motion) → skip the expand
+    // animation and navigate immediately.
+    if (reduce || !isDesktop) {
+      markDirect();
       router.push(def.target);
       return;
     }
@@ -60,8 +70,10 @@ export function WorkshopHub() {
   }
 
   function handleSelectCat(rect: DOMRect) {
-    // On mobile, skip the expand animation and navigate immediately.
-    if (reduce || window.innerWidth < 768) {
+    // No immersive room (mobile / touch / reduced motion) → skip the expand
+    // animation and navigate immediately.
+    if (reduce || !isDesktop) {
+      markDirect();
       router.push("/cats");
       return;
     }
@@ -81,7 +93,7 @@ export function WorkshopHub() {
       initial={{ opacity: 0, scale: reduce ? 1 : 1.03 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="relative min-h-dvh w-full overflow-hidden md:h-dvh"
+      className={`relative min-h-dvh w-full overflow-hidden ${isDesktop ? "h-dvh" : ""}`}
     >
       <AmbientBackground intense />
       <Particles count={18} />
@@ -89,12 +101,19 @@ export function WorkshopHub() {
       <motion.div
         animate={{ opacity: zoom ? 0 : 1, scale: zoom ? 1.05 : 1 }}
         transition={{ duration: 0.4 }}
-        className="relative z-10 min-h-dvh md:h-dvh"
+        className={`relative z-10 min-h-dvh ${isDesktop ? "h-dvh" : ""}`}
       >
-        {/* desktop immersive room fills the viewport */}
-        <div className="absolute inset-0 hidden md:block">
-          <WorkshopRoom onSelect={handleSelect} onSelectCat={handleSelectCat} />
-        </div>
+        {/* exactly one room is mounted — the immersive desktop room, or the
+            compact scrollable mobile room (also used for touch tablets) */}
+        {isDesktop ? (
+          <div className="absolute inset-0">
+            <WorkshopRoom onSelect={handleSelect} onSelectCat={handleSelectCat} />
+          </div>
+        ) : (
+          <div className="relative z-10">
+            <MobileWorkshop onSelect={handleSelect} onSelectCat={handleSelectCat} />
+          </div>
+        )}
 
         {/* overlaid identity bar */}
         <header className="absolute inset-x-0 top-0 z-30 flex items-center justify-between gap-4 px-5 py-4 sm:px-8 sm:py-5">
@@ -149,16 +168,13 @@ export function WorkshopHub() {
           </div>
         </header>
 
-        {/* desktop welcome caption */}
-        <p className="absolute inset-x-0 bottom-4 z-30 hidden items-center justify-center gap-2 px-6 text-center font-mono text-xs text-muted/90 md:flex">
-          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-neon anim-pulse-glow" />
-          Welcome to my garage — select a station to learn more about me.
-        </p>
-
-        {/* mobile: a compact, scrollable version of the same workshop room */}
-        <div className="relative z-10 md:hidden">
-          <MobileWorkshop onSelect={handleSelect} onSelectCat={handleSelectCat} />
-        </div>
+        {/* desktop welcome caption (the mobile room carries its own) */}
+        {isDesktop ? (
+          <p className="absolute inset-x-0 bottom-4 z-30 flex items-center justify-center gap-2 px-6 text-center font-mono text-xs text-muted/90">
+            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-neon anim-pulse-glow" />
+            Welcome to my garage — select a station to learn more about me.
+          </p>
+        ) : null}
       </motion.div>
 
       {/* zoom-into-object transition */}
@@ -183,8 +199,11 @@ export function WorkshopHub() {
               borderRadius: 0,
               opacity: 1,
             }}
-            transition={{ duration: 0.55, ease: [0.7, 0, 0.2, 1] }}
-            onAnimationComplete={() => router.push(zoom.target)}
+            transition={{ duration: 0.4, ease: [0.7, 0, 0.2, 1] }}
+            onAnimationComplete={() => {
+              markZoom();
+              router.push(zoom.target);
+            }}
             style={{
               position: "fixed",
               background: `radial-gradient(circle at 50% 45%, ${hexToRgba(
