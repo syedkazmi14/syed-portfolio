@@ -14,7 +14,7 @@ export const projects: Project[] = [
     name: "BlueRelief",
     tagline: "Real-time crisis detection platform",
     description:
-      "Real-time crisis detection platform using a containerized, event-driven microservices architecture. BlueSky data is ingested by FastAPI workers, processed with Gemini, stored in PostgreSQL/PostGIS, and displayed on a Next.js frontend with Mapbox visualizations.",
+      "I pull live posts from BlueSky, run them through Gemini to find and tag crisis reports, and drop the geolocated ones onto a Mapbox map as they come in. FastAPI workers handle ingest, Redis and Celery move work between them, PostGIS runs the geo queries, and everything ships in Docker.",
     problem:
       "During fast-moving emergencies, responders lack a real-time, geolocated read on what people are reporting across social platforms.",
     solution:
@@ -44,7 +44,7 @@ export const projects: Project[] = [
     name: "TeleKinetics",
     tagline: "AI physical-therapy form coach",
     description:
-      "1st Place AI Track winner at Axxess Hackathon 2024. AI-powered physical therapy app using pose estimation to analyze patient form and provide real-time movement feedback.",
+      "Won the AI track at Axxess Hackathon 2024. A physical-therapy app that watches you through a webcam, tracks your joints with PoseNet/MoveNet, checks each rep against its target range, and tells you the moment your form slips — in real time, on-device.",
     problem:
       "Patients doing physical therapy at home have no way to know whether they are performing exercises with correct, safe form.",
     solution:
@@ -61,7 +61,7 @@ export const projects: Project[] = [
     name: "GuardianGram",
     tagline: "Mobile personal-safety network",
     description:
-      "Full-stack mobile safety network app built through ACM. Users can create safety networks, trigger distress alerts, share location updates, and complete randomized safety check-ins.",
+      "A safety app I built with ACM. You set up a circle of trusted contacts, hit one button to send them a distress alert with your live location, and answer randomized check-ins so they know you're okay. Express/Prisma API on MongoDB, Next.js front end.",
     problem:
       "People navigating unsafe situations need a fast, trusted way to alert their circle and prove they're okay.",
     solution:
@@ -86,7 +86,7 @@ export const projects: Project[] = [
     name: "WitchWatch",
     tagline: "Oil-tank monitoring & delivery routing",
     description:
-      "Real-time oil tank monitoring and delivery optimization system using EOG API data. Detects tank level changes, validates delivery tickets, flags discrepancies, and provides optimized delivery routes through hardware-software integration.",
+      "Built at HackUTD 2025. It reads oil-tank levels two ways — the EOG API and a Raspberry Pi Pico 2 sensor over serial — to catch level changes, check them against delivery tickets, flag the ones that don't match, and route the next truck on a Mapbox map.",
     problem:
       "Tracking oil tank levels and validating field deliveries is manual and error-prone, leading to wasted trips and unnoticed discrepancies.",
     solution:
@@ -112,7 +112,7 @@ export const projects: Project[] = [
     name: "TrashTrends",
     tagline: "Drone video → litter heatmaps",
     description:
-      "Cloud backend for drone video processing and GIS heatmaps. Processes video feeds, supports computer vision workflows, and visualizes litter patterns.",
+      "A backend that takes drone footage, runs computer vision over the frames to spot litter, and turns the detections into GIS heatmaps that show where trash collects. Python and C++ on ROS, packaged with Docker.",
     problem:
       "Mapping litter across large areas by hand is slow, inconsistent, and hard to track over time.",
     solution:
@@ -127,7 +127,7 @@ export const projects: Project[] = [
     name: "EcoDrive",
     tagline: "OBD fuel-economy dashboard",
     description:
-      "Vehicle data platform using OBD data to visualize fuel economy trends through a web dashboard.",
+      "I wired an Arduino into a car's OBD-II port to read live engine data, pushed it through a REST API into MongoDB, and charted fuel-economy trends in a Next.js dashboard — so you can see which driving habits actually burn gas.",
     problem:
       "Drivers rarely get clear feedback on how their habits affect real-world fuel economy.",
     solution:
@@ -142,7 +142,7 @@ export const projects: Project[] = [
     name: "HBS Computer Vision Research",
     tagline: "YOLOv8 TCP-coil detection",
     description:
-      "Computer vision system using YOLOv8 and Python to detect TCP coils.",
+      "A research project where I trained YOLOv8 to detect TCP coils in imagery — Python for the detection pipeline, MATLAB for analysis — so spotting coils no longer means a person checking frames by hand.",
     problem:
       "Detecting TCP coils reliably in imagery is tedious and inconsistent when done manually.",
     solution:
@@ -157,7 +157,7 @@ export const projects: Project[] = [
     name: "First Person Shooter",
     tagline: "UE5 gameplay & physics",
     description:
-      "Playable FPS built in Unreal Engine 5 using Blueprint and C++ with destructible environments, UMG UI, and Chaos Physics.",
+      "A playable first-person shooter I built in Unreal Engine 5, part Blueprint and part C++. Chaos Physics drives destructible environments, UMG runs the HUD, and I wrote the core input and gameplay systems myself.",
     problem:
       "Wanted to go deep on real-time game systems: input, UI, and physics-driven destruction.",
     solution:

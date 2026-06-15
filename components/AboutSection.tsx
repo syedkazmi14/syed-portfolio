@@ -15,7 +15,7 @@ const stats = [
 const facts = [
   { Icon: GraduationCap, text: "B.S. Computer Science — UT Dallas, Fall 2026" },
   { Icon: MapPin, text: siteConfig.location },
-  { Icon: Sparkles, text: "AI · Full-stack · Cloud · Hardware" },
+  { Icon: Sparkles, text: "Backend · Full-stack · Cloud · Board-level repair" },
 ];
 
 /** "About" intro: identity rail + confident bio + quick stats. */
@@ -50,7 +50,7 @@ export function AboutIntro() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-mint opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-mint" />
             </span>
-            Building AI-powered systems
+            Currently at IBM, working on agent orchestration
           </p>
 
           <ul className="mt-6 space-y-3 border-t border-line pt-5">
@@ -67,16 +67,17 @@ export function AboutIntro() {
       {/* prose + stats */}
       <Reveal delay={0.1} className="flex flex-col justify-center">
         <p className="text-pretty text-xl font-medium leading-relaxed text-ink sm:text-2xl">
-          Syed Kazmi is a Computer Science student at The University of Texas at
-          Dallas graduating Fall 2026. He builds AI-powered applications,
-          full-stack products, backend systems, and cloud-connected tools.
+          I&apos;m a CS student at UT Dallas, graduating Fall 2026. Right now
+          I&apos;m at IBM working on watsonx Orchestrate, helping teams plug
+          agents they built elsewhere into the platform.
         </p>
         <p className="mt-5 text-pretty leading-relaxed text-muted">
-          His experience spans software engineering, IT infrastructure, hardware
-          troubleshooting, computer vision, and hackathon-winning product
-          development — from board-level repair with an oscilloscope to
-          enterprise agentic-AI platforms. He cares about systems that are both
-          deeply engineered and genuinely polished end to end.
+          Before this I built a video-avatar advisor at Infosys, won the AI track
+          at the Axxess hackathon with a pose-estimation form coach, and spent two
+          years fixing laptops down to the board — reflowing chips and tracing
+          shorts with a multimeter. I like work that goes the whole way down: a
+          backend that doesn&apos;t fall over and a front end people actually want
+          to use.
         </p>
 
         <dl className="mt-8 grid grid-cols-3 gap-4">

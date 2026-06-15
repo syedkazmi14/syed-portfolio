@@ -10,14 +10,11 @@ export const experience: ExperienceItem[] = [
     type: "software",
     current: true,
     description:
-      "Working on the watsonx Orchestrate platform to expand Bring Your Own (BYO) Agent capabilities and support integrations with external agent frameworks. Developing backend systems, agent orchestration features, API integrations, and enterprise AI workflows.",
+      "I work on watsonx Orchestrate, IBM's platform for building and running AI agents. My focus is the Bring Your Own Agent path — letting teams register agents they built in frameworks like LangChain or CrewAI and run them inside Orchestrate next to IBM's own.",
     highlights: [
-      "Contributed to the watsonx Orchestrate agent ecosystem",
-      "Worked on Bring Your Own Agent (BYO Agent) capabilities",
-      "Integrated external agent frameworks and orchestration workflows",
-      "Developed backend services and APIs for AI agents",
-      "Collaborated with enterprise AI engineering teams",
-      "Participated in architecture discussions and platform development",
+      "Built backend services and REST endpoints for registering and running external agents",
+      "Connected outside frameworks like LangChain and CrewAI to Orchestrate's agent runtime",
+      "Worked across the Python and TypeScript codebase with the platform team",
     ],
     tech: [
       "Python",
@@ -59,11 +56,11 @@ export const experience: ExperienceItem[] = [
     period: "May 2025 — July 2025",
     type: "software",
     description:
-      "Designed and developed an AI-powered advisor platform enabling lifelike interactions and backend integration, deployed on cloud infrastructure with enhanced document search.",
+      "I built an advisor app where people talk to a video avatar instead of reading through documents. The avatar streamed through HeyGen over WebRTC; behind it, a Flask and Node backend answered questions from a ChromaDB + AWS Bedrock retrieval pipeline, all running on Google Cloud.",
     highlights: [
-      "Built scalable APIs and backend services",
-      "Integrated AWS Bedrock and ChromaDB",
-      "Implemented retrieval-augmented document parsing",
+      "Streamed a HeyGen avatar over WebRTC so the advisor answered in real time",
+      "Built the document-Q&A pipeline: ChromaDB vector search into AWS Bedrock, wired together with LangGraph",
+      "Set up the Flask/Node APIs and CI/CD to ship it on Google Cloud",
     ],
     tech: [
       "React.js",

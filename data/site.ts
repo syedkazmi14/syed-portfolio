@@ -7,9 +7,10 @@ export const siteConfig = {
   name: "Syed Kazmi",
   shortName: "Syed",
   role: "Software Engineer",
-  headline: "Software Engineer building AI-powered full-stack systems.",
+  headline:
+    "I build backend systems and the full-stack products around them — currently working on agent orchestration at IBM.",
   subheadline:
-    "Computer Science student at UT Dallas graduating Fall 2026. Focused on AI applications, backend systems, cloud infrastructure, and polished full-stack products.",
+    "CS student at UT Dallas, graduating Fall 2026. Most of what I build starts as a backend problem — moving data around, making an API reliable, getting async work to behave — and ends as something you can click.",
   location: "Austin, Texas",
   url: "https://syedk.dev", // placeholder — used for SEO metadata
   links: {
