@@ -34,7 +34,7 @@ export function AboutIntro() {
             }}
           >
             <Image
-              src="/photos/syedheadshot.png"
+              src="/photos/syedheadshot.webp"
               alt="Syed Kazmi"
               fill
               sizes="96px"

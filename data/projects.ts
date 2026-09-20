@@ -5,7 +5,7 @@ import type { Project } from "@/lib/types";
  *
  * Each project has a Problem / Solution framing for the cards plus a `visual`
  * key that maps to a built-in placeholder illustration in ProjectVisual.tsx.
- * To use a real screenshot instead, set `image: "/projects/<file>.png"`.
+ * To use a real screenshot instead, set `image: "/projects/<file>.webp"`.
  * Add repo/demo links via the optional `links` array.
  */
 export const projects: Project[] = [
@@ -36,7 +36,7 @@ export const projects: Project[] = [
     accent: "neon",
     featured: true,
     visual: "map",
-    image: "/projects/blue-relief.png",
+    image: "/projects/blue-relief.webp",
     // links: [{ label: "View Code", href: "https://github.com/..." }],
   },
   {
@@ -54,7 +54,7 @@ export const projects: Project[] = [
     featured: true,
     badge: "🏆 1st Place · Axxess AI Track",
     visual: "pose",
-    image: "/projects/telekinetics.png",
+    image: "/projects/telekinetics.webp",
   },
   {
     id: "guardiangram",
@@ -79,7 +79,7 @@ export const projects: Project[] = [
     featured: true,
     badge: "People's Choice Award",
     visual: "shield",
-    image: "/projects/guardiangram.png",
+    image: "/projects/guardiangram.webp",
   },
   {
     id: "witchwatch",
@@ -105,7 +105,7 @@ export const projects: Project[] = [
     accent: "heat",
     badge: "HackUTD 2025",
     visual: "tank",
-    image: "/projects/witchwatch.png",
+    image: "/projects/witchwatch.webp",
   },
   {
     id: "trashtrends",
@@ -120,7 +120,7 @@ export const projects: Project[] = [
     tech: ["Python", "C++", "ROS", "Docker", "Computer Vision"],
     accent: "mint",
     visual: "heatmap",
-    image: "/projects/trashtrends.png",
+    image: "/projects/trashtrends.webp",
   },
   {
     id: "ecodrive",
@@ -135,7 +135,7 @@ export const projects: Project[] = [
     tech: ["Next.js", "MongoDB", "Arduino", "REST API", "Data Visualization"],
     accent: "neon",
     visual: "gauge",
-    image: "/projects/ecodrive.png",
+    image: "/projects/ecodrive.webp",
   },
   {
     id: "hbs-cv",
@@ -150,7 +150,7 @@ export const projects: Project[] = [
     tech: ["Machine Learning", "MATLAB", "Python", "YOLOv8", "Computer Vision"],
     accent: "iris",
     visual: "detect",
-    image: "/projects/hbs-cv.png",
+    image: "/projects/hbs-cv.webp",
   },
   {
     id: "fps",
@@ -165,7 +165,7 @@ export const projects: Project[] = [
     tech: ["C++", "Unreal Engine", "Blueprint", "UMG", "Chaos Physics"],
     accent: "heat",
     visual: "fps",
-    image: "/projects/fps.png",
+    image: "/projects/fps.webp",
   },
 ];
 

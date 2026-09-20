@@ -213,7 +213,7 @@ export function CarPhotoSticker({ className }: P) {
       <div style={{ filter: stickerFilter }}>
         <div className="relative" style={{ aspectRatio: "1 / 1" }}>
           <Image
-            src="/photos/sc300.png"
+            src="/photos/sc300.webp"
             alt="'95 Lexus SC300 — the weekend project"
             fill
             sizes="20vw"

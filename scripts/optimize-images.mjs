@@ -1,69 +1,85 @@
 /**
- * Resizes project screenshots that are wider than MAX_WIDTH to exactly
- * MAX_WIDTH pixels wide (maintaining aspect ratio).  Re-encodes PNG at
- * maximum compression; JPEG at high quality with mozjpeg.
+ * Converts every raster image under public/ to WebP, resized to fit the
+ * dimensions it is actually displayed at.
  *
- * Source files in public/projects/ are updated in-place.
- * Files that are already ≤ MAX_WIDTH are left untouched.
+ * The previous version of this script only looked at public/projects, which is
+ * how 285MB of full-resolution (4032x3024) phone photos ended up in public/cats.
+ * It now walks every configured folder so that can't happen again.
  *
- * Run with:  node scripts/optimize-images.mjs
+ * Originals are replaced. They remain recoverable from git history.
+ *
+ * Run with:  npm run optimize:images
  */
 
 import { createRequire } from "node:module";
-import { readdir, rename as renameFile, stat } from "node:fs/promises";
-import { join, extname, dirname } from "node:path";
+import { readdir, stat, unlink } from "node:fs/promises";
+import { join, extname, basename, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
-// sharp ships as a Next.js transitive dep; use createRequire to load CJS module
 const require = createRequire(import.meta.url);
 const sharp = require("sharp");
 
 const __dir = dirname(fileURLToPath(import.meta.url));
-const INPUT_DIR = join(__dir, "..", "public", "projects");
-const MAX_WIDTH = 1600;
+const PUBLIC = join(__dir, "..", "public");
 
-console.log("Optimizing project screenshots…\n");
+/** Per-folder budgets, sized to how each image is actually rendered. */
+const TARGETS = [
+  { dir: "cats", maxWidth: 1400, quality: 80 },
+  { dir: "projects", maxWidth: 1600, quality: 82 },
+  { dir: "photos", maxWidth: 1200, quality: 84 },
+];
 
-const files = await readdir(INPUT_DIR);
+const SOURCE_EXT = [".png", ".jpg", ".jpeg"];
+const kb = (b) => (b / 1024).toFixed(0);
 
-for (const file of files) {
-  const ext = extname(file).toLowerCase();
-  if (![".png", ".jpg", ".jpeg"].includes(ext)) continue;
+let totalBefore = 0;
+let totalAfter = 0;
 
-  const inPath = join(INPUT_DIR, file);
-  const before = (await stat(inPath)).size;
+for (const { dir, maxWidth, quality } of TARGETS) {
+  const inputDir = join(PUBLIC, dir);
 
-  const img = sharp(inPath);
-  const meta = await img.metadata();
-
-  if ((meta.width ?? 0) <= MAX_WIDTH) {
-    console.log(
-      `✓  ${file.padEnd(26)} ${meta.width}×${meta.height}  — already ≤${MAX_WIDTH}px`,
-    );
+  let files;
+  try {
+    files = await readdir(inputDir);
+  } catch {
+    console.log(`—  public/${dir} not found, skipping\n`);
     continue;
   }
 
-  const tmpPath = inPath + ".opt";
+  console.log(`public/${dir}  (max ${maxWidth}px, q${quality})`);
 
-  let pipeline = img.resize(MAX_WIDTH, null, {
-    withoutEnlargement: true,
-    kernel: "lanczos3",
-  });
+  for (const file of files) {
+    const ext = extname(file).toLowerCase();
+    if (!SOURCE_EXT.includes(ext)) continue;
 
-  if (ext === ".png") {
-    pipeline = pipeline.png({ compressionLevel: 9, adaptiveFiltering: true });
-  } else {
-    pipeline = pipeline.jpeg({ quality: 88, mozjpeg: true });
+    const inPath = join(inputDir, file);
+    const outPath = join(inputDir, `${basename(file, ext)}.webp`);
+    const before = (await stat(inPath)).size;
+
+    const img = sharp(inPath);
+    const meta = await img.metadata();
+
+    const info = await img
+      .resize(maxWidth, null, { withoutEnlargement: true, kernel: "lanczos3" })
+      .webp({ quality, effort: 6 })
+      .toFile(outPath);
+
+    await unlink(inPath);
+
+    totalBefore += before;
+    totalAfter += info.size;
+
+    console.log(
+      `   ${file.padEnd(30)} ${meta.width}x${meta.height} -> ${info.width}x${info.height}` +
+        `   ${kb(before)}KB -> ${kb(info.size)}KB`,
+    );
   }
-
-  const info = await pipeline.toFile(tmpPath);
-  await renameFile(tmpPath, inPath);
-
-  const saved = ((before - info.size) / 1024).toFixed(0);
-  console.log(
-    `↓  ${file.padEnd(26)} ${meta.width}×${meta.height} → ${info.width}×${info.height}` +
-      `  (${(info.size / 1024).toFixed(0)}KB, saved ${saved}KB)`,
-  );
+  console.log("");
 }
 
-console.log("\n✓ Done. Rebuild Next.js to pick up the changes.");
+const saved = totalBefore - totalAfter;
+console.log(
+  `Done. ${(totalBefore / 1048576).toFixed(1)}MB -> ${(totalAfter / 1048576).toFixed(1)}MB ` +
+    `(saved ${(saved / 1048576).toFixed(1)}MB, ${((saved / totalBefore) * 100).toFixed(1)}%)`,
+);
+console.log("Remember to update image paths from .png to .webp.");
