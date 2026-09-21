@@ -101,10 +101,11 @@ export function Drawer({
         }`}
         style={{ transitionTimingFunction: "cubic-bezier(0.32, 0.72, 0, 1)" }}
       >
-        {/* dotted inset frame — a small nod to the paper the site is printed on */}
+        {/* A band of the fine jali down the inside edge, like the carved screen
+            it borrows from. Replaces what used to be a plain dotted rule. */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-2 left-2 right-0 border-l border-t border-dotted border-rule opacity-50"
+          className="jali-edge pointer-events-none absolute inset-y-3 left-2 w-3 border-l border-rule"
         />
 
         <header className="relative z-10 flex h-[4.5rem] shrink-0 items-center justify-between gap-4 border-b border-rule px-6">

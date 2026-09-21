@@ -30,12 +30,18 @@ utility for small uppercase mono headings rather than re-specifying it.
   borders (`border-rule`) do the separating. No exceptions — the About photos
   are lifted off the page by translucent tape, not a shadow.
 - **Radius**: `rounded-sm` (2px) on buttons and inputs, `0` on images.
-- **Texture**: the ground is not flat. `body` carries a 4px CSS checkerboard
-  (two 45deg gradients, the second offset half a tile) at ~3.5% alpha, and the
-  header carries a 4px dot screen on `.nav-texture::after`. The dots must stay
-  on a pseudo-element: the header has a `backdrop-filter`, and a background on
-  the header itself would be blurred along with everything behind it. Keep both
-  alphas tiny — this is paper tooth, not a pattern.
+- **Texture**: the ground is not flat. It carries a **jali** lattice — the
+  perforated stone screens of Lahore Fort and the Badshahi Mosque — as one
+  motif at two densities, the way a real screen varies its weave by position:
+  `--jali` at 24px on `body`, `--jali-fine` at 12px on the header and the
+  drawer's edge band. The fine tile is drawn at 12px with thinner strokes, not
+  scaled down from the 24px one, or the strokes go to half-pixel mush.
+  `--jali` bakes its own `stroke-opacity` because a `background-image` on
+  `body` has no opacity of its own; `--jali-fine` is solid ink and its two
+  users set strength on their pseudo-element. The header's texture must stay on
+  a pseudo-element: it has a `backdrop-filter`, and a background on the header
+  itself would be blurred with everything behind it. Keep the alphas tiny —
+  this is texture in the stock, not a pattern.
 - **Imagery**: photographs appear three ways — `HoverTile` (fades a photo in
   behind a row on hover) `SectionBackdrop` (a grayscale, green-tinted wash
   far behind a section) and `PhotoSticker` (a small rotated photo tucked in a
