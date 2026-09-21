@@ -20,9 +20,19 @@ green  #0C4A33   green-deep #0A3A28   green-wash #E9EEE9
 
 ## Type — three families
 
-`font-display` Instrument Serif · `font-sans` Schibsted Grotesk · `font-mono` IBM Plex Mono.
+`font-display` Young Serif · `font-sans` Archivo · `font-mono` Fragment Mono.
 All three load via `next/font/google` in `app/layout.tsx`. Use the `label`
 utility for small uppercase mono headings rather than re-specifying it.
+
+**Young Serif and Fragment Mono are single-weight (400).** Never pair a weight
+class with `font-mono`, and never set italic on `font-display` — either would
+be synthesised by the browser and look wrong. Archivo is variable, so weights
+on body text are fine.
+
+Young Serif also sets appreciably wider than most display serifs: the hero
+scale in `components/Hero.tsx` is tuned to it, and at the previous 5.2rem the
+two-line headline wrapped to four even at 1440px. Re-measure the hero if the
+display face ever changes again.
 
 ## Hard rules
 

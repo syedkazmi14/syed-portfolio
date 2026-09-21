@@ -24,9 +24,9 @@
   --color-green-wash: #e9eee9; /* tint for bands       */
 
   /* type */
-  --font-display: var(--font-instrument-serif), Georgia, serif;
-  --font-sans: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --font-display: var(--font-young-serif), Georgia, serif;
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-fragment-mono), ui-monospace, monospace;
 
   /* container */
   --spacing-gutter: 1.5rem;

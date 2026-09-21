@@ -6,6 +6,12 @@ import { Saturn } from "@/components/marginalia";
 
 const { name, location, education, links } = siteConfig;
 
+/*
+ * The type scale here is tuned to Young Serif, which sets appreciably wider
+ * than the previous display face: at the old 5.2rem the two-line headline
+ * wrapped to four even at 1440px. Re-measure this if the display face changes
+ * again.
+ */
 /**
  * Deliberately short. The hero states who he is and what he does; everything
  * else — the IBM detail, the backend/cloud/agents positioning — lives in the
@@ -21,7 +27,7 @@ export function Hero() {
           {location} &nbsp;·&nbsp; Graduating {education.graduating}
         </p>
 
-        <h1 className="mt-7 max-w-3xl font-display text-[2.9rem] font-normal leading-[1.06] tracking-[-0.015em] sm:text-6xl lg:text-[5.2rem]">
+        <h1 className="mt-7 max-w-4xl font-display text-[2.35rem] font-normal leading-[1.08] tracking-[-0.015em] sm:text-5xl lg:text-[4.1rem]">
           Hi, I&rsquo;m <span className="text-green">{name}</span>,
           <br />a software developer.
         </h1>

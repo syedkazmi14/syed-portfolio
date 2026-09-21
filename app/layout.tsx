@@ -1,28 +1,30 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Serif, Schibsted_Grotesk, IBM_Plex_Mono } from "next/font/google";
+import { Young_Serif, Archivo, Fragment_Mono } from "next/font/google";
 import { siteConfig } from "@/data/site";
 import { CursorLabel } from "@/components/CursorLabel";
 import { ScrollMemory } from "@/components/ScrollMemory";
 import "./globals.css";
 
-const display = Instrument_Serif({
-  variable: "--font-instrument-serif",
+// Young Serif and Fragment Mono are single-weight faces. Nothing in the app
+// pairs a weight class with `font-mono` or sets italic on the display face, so
+// neither ever gets synthesised.
+const display = Young_Serif({
+  variable: "--font-young-serif",
   subsets: ["latin"],
   weight: "400",
-  style: ["normal", "italic"],
   display: "swap",
 });
 
-const sans = Schibsted_Grotesk({
-  variable: "--font-schibsted",
+const sans = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
   display: "swap",
 });
 
-const mono = IBM_Plex_Mono({
-  variable: "--font-plex-mono",
+const mono = Fragment_Mono({
+  variable: "--font-fragment-mono",
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: "400",
   display: "swap",
 });
 
