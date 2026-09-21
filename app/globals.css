@@ -50,6 +50,10 @@
      * strokes rather than scaled down from the 24px one — squashing it would
      * turn the 1px strokes to half-pixel mush.
      *
+     * --jali-bold is the same motif again at 48px in green, for the band that
+     * closes the page: the screen you have been looking through all the way
+     * down finally becomes the thing you are looking at.
+     *
      * --jali carries its own stroke-opacity because it is painted straight
      * onto body, where background-image has no opacity of its own.
      * --jali-fine is solid ink: both of its uses sit on a pseudo-element and
@@ -58,6 +62,7 @@
      * Both are tiled SVG data URIs: no request, no DOM.
      */
     --jali: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cg fill='none' stroke='%2314201A' stroke-opacity='0.05' stroke-width='1'%3E%3Cpath d='M0 0L24 24M24 0L0 24'/%3E%3Crect x='8' y='8' width='8' height='8' transform='rotate(45 12 12)'/%3E%3Crect x='-4' y='-4' width='8' height='8' transform='rotate(45 0 0)'/%3E%3Crect x='20' y='-4' width='8' height='8' transform='rotate(45 24 0)'/%3E%3Crect x='-4' y='20' width='8' height='8' transform='rotate(45 0 24)'/%3E%3Crect x='20' y='20' width='8' height='8' transform='rotate(45 24 24)'/%3E%3C/g%3E%3C/svg%3E");
+    --jali-bold: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cg fill='none' stroke='%230C4A33' stroke-width='1.6'%3E%3Cpath d='M0 0L48 48M48 0L0 48'/%3E%3Crect x='16' y='16' width='16' height='16' transform='rotate(45 24 24)'/%3E%3Crect x='-8' y='-8' width='16' height='16' transform='rotate(45 0 0)'/%3E%3Crect x='40' y='-8' width='16' height='16' transform='rotate(45 48 0)'/%3E%3Crect x='-8' y='40' width='16' height='16' transform='rotate(45 0 48)'/%3E%3Crect x='40' y='40' width='16' height='16' transform='rotate(45 48 48)'/%3E%3C/g%3E%3C/svg%3E");
     --jali-fine: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cg fill='none' stroke='%2314201A' stroke-width='0.75'%3E%3Cpath d='M0 0L12 12M12 0L0 12'/%3E%3Crect x='4' y='4' width='4' height='4' transform='rotate(45 6 6)'/%3E%3Crect x='-2' y='-2' width='4' height='4' transform='rotate(45 0 0)'/%3E%3Crect x='10' y='-2' width='4' height='4' transform='rotate(45 12 0)'/%3E%3Crect x='-2' y='10' width='4' height='4' transform='rotate(45 0 12)'/%3E%3Crect x='10' y='10' width='4' height='4' transform='rotate(45 12 12)'/%3E%3C/g%3E%3C/svg%3E");
   }
 
@@ -275,4 +280,20 @@
   [aria-disabled="true"] {
     cursor: not-allowed;
   }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Footer band — the jali comes up to strength                        */
+/*                                                                     */
+/*  Sits below the whole footer, including the colophon row. Masked so  */
+/*  it fades in from nothing at the top: the lattice arrives rather     */
+/*  than starting abruptly. Its own element so the closing photo on top */
+/*  is not dimmed with it.                                              */
+/* ------------------------------------------------------------------ */
+.jali-resolve {
+  background-image: var(--jali-bold);
+  background-size: 48px 48px;
+  opacity: 0.26;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 62%);
+  mask-image: linear-gradient(to bottom, transparent, #000 62%);
 }

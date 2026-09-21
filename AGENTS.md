@@ -46,6 +46,8 @@ display face ever changes again.
   `--jali` at 24px on `body`, `--jali-fine` at 12px on the header and the
   drawer's edge band. The fine tile is drawn at 12px with thinner strokes, not
   scaled down from the 24px one, or the strokes go to half-pixel mush.
+  `--jali-bold` is the same motif at 48px in green, used by `.jali-resolve`
+  for the band that closes the page below the footer's colophon.
   `--jali` bakes its own `stroke-opacity` because a `background-image` on
   `body` has no opacity of its own; `--jali-fine` is solid ink and its two
   users set strength on their pseudo-element. The header's texture must stay on
@@ -118,6 +120,11 @@ served CSS before debugging the rule — Turbopack has served a stale stylesheet
 more than once in this project. `rm -rf .next` and restart. Lightning CSS also
 rewrites colours (`rgba(20,32,26,0.035)` becomes `#14201a09`), so grep the
 compiled output by shape, not by the literal colour you wrote.
+
+The footer's closing photo slot (`siteConfig.footerPhoto`) is
+**height-constrained, not width-constrained**, so it accepts any aspect Syed
+drops in. Give it real intrinsic `width`/`height` — the first attempt used a
+portrait photo with 4:3 dimensions hardcoded and it overflowed the band.
 
 ## The logo mark
 
