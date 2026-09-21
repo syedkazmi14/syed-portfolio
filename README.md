@@ -1,192 +1,68 @@
-# Syed's Workshop — Interactive Portfolio
+# syedk.dev
 
-An interactive portfolio for **Syed Kazmi** built like a video-game **level-select
-screen**. The homepage is _only_ the workshop — a full-viewport scene where every
-object is a **portal**. Clicking an object **zooms into it** and navigates to its
-own dedicated, themed page. On mobile the scene becomes a tap-friendly card grid.
-
-```
-Monitor           → /projects     (software projects + software experience)
-Whiteboard        → /research      (research & AI work)
-Soldering Station → /hardware      (hardware + IT experience & builds)
-Trophy Shelf      → /awards         (awards & recognition)
-Toolbox           → /skills         (skills & stack)
-Desk Phone        → /contact        (about + contact form)
-```
-
-The hub is the world; the pages are the destinations. Each page has a themed
-design, detailed content, and a **Back to Workshop** button.
+Personal portfolio for **Syed Kazmi** — a light, typography-led editorial site.
 
 **Stack:** Next.js 16 (App Router, Turbopack) · TypeScript · Tailwind CSS v4 ·
-Framer Motion · Radix Dialog · lucide-react. All artwork is custom SVG/CSS — no
-image assets or paid licenses required.
-
----
-
-## 1. How to run it
+five runtime dependencies.
 
 ```bash
-npm install      # install dependencies
-npm run dev      # start the dev server  → http://localhost:3000
+npm install
+npm run dev          # http://localhost:3000
+npm run build        # production build; every route is prerendered
+npm run lint
+npx playwright test  # horizontal-overflow guard, 320/360/390/768px
+npm run optimize:images
 ```
 
-Other scripts:
+## Routes
 
-```bash
-npm run build    # production build (every route is statically prerendered)
-npm start        # serve the production build
-npm run lint     # eslint
+```
+/                 hero · selected work · experience · about · stack · contact
+/work             all eight projects
+/work/[slug]      one page per project (problem / solution / stack / links)
+/cats             easter egg — reachable only via the cat drawing in About
 ```
 
-Requires Node 20.9+ (built and tested on Node 26).
+Old routes (`/projects`, `/research`, `/hardware`, `/awards`, `/skills`,
+`/contact`) permanently redirect via `next.config.ts`.
 
----
+## Editing content
 
-## 2. Where to update your links
-
-All personal links live in one place: **[`data/site.ts`](data/site.ts)** — the
-`links` object (`github`, `linkedin`, `email`, `emailPlain`, `resume`). They feed
-the hub header, every page footer, and the contact page automatically.
-
-**Resume:** the Resume button points to `/resume.pdf`. Drop your file at
-`public/resume.pdf`, or set `resume` to an external URL.
-
-**Content** lives in plain TypeScript data files:
+Everything is in `data/` — no content is hardcoded in components.
 
 | File | Controls |
 | --- | --- |
-| [`data/site.ts`](data/site.ts) | Name, headline, links |
-| [`data/projects.ts`](data/projects.ts) | Projects (problem/solution/tech, badges) |
-| [`data/experience.ts`](data/experience.ts) | Roles — `type` decides the page: `software` → /projects, `hardware`/`it` → /hardware |
-| [`data/skills.ts`](data/skills.ts) | Skill categories ("toolbox drawers") |
-| [`data/awards.ts`](data/awards.ts) | Awards |
-| [`data/research.ts`](data/research.ts) | Research focus areas + featured research projects |
-| [`data/workshop.ts`](data/workshop.ts) | The 6 portals: labels, captions, **`target` route**, and scene `area` positions |
+| `data/site.ts` | Name, headline, bio, education, portrait photo + caption, links |
+| `data/projects.ts` | The 8 projects. **Repo/demo links go in each project's `links` array** |
+| `data/experience.ts` | Roles, newest first |
+| `data/skills.ts` | Stack groups |
+| `data/awards.ts` | Recognition |
 
-The contact form is **frontend-only** — on submit it shows a success state. To
-make it send, wire `handleSubmit` in
-[`components/ContactPanel.tsx`](components/ContactPanel.tsx) to an API route,
-[Formspree](https://formspree.io), [Resend](https://resend.com), etc.
+**Adding a project link:**
 
----
-
-## 3. Where to replace the placeholder artwork
-
-### Workshop objects (the portals)
-
-Each object is its own SVG component in
-[`components/workshop/`](components/workshop):
-
-```
-MonitorArt.tsx · SolderingArt.tsx · WhiteboardArt.tsx
-TrophyShelfArt.tsx · ToolboxArt.tsx · DeskPhoneArt.tsx
+```ts
+links: [
+  { label: "Repo", href: "https://github.com/syedkazmi14/..." },
+  { label: "Live demo", href: "https://..." },
+],
 ```
 
-Replace the SVG inside any of these (or return an `<img>` / `next/image` — it's
-sized to fill its container). The interactive wrapper, hover glow, tooltip, and
-**zoom transition** are handled separately by
-[`components/WorkshopObject.tsx`](components/WorkshopObject.tsx) +
-[`components/WorkshopHub.tsx`](components/WorkshopHub.tsx). Reposition objects in
-the scene via the `area` percentages in [`data/workshop.ts`](data/workshop.ts).
+An empty array renders nothing, so no placeholder links ever ship.
 
-### Project screenshots (monitor slideshow + cards)
+## Images
 
-The workshop **monitor** runs an auto-rotating slideshow of your projects, and
-the `/projects` cards use the same artwork. Each project already points at
-`image: "/projects/<id>.png"` in [`data/projects.ts`](data/projects.ts) — **drop
-your real screenshots** in [`public/projects/`](public/projects) using the
-filenames listed in that folder's README. Until a file exists,
-[`ProjectVisual.tsx`](components/ProjectVisual.tsx) shows a built-in abstract SVG
-(no broken images), so it looks complete immediately.
+All images are WebP, resized by `scripts/optimize-images.mjs` to per-folder
+budgets (cats 1400px, projects 1600px, photos 1200px). Drop a new file in
+`public/`, run `npm run optimize:images`, and reference the `.webp`.
 
-### Environmental storytelling & easter eggs
+## Design system
 
-The room is full of intentional details (IBM badge, "watsonx / BYO agents" note,
-Infosys "AI Advisor" folder + "Bedrock + ChromaDB", an AI-Track mini-trophy,
-GuardianGram notification, engineering books, cat references). Hidden clicks live
-in [`components/workshop/EasterEgg.tsx`](components/workshop/EasterEgg.tsx) —
-click the **mug**, the **cat** (Louise 🐾), or the sticky note for a surprise;
-hover the **soldering station** for a spark. Edit/add props in
-[`components/workshop/storytelling.tsx`](components/workshop/storytelling.tsx) and
-place them in [`components/WorkshopScene.tsx`](components/WorkshopScene.tsx). The
-SC300 sticker + repair bench live on the `/hardware` page.
+See [`AGENTS.md`](AGENTS.md) — seven colors, three typefaces, one accent, one
+animation. The constraints are the point; read it before adding anything.
 
-### Branding — neon sign, cat mascot & favicon
+## Custom artwork
 
-- **Neon workshop sign** — [`components/NeonSign.tsx`](components/NeonSign.tsx) is
-  the homepage centerpiece. The letters are **not a font** — each glyph is a
-  hand-routed monoline tube path in the `GLYPHS` map, rendered as layered strokes
-  (outer glow → glass tube → white-hot core → traveling shimmer) so it reads as
-  real neon glass. It's mounted on an acrylic backboard with hanging chains +
-  standoffs and casts glow/reflection onto the room. Edit the wording by changing
-  the `buildWord("…")` calls (add glyphs to `GLYPHS` if you use new letters);
-  tune colors via the `neon-title` / `neon-sub` gradients. Subtle flicker /
-  breathe / shimmer come from `.neon-*` classes in
-  [`app/globals.css`](app/globals.css).
-- **Cat mascot** — the animated hacker-cat is
-  [`components/CatMascot.tsx`](components/CatMascot.tsx): a transparent,
-  container-free SVG (hover → blink / ear-twitch / head-tilt / glow). It's the
-  hub avatar, page-chrome icon, and About avatar. To use a real photo on the
-  About page instead, see the commented example in
-  [`AboutSection.tsx`](components/AboutSection.tsx).
-- **Favicon** — a simplified, transparent version of the same cat face. The
-  source is [`app/icon.svg`](app/icon.svg); `app/favicon.ico` +
-  `app/apple-icon.png` are generated from it. After editing the cat, regenerate:
-
-  ```bash
-  npm run gen:icons
-  ```
-
-### Theme / colors
-
-All palette + animation tokens are in [`app/globals.css`](app/globals.css) under
-`@theme` (accents `neon`, `heat`, `mint`, `iris`). Each page's accent is set on
-its `<PageShell accent="…">`.
-
----
-
-## Project structure
-
-```
-app/
-  layout.tsx              # SEO metadata, fonts, <html>/<body>
-  page.tsx                # the workshop HUB (full viewport, no chrome)
-  globals.css             # theme tokens, animations, effect utilities
-  projects/page.tsx       # ┐
-  research/page.tsx       # │ destination pages — each exports its own
-  hardware/page.tsx       # │ <metadata> and renders <PageShell> + content
-  awards/page.tsx         # │
-  skills/page.tsx         # │
-  contact/page.tsx        # ┘
-components/
-  WorkshopHub.tsx         # hub: overlaid header, immersive room, zoom → router.push
-  WorkshopScene.tsx       # WorkshopRoom (desktop diorama) + PortalCardGrid (mobile)
-  WorkshopObject.tsx      # one interactive portal (hover/focus/click + rect)
-  parallax/Parallax.tsx   # mouse-driven 2.5D depth layers (ParallaxStage/Layer)
-  workshop/               # the 6 portal SVGs + room props:
-                          #   Environment (brick wall + workbench), SleepingCat,
-                          #   props.tsx (keyboard, mug, PCBs, sticky notes, …)
-  PageShell.tsx           # themed page chrome: back button, entrance, footer
-  ProjectGrid.tsx ProjectCard.tsx ProjectVisual.tsx
-  ExperienceTimeline.tsx ResearchBoard.tsx AwardsShelf.tsx
-  SkillsToolbox.tsx AboutSection.tsx ContactPanel.tsx
-  effects/                # AmbientBackground, Particles
-  ui/                     # Button, Badge, Modal (Radix), Reveal
-  icons/                  # GitHub / LinkedIn brand glyphs
-data/                     # all content (see table above)
-lib/                      # types, cn() helper, accent class map
-```
-
-### How the zoom transition works
-
-`WorkshopHub` captures the clicked object's on-screen rectangle, expands an
-accent-tinted overlay from that rectangle to fill the viewport, then
-`router.push()`-es to the route. The destination's `PageShell` mounts with a
-matching accent flash that fades out — so it reads as zooming _into_ the object.
-Routes are prefetched on load so it feels instant. Everything respects
-`prefers-reduced-motion` (the zoom is skipped and navigation is immediate).
-
-Accessibility: every portal/card is a real `<button>`, every page link is a real
-`<a>`, the project modal traps focus and closes on Esc, and animations respect
-reduced-motion.
-```
+`components/marginalia.tsx` holds the margin drawings (Saturn, the SC300, a
+cat, a sauropod). These are **placeholders** — replace each with a real drawing
+exported as SVG using `fill="none" stroke="currentColor"`, keeping the same
+props signature, and color and sizing follow automatically.

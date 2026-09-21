@@ -6,11 +6,10 @@ export const experience: ExperienceItem[] = [
     id: "ibm",
     company: "IBM",
     role: "Software Engineering Intern",
-    period: "May 2026 — Present",
+    period: "May 2026 — August 2026",
     type: "software",
-    current: true,
     description:
-      "I work on watsonx Orchestrate, IBM's platform for building and running AI agents. My focus is the Bring Your Own Agent path — letting teams register agents they built in frameworks like LangChain or CrewAI and run them inside Orchestrate next to IBM's own.",
+      "I worked on watsonx Orchestrate, IBM's platform for building and running AI agents. My focus was the Bring Your Own Agent path — letting teams register agents they built in frameworks like LangChain or CrewAI and run them inside Orchestrate next to IBM's own.",
     highlights: [
       "Built backend services and REST endpoints for registering and running external agents",
       "Connected outside frameworks like LangChain and CrewAI to Orchestrate's agent runtime",
@@ -35,7 +34,6 @@ export const experience: ExperienceItem[] = [
     role: "Hardware Technician",
     period: "August 2025 — May 2026",
     type: "hardware",
-    current: false,
     description:
       "Diagnose and repair consumer electronics and laptops, performing advanced board-level troubleshooting, soldering, and component replacement using precision tools and test equipment.",
     tech: [

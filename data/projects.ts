@@ -3,10 +3,12 @@ import type { Project } from "@/lib/types";
 /**
  * Software projects.
  *
- * Each project has a Problem / Solution framing for the cards plus a `visual`
- * key that maps to a built-in placeholder illustration in ProjectVisual.tsx.
- * To use a real screenshot instead, set `image: "/projects/<file>.webp"`.
- * Add repo/demo links via the optional `links` array.
+ * Each project has a Problem / Solution framing used on its detail page at
+ * /work/<id>, plus a screenshot at `image`.
+ * Repo / demo links go in the `links` array on each project, e.g.
+ *   links: [{ label: "Repo", href: "https://github.com/..." },
+ *           { label: "Live demo", href: "https://..." }]
+ * An empty array renders nothing — no broken or placeholder links ship.
  */
 export const projects: Project[] = [
   {
@@ -33,11 +35,9 @@ export const projects: Project[] = [
       "Celery",
       "TailwindCSS",
     ],
-    accent: "neon",
     featured: true,
-    visual: "map",
     image: "/projects/blue-relief.webp",
-    // links: [{ label: "View Code", href: "https://github.com/..." }],
+    links: [],
   },
   {
     id: "telekinetics",
@@ -50,11 +50,10 @@ export const projects: Project[] = [
     solution:
       "An AI app that runs pose estimation (PoseNet / MoveNet) on live movement, scores form against target ranges, and surfaces real-time corrective feedback — built and shipped in a hackathon weekend.",
     tech: ["Python", "TensorFlow", "PoseNet", "MoveNet", "Machine Learning"],
-    accent: "mint",
     featured: true,
-    badge: "🏆 1st Place · Axxess AI Track",
-    visual: "pose",
+    badge: "1st Place · Axxess AI Track",
     image: "/projects/telekinetics.webp",
+    links: [],
   },
   {
     id: "guardiangram",
@@ -75,11 +74,10 @@ export const projects: Project[] = [
       "Tailwind CSS",
       "Git",
     ],
-    accent: "iris",
     featured: true,
     badge: "People's Choice Award",
-    visual: "shield",
     image: "/projects/guardiangram.webp",
+    links: [],
   },
   {
     id: "witchwatch",
@@ -102,10 +100,9 @@ export const projects: Project[] = [
       "Serial Communication",
       "EOG API",
     ],
-    accent: "heat",
     badge: "HackUTD 2025",
-    visual: "tank",
     image: "/projects/witchwatch.webp",
+    links: [],
   },
   {
     id: "trashtrends",
@@ -118,9 +115,8 @@ export const projects: Project[] = [
     solution:
       "A cloud backend that ingests drone video, runs computer-vision workflows on the frames, and renders GIS heatmaps that reveal where litter concentrates.",
     tech: ["Python", "C++", "ROS", "Docker", "Computer Vision"],
-    accent: "mint",
-    visual: "heatmap",
     image: "/projects/trashtrends.webp",
+    links: [],
   },
   {
     id: "ecodrive",
@@ -133,9 +129,8 @@ export const projects: Project[] = [
     solution:
       "A vehicle data platform that reads OBD data via an Arduino bridge, exposes it through a REST API, and visualizes fuel-economy trends in a Next.js dashboard.",
     tech: ["Next.js", "MongoDB", "Arduino", "REST API", "Data Visualization"],
-    accent: "neon",
-    visual: "gauge",
     image: "/projects/ecodrive.webp",
+    links: [],
   },
   {
     id: "hbs-cv",
@@ -148,9 +143,8 @@ export const projects: Project[] = [
     solution:
       "A computer-vision pipeline using YOLOv8 and Python (with MATLAB for analysis) trained to detect TCP coils accurately and repeatably.",
     tech: ["Machine Learning", "MATLAB", "Python", "YOLOv8", "Computer Vision"],
-    accent: "iris",
-    visual: "detect",
     image: "/projects/hbs-cv.webp",
+    links: [],
   },
   {
     id: "fps",
@@ -163,9 +157,8 @@ export const projects: Project[] = [
     solution:
       "A playable first-person shooter in Unreal Engine 5 combining Blueprint and C++ — destructible environments via Chaos Physics, a UMG-driven HUD, and responsive gameplay systems.",
     tech: ["C++", "Unreal Engine", "Blueprint", "UMG", "Chaos Physics"],
-    accent: "heat",
-    visual: "fps",
     image: "/projects/fps.webp",
+    links: [],
   },
 ];
 

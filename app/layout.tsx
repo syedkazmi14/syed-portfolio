@@ -1,38 +1,49 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Instrument_Serif, Schibsted_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import { siteConfig } from "@/data/site";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const display = Instrument_Serif({
+  variable: "--font-instrument-serif",
   subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const sans = Schibsted_Grotesk({
+  variable: "--font-schibsted",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const description = `${siteConfig.name} — ${siteConfig.headline} ${siteConfig.subheadline}`;
+const mono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
+});
+
+const { headline, intro, name, role, education } = siteConfig;
+const plainHeadline = `${headline.lead} ${headline.accent} ${headline.trail}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — Software Engineer`,
-    template: `%s · ${siteConfig.name}`,
+    default: `${name} — ${role}`,
+    template: `%s · ${name}`,
   },
-  description,
-  applicationName: `${siteConfig.name} · Workshop`,
-  authors: [{ name: siteConfig.name, url: siteConfig.url }],
-  creator: siteConfig.name,
+  description: intro,
+  authors: [{ name, url: siteConfig.url }],
+  creator: name,
   keywords: [
     "Syed Kazmi",
-    "Software Engineer",
-    "AI Engineer",
+    "Software Developer",
+    "Backend Engineer",
+    "Cloud",
+    "AI Agents",
     "Full-Stack Developer",
-    "Machine Learning",
-    "Computer Vision",
-    "UT Dallas",
+    education.shortSchool,
     "Next.js",
     "Portfolio",
   ],
@@ -40,37 +51,53 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: siteConfig.url,
-    title: `${siteConfig.name} — Software Engineer`,
-    description: siteConfig.headline,
-    siteName: `${siteConfig.name} · Workshop`,
+    title: `${name} — ${role}`,
+    description: plainHeadline,
+    siteName: name,
+    locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} — Software Engineer`,
-    description: siteConfig.headline,
+    title: `${name} — ${role}`,
+    description: plainHeadline,
   },
   robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#06070d",
-  colorScheme: "dark",
+  themeColor: "#f4f2ea",
+  colorScheme: "light",
   width: "device-width",
   initialScale: 1,
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      // The inline script below adds data-js to this element before React
+      // hydrates, which React would otherwise report as a mismatch. Same
+      // pattern the theming libraries use for their no-flash scripts.
+      suppressHydrationWarning
+      className={`${display.variable} ${sans.variable} ${mono.variable} h-full`}
     >
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        {/*
+          Marks the document as scripted before anything below it paints, so the
+          scroll-reveal styles in globals.css can safely hide content knowing JS
+          is there to bring it back. Without JS the attribute is never set and
+          everything renders visible.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.setAttribute('data-js','')`,
+          }}
+        />
+        {children}
+      </body>
     </html>
   );
 }
