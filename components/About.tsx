@@ -45,7 +45,8 @@ export function About() {
 
         </Reveal>
 
-        <Reveal delay={80}>
+        {/* Photo leads on mobile, sits right of the text from lg up. */}
+        <Reveal delay={80} className="order-first lg:order-none">
           <figure className="max-w-[17rem]">
             {/* Polaroid: even white border, deeper strip at the bottom. */}
             <div className="bg-white p-3 pb-0 shadow-[0_1px_2px_rgba(20,32,26,0.10),0_8px_24px_-12px_rgba(20,32,26,0.28)]">
