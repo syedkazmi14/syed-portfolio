@@ -55,16 +55,6 @@ export const siteConfig = {
     caption: "Austin, Texas",
   },
 
-  /**
-   * A second, wider photo in the About section. Currently the SC300 \u2014 swap
-   * it for anything: a hackathon, a workbench, a trip. Landscape works best.
-   */
-  aboutPhoto: {
-    src: "/photos/sc300.webp",
-    alt: "A 1995 Lexus SC300",
-    caption: "'95 SC300 \u2014 the weekend project",
-  },
-
   url: "https://syedk.dev",
 
   links: {

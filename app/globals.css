@@ -123,3 +123,43 @@
     transform: none;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/*  Avatar — idle blink, plus a tilt on hover of its parent `group`.   */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: no-preference) {
+  .avatar-eyes {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: avatarBlink 7s infinite;
+  }
+
+  .avatar-tilt,
+  .avatar-hair {
+    transform-box: fill-box;
+    transform-origin: bottom center;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .group:hover .avatar-tilt,
+  .group:focus-visible .avatar-tilt {
+    transform: rotate(-5deg);
+  }
+
+  .group:hover .avatar-hair,
+  .group:focus-visible .avatar-hair {
+    transform: translateY(-1.2px) scaleY(1.06);
+  }
+}
+
+@keyframes avatarBlink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  94%,
+  96% {
+    transform: scaleY(0.12);
+  }
+}

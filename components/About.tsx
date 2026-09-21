@@ -4,7 +4,7 @@ import { siteConfig } from "@/data/site";
 import { Reveal } from "@/components/Reveal";
 import { Cat, Coupe } from "@/components/marginalia";
 
-const { bio, portrait, aboutPhoto, education, location } = siteConfig;
+const { bio, portrait, education, location } = siteConfig;
 
 /**
  * About — the first section after the hero.
@@ -45,21 +45,6 @@ export function About() {
             </div>
           </dl>
 
-          {/* Wide photo. Landscape; swap freely in data/site.ts. */}
-          <figure className="mt-10 max-w-xl">
-            <div className="relative aspect-[3/2] overflow-hidden border border-rule bg-rule-soft">
-              <Image
-                src={aboutPhoto.src}
-                alt={aboutPhoto.alt}
-                fill
-                sizes="(max-width: 1024px) 100vw, 36rem"
-                className="object-cover"
-              />
-            </div>
-            <figcaption className="mt-2.5 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-faint">
-              {aboutPhoto.caption}
-            </figcaption>
-          </figure>
         </Reveal>
 
         <Reveal delay={80}>

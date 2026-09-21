@@ -8,6 +8,7 @@ import { ExperienceList } from "@/components/ExperienceList";
 import { Credentials } from "@/components/Credentials";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
+import { SectionBackdrop } from "@/components/SectionBackdrop";
 
 export default function Home() {
   return (
@@ -38,10 +39,18 @@ export default function Home() {
           <WorkIndex projects={featuredProjects} className="mt-4" />
         </section>
 
+        {/* The car and the cats carry the personality now that the written
+            "off the clock" block is gone — see SectionBackdrop. */}
         <section
           id="experience"
-          className="mx-auto mt-24 w-full max-w-6xl px-6 sm:mt-32 sm:px-12"
+          className="relative isolate mx-auto mt-24 w-full max-w-6xl px-6 py-16 sm:mt-32 sm:px-12"
         >
+          <SectionBackdrop
+            src="/photos/sc300.webp"
+            opacity={0.16}
+            position="right center"
+            fit="contain"
+          />
           <Reveal>
             <h2 className="label">Experience</h2>
           </Reveal>
@@ -50,7 +59,12 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="mt-24 sm:mt-32">
+        <div className="relative isolate mt-24 py-16 sm:mt-32">
+          <SectionBackdrop
+            src="/cats/baileyandlouiseloafed2.webp"
+            opacity={0.15}
+            position="56% 54%"
+          />
           <Credentials />
         </div>
       </main>

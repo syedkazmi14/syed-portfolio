@@ -30,9 +30,14 @@ utility for small uppercase mono headings rather than re-specifying it.
   borders (`border-rule`) do the separating. The one exception is the polaroid
   in `About.tsx`.
 - **Radius**: `rounded-sm` (2px) on buttons and inputs, `0` on images.
-- **Motion**: three effects, all cheap — the scroll reveal
-  (`components/Reveal.tsx`), the nav's scroll-progress bar, and the hover photo
-  in `components/HoverTile.tsx`. Do not add more, and do not add an animation
+- **Imagery**: photographs appear two ways — `HoverTile` (fades a photo in
+  behind a row on hover) and `SectionBackdrop` (a grayscale, green-tinted wash
+  far behind a section). Both are `aria-hidden` and purely atmospheric. Keep
+  backdrop opacity at or below ~0.18 or body copy starts to suffer, and use
+  `fit="contain"` for die-cut cutouts with transparent backgrounds.
+- **Motion**: four effects, all cheap — the scroll reveal
+  (`components/Reveal.tsx`), the nav's scroll-progress bar, the hover photo
+  in `components/HoverTile.tsx`, and the avatar's blink/tilt. Do not add more, and do not add an animation
   library. Motion is never load-bearing: content is visible by default and the
   reveal's hide styles are scoped behind `[data-js]`, so a page is never blank
   when scripting fails.
@@ -47,6 +52,14 @@ utility for small uppercase mono headings rather than re-specifying it.
   `scripts/optimize-images.mjs`. Run `npm run optimize:images` after adding any
   image, and add new folders to that script's `TARGETS`. Never commit a
   straight-from-camera file.
+
+## The avatar
+
+`components/Avatar.tsx` is an original monoline drawing (messy spiky hair,
+goatee, no glasses) used as the nav mark. `app/icon.svg` is a simplified solid
+version of the same face for the favicon — line work turns to mush at 16px.
+After editing either, run `npm run gen:icons` to rebuild `favicon.ico` and
+`apple-icon.png`.
 
 ## Content rules
 

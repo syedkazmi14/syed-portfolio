@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { siteConfig, navItems } from "@/data/site";
+import { Avatar } from "@/components/Avatar";
 
 /**
  * Fixed site header with a scroll-progress hairline along its bottom edge.
@@ -69,12 +70,7 @@ export function Nav() {
             className="group flex shrink-0 items-center gap-2.5"
             aria-label={`${siteConfig.name} — home`}
           >
-            <span
-              aria-hidden
-              className="grid h-7 w-7 place-items-center rounded-full bg-green font-display text-[0.95rem] leading-none text-ground"
-            >
-              S
-            </span>
+            <Avatar className="h-9 w-9 shrink-0 text-green" />
             <span className="hidden font-mono text-xs uppercase tracking-[0.1em] text-ink sm:inline">
               {siteConfig.name}
             </span>
