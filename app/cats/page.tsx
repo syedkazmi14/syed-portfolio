@@ -58,7 +58,7 @@ export default function CatsPage() {
   return (
     <>
       <Nav />
-      <main className="mx-auto w-full max-w-6xl px-6 pt-16 sm:px-12 sm:pt-20">
+      <main className="mx-auto w-full max-w-6xl px-6 pt-32 sm:px-12 sm:pt-40">
         <Reveal>
           <Link
             href="/#about"

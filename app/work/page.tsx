@@ -16,7 +16,7 @@ export default function WorkPage() {
   return (
     <>
       <Nav />
-      <main className="mx-auto w-full max-w-6xl px-6 pt-20 sm:px-12 sm:pt-28">
+      <main className="mx-auto w-full max-w-6xl px-6 pt-36 sm:px-12 sm:pt-44">
         <Reveal>
           <h1 className="max-w-3xl font-display text-[2.75rem] leading-[1.06] tracking-[-0.015em] sm:text-6xl">
             Work

@@ -2,9 +2,9 @@ import Link from "next/link";
 import { featuredProjects } from "@/data/projects";
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
+import { About } from "@/components/About";
 import { WorkIndex } from "@/components/WorkIndex";
 import { ExperienceList } from "@/components/ExperienceList";
-import { About } from "@/components/About";
 import { Credentials } from "@/components/Credentials";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
@@ -16,7 +16,15 @@ export default function Home() {
       <main>
         <Hero />
 
-        <section id="work" className="mx-auto mt-28 w-full max-w-6xl px-6 sm:mt-40 sm:px-12">
+        {/* About leads: who he is comes before what he shipped. */}
+        <div className="mt-20 sm:mt-24">
+          <About />
+        </div>
+
+        <section
+          id="work"
+          className="mx-auto mt-24 w-full max-w-6xl px-6 sm:mt-32 sm:px-12"
+        >
           <Reveal className="flex items-baseline justify-between gap-6 pb-2">
             <h2 className="label">Selected work</h2>
             <Link
@@ -41,10 +49,6 @@ export default function Home() {
             <ExperienceList />
           </div>
         </section>
-
-        <div className="mt-24 sm:mt-32">
-          <About />
-        </div>
 
         <div className="mt-24 sm:mt-32">
           <Credentials />

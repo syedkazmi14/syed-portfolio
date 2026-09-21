@@ -4,14 +4,13 @@ import { siteConfig } from "@/data/site";
 import { Reveal } from "@/components/Reveal";
 import { Cat, Coupe } from "@/components/marginalia";
 
-const { bio, portrait, education, location } = siteConfig;
+const { bio, portrait, aboutPhoto, education, location } = siteConfig;
 
 /**
- * About: a short factual bio and one photograph.
+ * About — the first section after the hero.
  *
- * There is deliberately no written "interests" list. Personality comes through
- * the pictures and their captions — see the portrait caption and the cat
- * easter egg — rather than a paragraph enumerating hobbies.
+ * There is deliberately no written list of interests. Personality comes from
+ * the photographs and their captions, and from the cat easter egg.
  */
 export function About() {
   return (
@@ -45,6 +44,22 @@ export function About() {
               <dd className="mt-1.5 text-[0.97rem] text-ink">{location}</dd>
             </div>
           </dl>
+
+          {/* Wide photo. Landscape; swap freely in data/site.ts. */}
+          <figure className="mt-10 max-w-xl">
+            <div className="relative aspect-[3/2] overflow-hidden border border-rule bg-rule-soft">
+              <Image
+                src={aboutPhoto.src}
+                alt={aboutPhoto.alt}
+                fill
+                sizes="(max-width: 1024px) 100vw, 36rem"
+                className="object-cover"
+              />
+            </div>
+            <figcaption className="mt-2.5 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-faint">
+              {aboutPhoto.caption}
+            </figcaption>
+          </figure>
         </Reveal>
 
         <Reveal delay={80}>
@@ -56,7 +71,7 @@ export function About() {
                   src={portrait.src}
                   alt={portrait.alt}
                   fill
-                  sizes="(max-width: 1024px) 17rem, 17rem"
+                  sizes="17rem"
                   className="object-cover"
                 />
               </div>

@@ -39,6 +39,11 @@ export interface ExperienceItem {
   description: string;
   highlights?: string[];
   tech: string[];
+  /**
+   * Optional photo or logo, revealed faintly behind the row on hover.
+   * Put files in public/experience/ and run `npm run optimize:images`.
+   */
+  image?: string;
 }
 
 export interface SkillCategory {

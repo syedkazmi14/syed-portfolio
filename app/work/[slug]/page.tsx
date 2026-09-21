@@ -42,7 +42,7 @@ export default async function ProjectPage({ params }: Params) {
   return (
     <>
       <Nav />
-      <main className="mx-auto w-full max-w-4xl px-6 pt-16 sm:px-12 sm:pt-20">
+      <main className="mx-auto w-full max-w-4xl px-6 pt-32 sm:px-12 sm:pt-40">
         <Reveal>
           <Link
             href="/work"

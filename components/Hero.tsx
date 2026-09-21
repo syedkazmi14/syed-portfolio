@@ -4,32 +4,29 @@ import { Reveal } from "@/components/Reveal";
 import { ArrowRight } from "@/components/icons";
 import { Saturn } from "@/components/marginalia";
 
-const { headline, intro, location, education, links } = siteConfig;
+const { name, location, education, links } = siteConfig;
 
+/**
+ * Deliberately short. The hero states who he is and what he does; everything
+ * else — the IBM detail, the backend/cloud/agents positioning — lives in the
+ * About section directly below it.
+ */
 export function Hero() {
   return (
-    <section className="relative mx-auto w-full max-w-6xl px-6 pt-24 sm:px-12 sm:pt-32">
-      {/* Margin drawing — placeholder until Syed's own artwork lands. */}
-      <Saturn className="pointer-events-none absolute right-6 top-28 hidden h-28 w-28 text-green/70 sm:right-12 sm:top-36 lg:block" />
+    <section className="relative mx-auto w-full max-w-6xl px-6 pb-4 pt-36 sm:px-12 sm:pt-44">
+      <Saturn className="pointer-events-none absolute right-6 top-40 hidden h-28 w-28 text-green/70 sm:right-12 lg:block" />
 
       <Reveal>
         <p className="label">
           {location} &nbsp;·&nbsp; Graduating {education.graduating}
         </p>
 
-        <h1 className="mt-7 max-w-4xl font-display text-[2.75rem] font-normal leading-[1.06] tracking-[-0.015em] sm:text-6xl lg:text-[4.9rem]">
-          {headline.lead}
-          <br />
-          <span className="text-green">{headline.accent}</span>
-          <br />
-          {headline.trail}
+        <h1 className="mt-7 max-w-3xl font-display text-[2.9rem] font-normal leading-[1.06] tracking-[-0.015em] sm:text-6xl lg:text-[5.2rem]">
+          Hi, I&rsquo;m <span className="text-green">{name}</span>,
+          <br />a software developer.
         </h1>
 
-        <p className="mt-8 max-w-xl text-lg leading-relaxed text-body sm:text-xl">
-          {intro}
-        </p>
-
-        <div className="mt-10 flex flex-wrap items-center gap-3">
+        <div className="mt-11 flex flex-wrap items-center gap-3">
           <Link
             href="/work"
             className="inline-flex items-center gap-2.5 rounded-sm bg-green px-6 py-3.5 text-[0.95rem] font-medium text-ground transition-colors hover:bg-green-deep"

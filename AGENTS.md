@@ -30,11 +30,16 @@ utility for small uppercase mono headings rather than re-specifying it.
   borders (`border-rule`) do the separating. The one exception is the polaroid
   in `About.tsx`.
 - **Radius**: `rounded-sm` (2px) on buttons and inputs, `0` on images.
-- **Motion**: the site has exactly one animation — the scroll reveal in
-  `components/Reveal.tsx`. Do not add more, and do not add an animation
-  library. Motion must never be load-bearing: content is visible by default and
-  the hide styles are scoped behind `[data-js]` so a page is never blank when
-  scripting fails.
+- **Motion**: three effects, all cheap — the scroll reveal
+  (`components/Reveal.tsx`), the nav's scroll-progress bar, and the hover photo
+  in `components/HoverTile.tsx`. Do not add more, and do not add an animation
+  library. Motion is never load-bearing: content is visible by default and the
+  reveal's hide styles are scoped behind `[data-js]`, so a page is never blank
+  when scripting fails.
+- **Tailwind v4 gotcha**: `scale-*` utilities set the CSS `scale` property, not
+  `transform`. Mixing them with a JS-written `transform` multiplies the two and
+  silently pins the element at zero — this bit the progress bar. Write the
+  initial transform inline instead.
 - **Dependencies**: five runtime deps. `framer-motion`, `lucide-react`, and
   `@radix-ui/react-dialog` were deliberately removed. Icons are inline SVG in
   `components/icons.tsx`. Do not add a component library or an icon package.

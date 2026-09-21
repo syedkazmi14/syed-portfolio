@@ -37,8 +37,9 @@ export const siteConfig = {
 
   /** About copy. Every claim here is drawn from the experience data. */
   bio: [
-    "I'm finishing a CS degree at UT Dallas. This past summer I was at IBM working on watsonx Orchestrate, helping teams plug agents they built elsewhere into the platform.",
-    "Before that I built a video-avatar advisor at Infosys, won the AI track at the Axxess hackathon with a pose-estimation form coach, and spent two years fixing laptops down to the board — reflowing chips and tracing shorts with a multimeter. I like work that goes the whole way down: a backend that doesn't fall over and a front end people actually want to use.",
+    "Software developer \u2014 full-stack by necessity, backend by preference. I'm finishing a CS degree at UT Dallas.",
+    "This past summer I was at IBM working on watsonx Orchestrate, helping teams plug agents they built elsewhere into the platform. Before that I built a video-avatar advisor at Infosys, won the AI track at the Axxess hackathon with a pose-estimation form coach, and spent two years fixing laptops down to the board \u2014 reflowing chips and tracing shorts with a multimeter.",
+    "I like work that goes the whole way down: a backend that doesn't fall over and a front end people actually want to use.",
   ],
 
   /**
@@ -52,6 +53,16 @@ export const siteConfig = {
     src: "/photos/syedheadshot.webp",
     alt: "Syed Kazmi",
     caption: "Austin, Texas",
+  },
+
+  /**
+   * A second, wider photo in the About section. Currently the SC300 \u2014 swap
+   * it for anything: a hackathon, a workbench, a trip. Landscape works best.
+   */
+  aboutPhoto: {
+    src: "/photos/sc300.webp",
+    alt: "A 1995 Lexus SC300",
+    caption: "'95 SC300 \u2014 the weekend project",
   },
 
   url: "https://syedk.dev",
