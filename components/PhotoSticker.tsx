@@ -17,17 +17,36 @@ export function PhotoSticker({
   width = 300,
   rotate = -3,
   opacity = 0.2,
+  aspect = 4 / 3,
+  cutout = false,
+  tint = true,
   className = "",
 }: {
   src: string;
-  /** Rendered width in px. Height follows a 4:3 crop. */
+  /** Rendered width in px. */
   width?: number;
   rotate?: number;
   opacity?: number;
+  /** Width / height. Set this to the artwork's own ratio for a cutout. */
+  aspect?: number;
+  /**
+   * True when the source has a transparent background. The green tint is then
+   * masked to the artwork itself — otherwise it paints a tinted rectangle
+   * behind a cut-out subject.
+   */
+  cutout?: boolean;
+  /**
+   * Grayscale + green wash. On by default, and right for a rectangular photo
+   * — the frame gives it structure. Turn it OFF for a cut-out: with no
+   * rectangle, desaturating and tinting collapses the subject into an
+   * unreadable silhouette. A cut-out reads better in its own colours, muted
+   * by opacity alone.
+   */
+  tint?: boolean;
   /** Placement utilities, e.g. "bottom-0 right-6". */
   className?: string;
 }) {
-  const height = Math.round((width * 3) / 4);
+  const height = Math.round(width / aspect);
 
   return (
     <div
@@ -41,9 +60,27 @@ export function PhotoSticker({
           alt=""
           fill
           sizes={`${width}px`}
-          className="object-cover grayscale"
+          className={`${tint ? "grayscale" : ""} ${cutout ? "object-contain" : "object-cover"}`}
         />
-        <div className="absolute inset-0 bg-green mix-blend-multiply" />
+        {tint ? (
+        <div
+          className="absolute inset-0 bg-green mix-blend-multiply"
+          style={
+            cutout
+              ? {
+                  maskImage: `url(${src})`,
+                  WebkitMaskImage: `url(${src})`,
+                  maskSize: "contain",
+                  WebkitMaskSize: "contain",
+                  maskRepeat: "no-repeat",
+                  WebkitMaskRepeat: "no-repeat",
+                  maskPosition: "center",
+                  WebkitMaskPosition: "center",
+                }
+              : undefined
+          }
+        />
+        ) : null}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { skills } from "@/data/skills";
-import { awards } from "@/data/awards";
+import { awards, certifications } from "@/data/awards";
 import { Reveal } from "@/components/Reveal";
 
 /**
@@ -45,6 +45,22 @@ export function Credentials() {
               </li>
             ))}
           </ul>
+
+          {certifications.length > 0 ? (
+            <>
+              <h2 className="label mt-9">Certifications</h2>
+              <ul className="mt-6 space-y-5">
+                {certifications.map((cert) => (
+                  <li key={cert.id}>
+                    <p className="text-[0.97rem] font-semibold text-ink">
+                      {cert.title}
+                    </p>
+                    <p className="font-mono text-xs text-muted">{cert.org}</p>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : null}
         </Reveal>
       </div>
     </section>

@@ -1,4 +1,4 @@
-import type { Award } from "@/lib/types";
+import type { Award, Certification } from "@/lib/types";
 
 export const awards: Award[] = [
   {
@@ -21,5 +21,18 @@ export const awards: Award[] = [
     org: "GuardianGram Showcase",
     description:
       "Awarded for most popular project by audience vote at the GuardianGram presentation event.",
+  },
+];
+
+/**
+ * Certifications. Kept separate from awards — a credential you earn by
+ * examination is a different claim from a prize you were given, and the
+ * Recognition column labels them apart.
+ */
+export const certifications: Certification[] = [
+  {
+    id: "aws-ccp",
+    title: "AWS Certified Cloud Practitioner",
+    org: "Amazon Web Services",
   },
 ];

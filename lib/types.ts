@@ -10,13 +10,20 @@ export interface ProjectLink {
 export interface Project {
   id: string;
   name: string;
-  tagline: string;
+  /**
+   * Everything below the name is optional. Newer entries often arrive with
+   * only a name, a date and a line of description, and a half-filled project
+   * is better than an invented one — the UI omits whatever is missing.
+   */
+  tagline?: string;
   /** Short summary — used on the project page under "How it works". */
-  description: string;
+  description?: string;
   /** What problem the project solves. */
-  problem: string;
+  problem?: string;
   /** How it solves it. */
-  solution: string;
+  solution?: string;
+  /** e.g. "Jul 2026 — Present". */
+  period?: string;
   tech: string[];
   featured?: boolean;
   /** Award or event tag, e.g. "1st Place · Axxess AI Track". */
@@ -57,6 +64,12 @@ export interface Award {
   title: string;
   org: string;
   description: string;
+}
+
+export interface Certification {
+  id: string;
+  title: string;
+  org: string;
 }
 
 export interface Interest {

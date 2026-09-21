@@ -16,21 +16,12 @@ export function Footer() {
      * The width constraint sits on the inner container rather than the
      * <footer> itself, so the jali band underneath can run edge to edge.
      */
-    <footer id="contact" className="mt-28 w-full sm:mt-40">
+    <footer id="contact" className="mt-20 w-full sm:mt-28">
       <div className="mx-auto w-full max-w-6xl px-6 sm:px-12">
-        <div className="border-t border-rule pt-12">
-          {/*
-            Factual only: Syed confirmed he is at UT Dallas through December 2026.
-            He has NOT told me his job-search status, so this deliberately makes
-            no claim about availability. Swap in a call to action once he does.
-          */}
-          <h2 className="max-w-xl font-display text-4xl leading-[1.12] sm:text-5xl">
-            Graduating <span className="text-green">December 2026</span>.
-            <br />
-            Say hello.
-          </h2>
-
-          <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
+        {/* Spacing tuned for a footer with no heading — it opens straight
+            on the email row. */}
+        <div className="border-t border-rule pt-10">
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
             <a
               href={siteConfig.links.email}
               className="font-mono text-base text-green underline decoration-rule underline-offset-[6px] transition-colors hover:text-green-deep hover:decoration-green"

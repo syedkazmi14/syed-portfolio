@@ -21,7 +21,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
   return {
     title: project.name,
-    description: `${project.tagline} — ${project.problem}`,
+    description:
+      [project.tagline, project.problem ?? project.description]
+        .filter(Boolean)
+        .join(" — ") || `${project.name} — a project by ${"Syed Kazmi"}.`,
     alternates: { canonical: `/work/${project.id}` },
     openGraph: {
       title: project.name,
@@ -60,9 +63,14 @@ export default async function ProjectPage({ params }: Params) {
           <h1 className="mt-3 font-display text-[2.75rem] leading-[1.06] tracking-[-0.015em] sm:text-6xl">
             {project.name}
           </h1>
-          <p className="mt-4 max-w-2xl text-xl leading-relaxed text-body">
-            {project.tagline}
-          </p>
+          {project.tagline ? (
+            <p className="mt-4 max-w-2xl text-xl leading-relaxed text-body">
+              {project.tagline}
+            </p>
+          ) : null}
+          {project.period ? (
+            <p className="mt-3 font-mono text-xs text-muted">{project.period}</p>
+          ) : null}
         </Reveal>
 
         {project.image ? (
@@ -83,24 +91,33 @@ export default async function ProjectPage({ params }: Params) {
         ) : null}
 
         <Reveal delay={80}>
-          <div className="mt-14 grid grid-cols-1 gap-10 sm:grid-cols-2">
-            <div>
-              <h2 className="label">The problem</h2>
-              <p className="mt-3 leading-relaxed">{project.problem}</p>
+          {project.problem || project.solution ? (
+            <div className="mt-14 grid grid-cols-1 gap-10 sm:grid-cols-2">
+              {project.problem ? (
+                <div>
+                  <h2 className="label">The problem</h2>
+                  <p className="mt-3 leading-relaxed">{project.problem}</p>
+                </div>
+              ) : null}
+              {project.solution ? (
+                <div>
+                  <h2 className="label">What I built</h2>
+                  <p className="mt-3 leading-relaxed">{project.solution}</p>
+                </div>
+              ) : null}
             </div>
-            <div>
-              <h2 className="label">What I built</h2>
-              <p className="mt-3 leading-relaxed">{project.solution}</p>
+          ) : null}
+
+          {project.description ? (
+            <div className="mt-12 border-t border-rule pt-8">
+              <h2 className="label">How it works</h2>
+              <p className="mt-3 max-w-2xl text-lg leading-relaxed">
+                {project.description}
+              </p>
             </div>
-          </div>
+          ) : null}
 
-          <div className="mt-12 border-t border-rule pt-8">
-            <h2 className="label">How it works</h2>
-            <p className="mt-3 max-w-2xl text-lg leading-relaxed">
-              {project.description}
-            </p>
-          </div>
-
+          {project.tech.length > 0 ? (
           <div className="mt-12 border-t border-rule pt-8">
             <h2 className="label">Stack</h2>
             <ul className="mt-4 flex flex-wrap gap-x-2 gap-y-2">
@@ -114,6 +131,7 @@ export default async function ProjectPage({ params }: Params) {
               ))}
             </ul>
           </div>
+          ) : null}
 
           {project.links && project.links.length > 0 ? (
             <div className="mt-12 flex flex-wrap gap-3 border-t border-rule pt-8">

@@ -49,12 +49,9 @@ export const interests: Interest[] = [
     id: "games",
     title: "Video games",
     blurb: "Playing them, and occasionally building one",
-    image: "/projects/fps.webp",
-    imageAlt: "A first-person shooter built in Unreal Engine 5",
     body: [
-      "DRAFT — rewrite in your own words. Playing games turned into taking them apart: the first-person shooter in the project list is Unreal Engine 5, part Blueprint and part C++, with Chaos Physics driving destructible environments and a UMG HUD.",
+      "DRAFT — rewrite in your own words. Playing games turned into taking them apart — building one in Unreal Engine 5, part Blueprint and part C++.",
       "DRAFT — rewrite in your own words. What you actually play, and what building one taught you that playing them did not.",
     ],
-    link: { label: "See the build", href: "/work/fps" },
   },
 ];

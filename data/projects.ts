@@ -12,6 +12,32 @@ import type { Project } from "@/lib/types";
  */
 export const projects: Project[] = [
   {
+    /*
+     * Syed supplied only the name, the dates and "Open Source" for this one.
+     * No tagline, stack or description yet — nothing here is invented, so the
+     * tile and drawer simply render less until he fills it in.
+     */
+    id: "copilot-sdk",
+    name: "Copilot SDK",
+    period: "Jul 2026 — Present",
+    badge: "Open source",
+    tech: [],
+    links: [],
+    featured: true,
+  },
+  {
+    /* Description is Syed's own wording, verbatim. Stack not supplied. */
+    id: "dayone",
+    name: "DayOne",
+    period: "Sep 2026",
+    badge: "HackRice 2026",
+    description:
+      "Gamified agentic document parser and AI video generation to make onboarding processes more engaging.",
+    tech: [],
+    links: [],
+    featured: true,
+  },
+  {
     id: "blue-relief",
     name: "BlueRelief",
     tagline: "Real-time crisis detection platform",
@@ -105,20 +131,6 @@ export const projects: Project[] = [
     links: [],
   },
   {
-    id: "trashtrends",
-    name: "TrashTrends",
-    tagline: "Drone video → litter heatmaps",
-    description:
-      "A backend that takes drone footage, runs computer vision over the frames to spot litter, and turns the detections into GIS heatmaps that show where trash collects. Python and C++ on ROS, packaged with Docker.",
-    problem:
-      "Mapping litter across large areas by hand is slow, inconsistent, and hard to track over time.",
-    solution:
-      "A cloud backend that ingests drone video, runs computer-vision workflows on the frames, and renders GIS heatmaps that reveal where litter concentrates.",
-    tech: ["Python", "C++", "ROS", "Docker", "Computer Vision"],
-    image: "/projects/trashtrends.webp",
-    links: [],
-  },
-  {
     id: "ecodrive",
     name: "EcoDrive",
     tagline: "OBD fuel-economy dashboard",
@@ -144,20 +156,6 @@ export const projects: Project[] = [
       "A computer-vision pipeline using YOLOv8 and Python (with MATLAB for analysis) trained to detect TCP coils accurately and repeatably.",
     tech: ["Machine Learning", "MATLAB", "Python", "YOLOv8", "Computer Vision"],
     image: "/projects/hbs-cv.webp",
-    links: [],
-  },
-  {
-    id: "fps",
-    name: "First Person Shooter",
-    tagline: "UE5 gameplay & physics",
-    description:
-      "A playable first-person shooter I built in Unreal Engine 5, part Blueprint and part C++. Chaos Physics drives destructible environments, UMG runs the HUD, and I wrote the core input and gameplay systems myself.",
-    problem:
-      "Wanted to go deep on real-time game systems: input, UI, and physics-driven destruction.",
-    solution:
-      "A playable first-person shooter in Unreal Engine 5 combining Blueprint and C++ — destructible environments via Chaos Physics, a UMG-driven HUD, and responsive gameplay systems.",
-    tech: ["C++", "Unreal Engine", "Blueprint", "UMG", "Chaos Physics"],
-    image: "/projects/fps.webp",
     links: [],
   },
 ];

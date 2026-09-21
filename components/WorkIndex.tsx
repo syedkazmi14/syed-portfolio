@@ -70,13 +70,21 @@ function WorkTile({
             </Link>
           </h3>
 
-          <p className="mt-1.5 text-[0.95rem] leading-relaxed text-body">
-            {project.tagline}
-          </p>
+          {project.tagline || project.description ? (
+            <p className="mt-1.5 text-[0.95rem] leading-relaxed text-body">
+              {project.tagline ?? project.description}
+            </p>
+          ) : null}
 
-          <p className="mt-3 font-mono text-[0.7rem] leading-relaxed text-muted">
-            {techLine(project.tech)}
-          </p>
+          {project.period ? (
+            <p className="mt-2 font-mono text-[0.7rem] text-faint">{project.period}</p>
+          ) : null}
+
+          {project.tech.length > 0 ? (
+            <p className="mt-3 font-mono text-[0.7rem] leading-relaxed text-muted">
+              {techLine(project.tech)}
+            </p>
+          ) : null}
 
           <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 pt-1">
             <Link
@@ -141,7 +149,12 @@ function ProjectDetail({ project }: { project: Project }) {
   return (
     <article>
       <h2 className="font-display text-4xl leading-tight">{project.name}</h2>
-      <p className="mt-2 text-lg leading-relaxed text-body">{project.tagline}</p>
+      {project.tagline ? (
+        <p className="mt-2 text-lg leading-relaxed text-body">{project.tagline}</p>
+      ) : null}
+      {project.period ? (
+        <p className="mt-1 font-mono text-xs text-muted">{project.period}</p>
+      ) : null}
 
       {project.image ? (
         <div className="relative mt-7 aspect-[16/9] overflow-hidden border border-rule bg-rule-soft">
@@ -155,21 +168,28 @@ function ProjectDetail({ project }: { project: Project }) {
         </div>
       ) : null}
 
-      <section className="mt-8">
-        <h3 className="label">The problem</h3>
-        <p className="mt-2.5 leading-relaxed">{project.problem}</p>
-      </section>
+      {project.problem ? (
+        <section className="mt-8">
+          <h3 className="label">The problem</h3>
+          <p className="mt-2.5 leading-relaxed">{project.problem}</p>
+        </section>
+      ) : null}
 
-      <section className="mt-6">
-        <h3 className="label">What I built</h3>
-        <p className="mt-2.5 leading-relaxed">{project.solution}</p>
-      </section>
+      {project.solution ? (
+        <section className="mt-6">
+          <h3 className="label">What I built</h3>
+          <p className="mt-2.5 leading-relaxed">{project.solution}</p>
+        </section>
+      ) : null}
 
-      <section className="mt-6 border-t border-rule-soft pt-6">
-        <h3 className="label">How it works</h3>
-        <p className="mt-2.5 leading-relaxed">{project.description}</p>
-      </section>
+      {project.description ? (
+        <section className="mt-6 border-t border-rule-soft pt-6">
+          <h3 className="label">How it works</h3>
+          <p className="mt-2.5 leading-relaxed">{project.description}</p>
+        </section>
+      ) : null}
 
+      {project.tech.length > 0 ? (
       <section className="mt-6 border-t border-rule-soft pt-6">
         <h3 className="label">Stack</h3>
         <ul className="mt-3 flex flex-wrap gap-1.5">
@@ -183,6 +203,7 @@ function ProjectDetail({ project }: { project: Project }) {
           ))}
         </ul>
       </section>
+      ) : null}
 
       {project.links && project.links.length > 0 ? (
         <div className="mt-7 flex flex-wrap gap-2.5 border-t border-rule-soft pt-6">

@@ -87,10 +87,10 @@ export const siteConfig = {
    * on the lattice better than a rectangle.
    */
   footerPhoto: {
-    src: "/cats/baileyandlouiseloafed2.webp",
+    src: "/cats/loaf-cutout.webp",
     alt: "Louise and Bailey, loafed",
-    width: 1400,
-    height: 1050,
+    width: 1283,
+    height: 954,
   },
 
   url: "https://syedk.dev",

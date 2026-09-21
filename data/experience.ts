@@ -29,25 +29,6 @@ export const experience: ExperienceItem[] = [
     ],
   },
   {
-    id: "techlots",
-    company: "TechLots, LLC",
-    role: "Hardware Technician",
-    period: "August 2025 — May 2026",
-    type: "hardware",
-    description:
-      "Diagnose and repair consumer electronics and laptops, performing advanced board-level troubleshooting, soldering, and component replacement using precision tools and test equipment.",
-    tech: [
-      "Diagnostics",
-      "Soldering",
-      "Multimeter",
-      "Oscilloscope",
-      "PCB Repair",
-      "Component Replacement",
-      "Consumer Electronics",
-      "Troubleshooting",
-    ],
-  },
-  {
     id: "infosys",
     company: "Infosys",
     role: "Software Engineering Intern",

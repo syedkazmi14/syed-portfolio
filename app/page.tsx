@@ -54,12 +54,18 @@ export default function Home() {
           <WorkIndex projects={projects} className="mt-4" />
         </section>
 
-        <div className="relative isolate mt-24 py-16 sm:mt-32">
+        {/* Extra bottom padding gives the cats their own space: the Recognition
+            column grew when certifications were added, and the sticker was
+            landing on top of it. */}
+        <div className="relative isolate mt-24 pb-44 pt-16 sm:mt-32 sm:pb-52">
           <PhotoSticker
-            src="/cats/baileyandlouiseloafed2.webp"
-            width={300}
+            src="/cats/loaf-cutout.webp"
+            width={220}
             rotate={-3}
-            opacity={0.22}
+            opacity={0.34}
+            aspect={1283 / 954}
+            cutout
+            tint={false}
             className="bottom-4 right-6 lg:right-16"
           />
           <Credentials />

@@ -162,12 +162,17 @@ company, or responsibility — if a fact is not already in `data/` or stated by
 Syed, ask rather than filling the gap.
 
 - `data/site.ts` — identity, headline, bio, education, portrait, links
-- `data/projects.ts` — the 8 projects; `links: []` is the repo/demo slot.
+- `data/projects.ts` — the projects; `links: []` is the repo/demo slot.
+  Everything below `name` is **optional**: entries often arrive with only a
+  name, a date and a line of copy, and every surface omits what is missing.
+  A half-filled project beats an invented one — never pad these out.
   All of them render on the homepage as a two-column grid; there is no
   separate index page. `/work/<slug>` detail pages still exist for permalinks
   and crawlers, and `/work` redirects to the homepage section.
 - `data/experience.ts` — 4 roles, reverse-chronological
-- `data/skills.ts`, `data/awards.ts` — rendered by `Credentials.tsx`
+- `data/skills.ts`, `data/awards.ts` — rendered by `Credentials.tsx`.
+  `awards.ts` also exports `certifications`, kept separate on purpose: a
+  credential earned by examination is a different claim from a prize.
 - `data/interests.ts` — the four interest tiles. **Every `body` in this file is
   currently Claude-written draft copy, not Syed's words**, and the header says
   so. Only the SC300 and the UE5 project references are grounded in the repo.
