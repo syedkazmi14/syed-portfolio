@@ -59,6 +59,19 @@ export interface Award {
   description: string;
 }
 
+export interface Interest {
+  id: string;
+  title: string;
+  /** One line on the tile. */
+  blurb: string;
+  /** Paragraphs shown in the drawer. */
+  body: string[];
+  image?: string;
+  imageAlt?: string;
+  /** Optional pointer at related work. */
+  link?: { label: string; href: string };
+}
+
 export interface NavItem {
   label: string;
   href: string;

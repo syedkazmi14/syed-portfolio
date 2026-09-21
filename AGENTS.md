@@ -161,9 +161,18 @@ Syed, ask rather than filling the gap.
   and crawlers, and `/work` redirects to the homepage section.
 - `data/experience.ts` — 4 roles, reverse-chronological
 - `data/skills.ts`, `data/awards.ts` — rendered by `Credentials.tsx`
+- `data/interests.ts` — the four interest tiles. **Every `body` in this file is
+  currently Claude-written draft copy, not Syed's words**, and the header says
+  so. Only the SC300 and the UE5 project references are grounded in the repo.
+  Replace all of it before treating the section as finished.
 
 The site makes **no claim about job-search status or availability.** This is
 intentional. Do not add one.
+
+Rendering a static array of prose? **Do not key on a prefix slice of the
+text** (`key={p.slice(0, 24)}`). Two paragraphs sharing an opening phrase
+collide, and React silently drops one. Use the index — these arrays never
+reorder.
 
 ## Verify before claiming done
 

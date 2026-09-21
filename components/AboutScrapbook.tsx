@@ -43,8 +43,10 @@ export function AboutScrapbook() {
     <div className="mt-8 grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-20">
       <Reveal>
         <div className="max-w-xl space-y-5">
-          {bio.map((paragraph) => (
-            <p key={paragraph.slice(0, 24)} className="text-lg leading-relaxed">
+          {/* Index keys: static array, and two paragraphs can share an opening
+              phrase — which collides when the key is a prefix slice. */}
+          {bio.map((paragraph, i) => (
+            <p key={i} className="text-lg leading-relaxed">
               {withPhotoButtons(paragraph, add)}
             </p>
           ))}

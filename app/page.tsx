@@ -5,6 +5,7 @@ import { About } from "@/components/About";
 import { WorkIndex } from "@/components/WorkIndex";
 import { ExperienceList } from "@/components/ExperienceList";
 import { Credentials } from "@/components/Credentials";
+import { Interests } from "@/components/Interests";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
 import { SectionBackdrop } from "@/components/SectionBackdrop";
@@ -62,6 +63,10 @@ export default function Home() {
             className="bottom-4 right-6 lg:right-16"
           />
           <Credentials />
+        </div>
+
+        <div className="mt-24 sm:mt-32">
+          <Interests />
         </div>
       </main>
       <Footer />
