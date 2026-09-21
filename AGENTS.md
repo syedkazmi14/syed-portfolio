@@ -121,20 +121,29 @@ compiled output by shape, not by the literal colour you wrote.
 
 ## The logo mark
 
-Syed's own hand-drawn mark. The source lives at
-`scripts/assets/mark-source.webp` (black ink on white) and every icon is
-derived from it by `npm run gen:icons`:
+Syed's own drawn cat head — grey fill, deep-green outline. The source lives at
+`scripts/assets/mark-cat-source.webp` and already carries a real alpha
+channel, so nothing is keyed out: it is trimmed, resized, and its own colours
+are preserved. Every icon is derived from it by `npm run gen:icons`:
 
 - `public/logo/mark.webp` — ink on transparent, trimmed; used by the nav
 - `app/icon.png`, `app/apple-icon.png`, `app/favicon.ico` — on a cream ground
 
-Two things the script does on purpose. It derives alpha from the drawing's own
-darkness, because the white background would otherwise show as a white box on
-the cream nav. And the icon files get a cream ground rather than transparency,
-because black ink on transparent disappears against a dark browser theme.
+The icon files get a cream ground rather than transparency on purpose: a
+dark-outlined mark on transparent disappears against a dark browser theme.
+
+**The mark is 1.36:1, not square.** The nav `<Image>` is sized to that aspect;
+a square box squashes it. Re-check those dimensions if the artwork changes —
+`gen:icons` prints the trimmed aspect for exactly this reason.
 
 To change the mark: replace the source file and re-run `npm run gen:icons`.
-Never hand-edit the outputs.
+Never hand-edit the outputs. **Then clear `.next/dev/cache/images`** — the
+optimiser keys its cache on the URL, and since the path does not change it
+will keep serving the old artwork through restarts. Note the dev cache is at
+`.next/dev/cache/images`, not `.next/cache/images`.
+
+The previous ink-portrait mark is still at `scripts/assets/mark-source.webp`
+if this is ever reverted.
 
 ## Content rules
 
