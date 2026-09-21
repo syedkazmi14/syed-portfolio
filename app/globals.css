@@ -211,3 +211,51 @@
 .drawer-body::-webkit-scrollbar-thumb {
   background: var(--color-rule);
 }
+
+/* ------------------------------------------------------------------ */
+/*  Cursor — a printer's registration mark                             */
+/*                                                                     */
+/*  The crosshair-in-a-circle used to align colour plates on press.    */
+/*  Hollow while reading, filled over anything interactive.            */
+/*                                                                     */
+/*  Scoped to `pointer: fine` so touch devices are untouched, and every */
+/*  rule keeps a standard keyword fallback so the cursor still means   */
+/*  the right thing if the image fails. Text inputs keep the I-beam:   */
+/*  overriding that one actively hurts.                                */
+/*                                                                     */
+/*  Note this does override the pointer people set at the OS level.    */
+/*  Deleting this block restores system cursors everywhere.            */
+/* ------------------------------------------------------------------ */
+@media (pointer: fine) {
+  body {
+    cursor:
+      image-set(url("/cursor/reg.png") 1x, url("/cursor/reg@2x.png") 2x) 16 16,
+      url("/cursor/reg.png") 16 16,
+      default;
+  }
+
+  a,
+  button,
+  summary,
+  label,
+  [role="button"],
+  [role="link"] {
+    cursor:
+      image-set(url("/cursor/reg-live.png") 1x, url("/cursor/reg-live@2x.png") 2x)
+        16 16,
+      url("/cursor/reg-live.png") 16 16,
+      pointer;
+  }
+
+  input,
+  textarea,
+  select,
+  [contenteditable="true"] {
+    cursor: auto;
+  }
+
+  :disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+}

@@ -9,9 +9,13 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   async redirects() {
     return [
-      { source: "/projects", destination: "/work", permanent: true },
-      { source: "/research", destination: "/work", permanent: true },
-      { source: "/hardware", destination: "/work", permanent: true },
+      // /work was the projects index; every project now lives on the
+      // homepage. The detail pages at /work/<slug> are untouched — this
+      // matches the exact path only.
+      { source: "/work", destination: "/#work", permanent: true },
+      { source: "/projects", destination: "/#work", permanent: true },
+      { source: "/research", destination: "/#work", permanent: true },
+      { source: "/hardware", destination: "/#work", permanent: true },
       { source: "/awards", destination: "/#stack", permanent: true },
       { source: "/skills", destination: "/#stack", permanent: true },
       { source: "/contact", destination: "/#contact", permanent: true },

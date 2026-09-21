@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { featuredProjects } from "@/data/projects";
+import { projects } from "@/data/projects";
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
@@ -47,17 +46,11 @@ export default function Home() {
           id="work"
           className="mx-auto mt-24 w-full max-w-6xl px-6 sm:mt-32 sm:px-12"
         >
-          <Reveal className="flex items-baseline justify-between gap-6 pb-2">
-            <h2 className="label">Selected projects</h2>
-            <Link
-              href="/work"
-              className="font-mono text-xs uppercase tracking-[0.08em] text-green transition-colors hover:text-green-deep"
-            >
-              All eight →
-            </Link>
+          <Reveal className="pb-2">
+            <h2 className="label">Projects</h2>
           </Reveal>
 
-          <WorkIndex projects={featuredProjects} className="mt-4" />
+          <WorkIndex projects={projects} className="mt-4" />
         </section>
 
         <div className="relative isolate mt-24 py-16 sm:mt-32">

@@ -10,7 +10,6 @@ import { test, expect } from "@playwright/test";
  */
 const routes = [
   "/",
-  "/work",
   "/work/blue-relief",
   "/work/telekinetics",
   "/work/fps",

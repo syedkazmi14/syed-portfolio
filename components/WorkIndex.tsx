@@ -9,8 +9,8 @@ import { ArrowUpRight } from "@/components/icons";
 import { HoverTile } from "@/components/HoverTile";
 import { Drawer } from "@/components/Drawer";
 
-/** Tech shown inline on a row before it gets noisy. */
-const MAX_TECH = 6;
+/** Tech shown on a tile before it gets noisy. Tiles are narrow now. */
+const MAX_TECH = 4;
 
 function techLine(tech: string[]) {
   const shown = tech.slice(0, MAX_TECH).join(" · ");
@@ -18,14 +18,14 @@ function techLine(tech: string[]) {
 }
 
 /**
- * True when a click should be left alone: a modified click or a middle click
- * is the reader asking for a new tab, and we should not hijack it.
+ * True when a click should be left alone: a modified or middle click is the
+ * reader asking for a new tab, and we should not hijack it.
  */
 function isPlainClick(e: MouseEvent) {
   return !(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0);
 }
 
-function WorkRow({
+function WorkTile({
   project,
   index,
   onOpen,
@@ -36,8 +36,8 @@ function WorkRow({
 }) {
   /*
    * The title stays a real <a href="/work/<id>"> even though a plain click
-   * opens the drawer: it keeps the eight project pages crawlable and linked,
-   * and lets cmd-click / middle-click open them in a new tab as expected.
+   * opens the drawer: it keeps the project pages crawlable and lets
+   * cmd-click / middle-click open them in a new tab as expected.
    */
   const handle = (e: MouseEvent) => {
     if (!isPlainClick(e)) return;
@@ -46,58 +46,56 @@ function WorkRow({
   };
 
   return (
-    <Reveal as="article" delay={index * 60} className="border-t border-rule">
-      <HoverTile image={project.image} intensity={0.18}>
-        <div className="grid grid-cols-1 gap-x-8 gap-y-4 px-4 py-8 sm:grid-cols-[3.5rem_minmax(0,1fr)] lg:grid-cols-[3.5rem_minmax(0,1fr)_13rem]">
-          <span className="font-mono text-[0.8rem] text-faint lg:pt-2.5">
-            {String(index + 1).padStart(2, "0")}
-          </span>
-
-          <div>
+    <Reveal as="article" delay={(index % 2) * 60} className="border-t border-rule">
+      <HoverTile image={project.image} intensity={0.2}>
+        <div className="flex h-full flex-col px-3 py-6">
+          <div className="flex items-baseline gap-3">
+            <span className="font-mono text-[0.72rem] text-faint">
+              {String(index + 1).padStart(2, "0")}
+            </span>
             {project.badge ? (
-              <p className="mb-1.5 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-green">
+              <p className="truncate font-mono text-[0.65rem] uppercase tracking-[0.1em] text-green">
                 {project.badge}
               </p>
             ) : null}
-
-            <h3 className="font-display text-3xl leading-tight sm:text-[2.35rem]">
-              <Link
-                href={`/work/${project.id}`}
-                onClick={handle}
-                className="transition-colors hover:text-green"
-              >
-                {project.name}
-              </Link>
-            </h3>
-
-            <p className="mt-2 max-w-xl leading-relaxed text-body">
-              {project.tagline}. {project.problem}
-            </p>
-
-            <p className="mt-3.5 font-mono text-xs leading-relaxed text-muted">
-              {techLine(project.tech)}
-            </p>
           </div>
 
-          <div className="flex flex-wrap items-start gap-x-5 gap-y-2 lg:flex-col lg:pt-2">
+          <h3 className="mt-1.5 font-display text-[1.75rem] leading-tight">
             <Link
               href={`/work/${project.id}`}
               onClick={handle}
-              className="border-b border-green pb-px text-[0.9rem] font-medium text-green transition-colors hover:text-green-deep"
+              className="transition-colors hover:text-green"
+            >
+              {project.name}
+            </Link>
+          </h3>
+
+          <p className="mt-1.5 text-[0.95rem] leading-relaxed text-body">
+            {project.tagline}
+          </p>
+
+          <p className="mt-3 font-mono text-[0.7rem] leading-relaxed text-muted">
+            {techLine(project.tech)}
+          </p>
+
+          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 pt-1">
+            <Link
+              href={`/work/${project.id}`}
+              onClick={handle}
+              className="border-b border-green pb-px text-[0.85rem] font-medium text-green transition-colors hover:text-green-deep"
             >
               Details
             </Link>
-
             {project.links?.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-[0.9rem] text-muted transition-colors hover:text-ink"
+                className="inline-flex items-center gap-1 text-[0.85rem] text-muted transition-colors hover:text-ink"
               >
                 {link.label}
-                <ArrowUpRight className="h-3.5 w-3.5" />
+                <ArrowUpRight className="h-3 w-3" />
               </a>
             ))}
           </div>
@@ -118,9 +116,13 @@ export function WorkIndex({
 
   return (
     <div className={className}>
-      {projects.map((project, i) => (
-        <WorkRow key={project.id} project={project} index={i} onOpen={setActive} />
-      ))}
+      {/* Two columns from sm up: eight tiles fit in four rows instead of
+          eight full-width bands. */}
+      <div className="grid grid-cols-1 gap-x-10 sm:grid-cols-2">
+        {projects.map((project, i) => (
+          <WorkTile key={project.id} project={project} index={i} onOpen={setActive} />
+        ))}
+      </div>
       <div className="border-t border-rule" />
 
       <Drawer

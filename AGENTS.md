@@ -69,6 +69,22 @@ utility for small uppercase mono headings rather than re-specifying it.
   image, and add new folders to that script's `TARGETS`. Never commit a
   straight-from-camera file.
 
+## The cursor
+
+A printer's registration mark — the crosshair used to align colour plates on
+press, in the same print vocabulary as the paper tooth and the drawer's dotted
+frame. Hollow by default, filled over interactive elements.
+
+`npm run gen:cursors` builds `public/cursor/*.png` from
+`scripts/gen-cursors.mjs`. PNG, not SVG: Safari does not support SVG cursors.
+Each shape is drawn twice — a cream halo under the green — or the mark vanishes
+over photos and the drawer backdrop.
+
+The CSS is scoped to `pointer: fine`, keeps a standard keyword fallback on
+every rule, and leaves the I-beam alone on text inputs. It does override the
+cursor people set at OS level, which is a real accessibility cost; deleting the
+block in `globals.css` restores system cursors everywhere.
+
 ## Turbopack cache
 
 If a change to `app/globals.css` does not appear in the browser, check the
@@ -101,7 +117,10 @@ company, or responsibility — if a fact is not already in `data/` or stated by
 Syed, ask rather than filling the gap.
 
 - `data/site.ts` — identity, headline, bio, education, portrait, links
-- `data/projects.ts` — the 8 projects; `links: []` is the repo/demo slot
+- `data/projects.ts` — the 8 projects; `links: []` is the repo/demo slot.
+  All of them render on the homepage as a two-column grid; there is no
+  separate index page. `/work/<slug>` detail pages still exist for permalinks
+  and crawlers, and `/work` redirects to the homepage section.
 - `data/experience.ts` — 4 roles, reverse-chronological
 - `data/skills.ts`, `data/awards.ts` — rendered by `Credentials.tsx`
 

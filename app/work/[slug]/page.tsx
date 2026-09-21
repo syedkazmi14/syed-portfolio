@@ -45,7 +45,7 @@ export default async function ProjectPage({ params }: Params) {
       <main className="mx-auto w-full max-w-4xl px-6 pt-32 sm:px-12 sm:pt-40">
         <Reveal>
           <Link
-            href="/work"
+            href="/#work"
             className="font-mono text-xs uppercase tracking-[0.08em] text-muted transition-colors hover:text-ink"
           >
             ← All projects
