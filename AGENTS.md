@@ -49,10 +49,18 @@ utility for small uppercase mono headings rather than re-specifying it.
   library. Motion is never load-bearing: content is visible by default and the
   reveal's hide styles are scoped behind `[data-js]`, so a page is never blank
   when scripting fails.
+- **The drawer**: project and experience rows open `components/Drawer.tsx`
+  rather than navigating. It **must** render through a portal onto `<body>` —
+  the sections holding those lists use `isolate` for their photo backdrops, and
+  an isolated ancestor traps the drawer so the header paints over it. Project
+  rows keep a real `href` and only hijack unmodified left-clicks, so the eight
+  project pages stay crawlable and cmd-click still opens a tab.
 - **Tailwind v4 gotcha**: `scale-*` utilities set the CSS `scale` property, not
   `transform`. Mixing them with a JS-written `transform` multiplies the two and
   silently pins the element at zero — this bit the progress bar. Write the
-  initial transform inline instead.
+  initial transform inline instead. `translate-*` behaves the same way, though
+  `transition-transform` does cover it (it compiles to
+  `transform, translate, scale, rotate`).
 - **Dependencies**: five runtime deps. `framer-motion`, `lucide-react`, and
   `@radix-ui/react-dialog` were deliberately removed. Icons are inline SVG in
   `components/icons.tsx`. Do not add a component library or an icon package.

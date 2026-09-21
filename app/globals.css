@@ -197,3 +197,17 @@
   mix-blend-mode: multiply;
   opacity: 0.32;
 }
+
+/* ------------------------------------------------------------------ */
+/*  Drawer body scrollbar — thin, in the site's own colours.           */
+/* ------------------------------------------------------------------ */
+.drawer-body {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-rule) transparent;
+}
+.drawer-body::-webkit-scrollbar {
+  width: 3px;
+}
+.drawer-body::-webkit-scrollbar-thumb {
+  background: var(--color-rule);
+}
