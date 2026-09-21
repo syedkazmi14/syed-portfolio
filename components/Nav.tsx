@@ -61,7 +61,7 @@ export function Nav() {
     <header
       ref={headerRef}
       data-scrolled="false"
-      className="fixed inset-x-0 top-0 z-50 bg-ground/95 backdrop-blur-[2px] transition-colors data-[scrolled=true]:border-b data-[scrolled=true]:border-rule"
+      className="nav-texture fixed inset-x-0 top-0 z-50 bg-ground/95 backdrop-blur-[2px] transition-colors data-[scrolled=true]:border-b data-[scrolled=true]:border-rule"
     >
       <div className="mx-auto w-full max-w-6xl px-6 py-4 sm:px-12 sm:py-5">
         <nav aria-label="Main" className="flex items-center justify-between gap-4">

@@ -45,8 +45,44 @@
     -webkit-text-size-adjust: 100%;
   }
 
+  /*
+   * Paper tooth.
+   *
+   * Two identical 45deg gradients tile at 4px; the second is offset by half a
+   * tile (2px 2px) so the triangles interlock into a checkerboard. On top of
+   * that sits a barely-there green wash. The alpha is deliberately tiny --
+   * this should never read as a pattern, only as texture in the stock. Costs
+   * no requests and no DOM.
+   */
   body {
     background-color: var(--color-ground);
+    background-image:
+      linear-gradient(
+        rgba(12, 74, 51, 0.022) 0%,
+        rgba(12, 74, 51, 0.01) 100%
+      ),
+      linear-gradient(
+        45deg,
+        rgba(20, 32, 26, 0.035) 25%,
+        transparent 25%,
+        transparent 75%,
+        rgba(20, 32, 26, 0.035) 75%
+      ),
+      linear-gradient(
+        45deg,
+        rgba(20, 32, 26, 0.035) 25%,
+        transparent 25%,
+        transparent 75%,
+        rgba(20, 32, 26, 0.035) 75%
+      );
+    background-size:
+      100% 100%,
+      4px 4px,
+      4px 4px;
+    background-position:
+      0 0,
+      0 0,
+      2px 2px;
     color: var(--color-body);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -162,4 +198,28 @@
   96% {
     transform: scaleY(0.12);
   }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Nav dot screen                                                     */
+/*                                                                     */
+/*  A 0.95px dot on a 4px grid, multiplied over the header. It lives on */
+/*  a pseudo-element rather than the header itself because the header   */
+/*  is translucent with a backdrop blur -- the dots have to composite   */
+/*  ABOVE that blur, or they get blurred away with everything else.     */
+/* ------------------------------------------------------------------ */
+.nav-texture::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(12, 74, 51, 0.16) 0.95px,
+    transparent 1px
+  );
+  background-size: 4px 4px;
+  mix-blend-mode: multiply;
+  opacity: 0.32;
 }

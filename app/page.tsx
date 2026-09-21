@@ -9,6 +9,7 @@ import { Credentials } from "@/components/Credentials";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
 import { SectionBackdrop } from "@/components/SectionBackdrop";
+import { PhotoSticker } from "@/components/PhotoSticker";
 
 export default function Home() {
   return (
@@ -60,10 +61,12 @@ export default function Home() {
         </section>
 
         <div className="relative isolate mt-24 py-16 sm:mt-32">
-          <SectionBackdrop
+          <PhotoSticker
             src="/cats/baileyandlouiseloafed2.webp"
-            opacity={0.15}
-            position="56% 54%"
+            width={300}
+            rotate={-3}
+            opacity={0.22}
+            className="bottom-4 right-6 lg:right-16"
           />
           <Credentials />
         </div>

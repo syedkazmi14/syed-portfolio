@@ -30,9 +30,17 @@ utility for small uppercase mono headings rather than re-specifying it.
   borders (`border-rule`) do the separating. The one exception is the polaroid
   in `About.tsx`.
 - **Radius**: `rounded-sm` (2px) on buttons and inputs, `0` on images.
-- **Imagery**: photographs appear two ways — `HoverTile` (fades a photo in
-  behind a row on hover) and `SectionBackdrop` (a grayscale, green-tinted wash
-  far behind a section). Both are `aria-hidden` and purely atmospheric. Keep
+- **Texture**: the ground is not flat. `body` carries a 4px CSS checkerboard
+  (two 45deg gradients, the second offset half a tile) at ~3.5% alpha, and the
+  header carries a 4px dot screen on `.nav-texture::after`. The dots must stay
+  on a pseudo-element: the header has a `backdrop-filter`, and a background on
+  the header itself would be blurred along with everything behind it. Keep both
+  alphas tiny — this is paper tooth, not a pattern.
+- **Imagery**: photographs appear three ways — `HoverTile` (fades a photo in
+  behind a row on hover) `SectionBackdrop` (a grayscale, green-tinted wash
+  far behind a section) and `PhotoSticker` (a small rotated photo tucked in a
+  corner). Prefer the sticker for personal photos — a section-sized personal
+  photo reads as wallpaper and swamps the type. Both are `aria-hidden` and purely atmospheric. Keep
   backdrop opacity at or below ~0.18 or body copy starts to suffer, and use
   `fit="contain"` for die-cut cutouts with transparent backgrounds.
 - **Motion**: four effects, all cheap — the scroll reveal
@@ -52,6 +60,14 @@ utility for small uppercase mono headings rather than re-specifying it.
   `scripts/optimize-images.mjs`. Run `npm run optimize:images` after adding any
   image, and add new folders to that script's `TARGETS`. Never commit a
   straight-from-camera file.
+
+## Turbopack cache
+
+If a change to `app/globals.css` does not appear in the browser, check the
+served CSS before debugging the rule — Turbopack has served a stale stylesheet
+more than once in this project. `rm -rf .next` and restart. Lightning CSS also
+rewrites colours (`rgba(20,32,26,0.035)` becomes `#14201a09`), so grep the
+compiled output by shape, not by the literal colour you wrote.
 
 ## The avatar
 

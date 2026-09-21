@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { siteConfig } from "@/data/site";
+import { Cat } from "@/components/marginalia";
 import { GithubIcon, LinkedinIcon, MailIcon } from "@/components/icons";
 
 const social = [
@@ -55,7 +57,21 @@ export function Footer() {
           <p>
             © {new Date().getFullYear()} {siteConfig.name} · {siteConfig.location}
           </p>
-          <p className="font-mono">Next.js · TypeScript · Tailwind</p>
+          <div className="flex items-center gap-3">
+            <p className="font-mono">Next.js · TypeScript · Tailwind</p>
+            {/*
+              The cat easter egg. It used to hang under the About portrait;
+              moved here when that row came out. Faint on purpose — /cats is
+              not in the nav and this is the only way in.
+            */}
+            <Link
+              href="/cats"
+              aria-label="Louise and Bailey"
+              className="text-rule transition-colors hover:text-green"
+            >
+              <Cat className="h-5 w-[1.4rem]" />
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

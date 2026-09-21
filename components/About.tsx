@@ -1,8 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 import { siteConfig } from "@/data/site";
 import { Reveal } from "@/components/Reveal";
-import { Cat, Coupe } from "@/components/marginalia";
 
 const { bio, portrait, education, location } = siteConfig;
 
@@ -66,17 +64,6 @@ export function About() {
             </div>
           </figure>
 
-          <div className="mt-7 flex items-end gap-5 text-green/60">
-            <Coupe className="h-11 w-[4.6rem]" aria-hidden />
-            {/* The easter egg: the only way to /cats. Not in the nav. */}
-            <Link
-              href="/cats"
-              aria-label="Louise and Bailey"
-              className="rounded-sm transition-colors hover:text-green"
-            >
-              <Cat className="h-11 w-[3.1rem]" />
-            </Link>
-          </div>
         </Reveal>
       </div>
     </section>
