@@ -27,8 +27,8 @@ utility for small uppercase mono headings rather than re-specifying it.
 ## Hard rules
 
 - **No shadows, glows, glassmorphism, gradient text, or blur washes.** Hairline
-  borders (`border-rule`) do the separating. The one exception is the polaroid
-  in `About.tsx`.
+  borders (`border-rule`) do the separating. No exceptions — the About photos
+  are lifted off the page by translucent tape, not a shadow.
 - **Radius**: `rounded-sm` (2px) on buttons and inputs, `0` on images.
 - **Texture**: the ground is not flat. `body` carries a 4px CSS checkerboard
   (two 45deg gradients, the second offset half a tile) at ~3.5% alpha, and the
@@ -43,6 +43,9 @@ utility for small uppercase mono headings rather than re-specifying it.
   photo reads as wallpaper and swamps the type. Both are `aria-hidden` and purely atmospheric. Keep
   backdrop opacity at or below ~0.18 or body copy starts to suffer, and use
   `fit="contain"` for die-cut cutouts with transparent backgrounds.
+  Separately, the About section has a scrapbook pile (`AboutScrapbook.tsx`):
+  the portrait taped down at the bottom, and phrases in the bio that tape
+  `aboutPhotos` on top. Photos appear instantly, with no drop animation.
 - **Motion**: four effects, all cheap — the scroll reveal
   (`components/Reveal.tsx`), the nav's scroll-progress bar, the hover photo
   in `components/HoverTile.tsx`, and the avatar's blink/tilt. Do not add more, and do not add an animation

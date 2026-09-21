@@ -37,23 +37,48 @@ export const siteConfig = {
 
   /** About copy. Every claim here is drawn from the experience data. */
   bio: [
-    "Software developer \u2014 full-stack by necessity, backend by preference. I'm finishing a CS degree at UT Dallas.",
-    "This past summer I was at IBM working on watsonx Orchestrate, helping teams plug agents they built elsewhere into the platform. Before that I built a video-avatar advisor at Infosys, won the AI track at the Axxess hackathon with a pose-estimation form coach, and spent two years fixing laptops down to the board \u2014 reflowing chips and tracing shorts with a multimeter.",
-    "I like work that goes the whole way down: a backend that doesn't fall over and a front end people actually want to use.",
+    "CS undergraduate at UTD with previous SWE internships at IBM and Infosys. I am a creative individual who is interested in cloud and agentic AI.",
+    "Away from my laptop, I\u2019m a father of two cats, I like getting outside, and I spend time volunteering and finding ways to give back to the people around me.",
   ],
 
   /**
-   * The one personal photograph, shown polaroid-style.
+   * The bottom photo of the About scrapbook pile, always showing.
    *
-   * `caption` is a place and a date, the way you'd write on the white strip
-   * under a real polaroid. Swap `src` for a better photo whenever you have
-   * one — anything roughly square works.
+   * `caption` is shown under the pile while this photo is on top. Swap `src`
+   * for a better photo whenever you have one — anything roughly square works.
    */
   portrait: {
     src: "/photos/syedheadshot.webp",
     alt: "Syed Kazmi",
     caption: "Austin, Texas",
   },
+
+  /**
+   * Photos that tape onto the About pile when their phrase in `bio` is
+   * clicked. `phrase` must appear word for word in a bio paragraph; that is
+   * what becomes the button. `src: null` renders a labelled placeholder card
+   * until a real photo is supplied.
+   */
+  aboutPhotos: [
+    {
+      phrase: "two cats",
+      src: "/cats/baileyandlouisecuddled.webp",
+      alt: "Bailey and Louise, Syed's two cats, curled up together",
+      caption: "Bailey & Louise",
+    },
+    {
+      phrase: "getting outside",
+      src: null,
+      alt: "Placeholder for a photo outdoors",
+      caption: "Placeholder \u00b7 outside",
+    },
+    {
+      phrase: "volunteering",
+      src: null,
+      alt: "Placeholder for a volunteering photo",
+      caption: "Placeholder \u00b7 volunteering",
+    },
+  ],
 
   url: "https://syedk.dev",
 
