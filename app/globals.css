@@ -215,8 +215,8 @@
 /* ------------------------------------------------------------------ */
 /*  Cursor — a printer's registration mark                             */
 /*                                                                     */
-/*  The crosshair-in-a-circle used to align colour plates on press.    */
-/*  Hollow while reading, filled over anything interactive.            */
+/*  The crosshair used to align colour plates on press. One mark         */
+/*  everywhere — the hover label carries interactivity, not the cursor.  */
 /*                                                                     */
 /*  Scoped to `pointer: fine` so touch devices are untouched, and every */
 /*  rule keeps a standard keyword fallback so the cursor still means   */
@@ -234,6 +234,8 @@
       default;
   }
 
+  /* Same mark over links; only the keyword fallback differs, so the cursor
+     still means the right thing if the image ever fails to load. */
   a,
   button,
   summary,
@@ -241,9 +243,8 @@
   [role="button"],
   [role="link"] {
     cursor:
-      image-set(url("/cursor/reg-live.png") 1x, url("/cursor/reg-live@2x.png") 2x)
-        16 16,
-      url("/cursor/reg-live.png") 16 16,
+      image-set(url("/cursor/reg.png") 1x, url("/cursor/reg@2x.png") 2x) 16 16,
+      url("/cursor/reg.png") 16 16,
       pointer;
   }
 

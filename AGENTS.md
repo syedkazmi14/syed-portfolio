@@ -73,7 +73,14 @@ utility for small uppercase mono headings rather than re-specifying it.
 
 A printer's registration mark — the crosshair used to align colour plates on
 press, in the same print vocabulary as the paper tooth and the drawer's dotted
-frame. Hollow by default, filled over interactive elements.
+frame. One mark everywhere, lines closed through the centre.
+
+Interactivity is carried by `components/CursorLabel.tsx`, a small label that
+rides beside the cursor over anything with a `data-cursor-label` attribute
+("View project" on a project tile, "View details" on an experience row) — not
+by a second cursor image. It is mounted once in the root layout, writes
+position straight to the DOM in a rAF so moving the mouse never renders, and
+is skipped entirely on coarse pointers and under reduced motion.
 
 `npm run gen:cursors` builds `public/cursor/*.png` from
 `scripts/gen-cursors.mjs`. PNG, not SVG: Safari does not support SVG cursors.

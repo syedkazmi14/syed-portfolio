@@ -1,13 +1,13 @@
 /**
  * Builds the cursor images.
  *
- * The mark is a printer's registration mark — the crosshair-in-a-circle used
+ * The mark is a printer's registration mark — the crosshair used
  * to align colour plates on press. It belongs to the same print vocabulary as
  * the paper tooth and the drawer's dotted frame.
  *
- * Two states:
- *   reg.png       hollow  — the default cursor
- *   reg-live.png  filled  — over links and buttons ("on target")
+ * One mark everywhere: two lines crossing through the centre. Interactivity
+ * is carried by the hover label and the usual link styles, not by a second
+ * cursor.
  *
  * PNG rather than SVG because Safari does not support SVG cursors. Each is
  * emitted at 1x and 2x and referenced through image-set().
@@ -33,28 +33,23 @@ const OUT = join(root, "public/cursor");
 const GREEN = "#0C4A33";
 const HALO = "#F4F2EA";
 
-/** @param {boolean} live  filled centre for interactive elements */
-function markSvg(live) {
-  const shapes = (stroke, width) => `
-    <g fill="none" stroke="${stroke}" stroke-width="${width}" stroke-linecap="round">
-      <circle cx="16" cy="16" r="6.25" />
-      <path d="M16 1.5v6.5M16 24v6.5M1.5 16h6.5M24 16h6.5" />
-    </g>`;
+function markSvg() {
+  const path = "M16 2.5v27M2.5 16h27";
+
+  const shapes = (stroke, width) =>
+    `<path d="${path}" fill="none" stroke="${stroke}" stroke-width="${width}" stroke-linecap="round" />`;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
     ${shapes(HALO, 3.2)}
-    ${shapes(GREEN, 1.25)}
-    ${live ? `<circle cx="16" cy="16" r="2.6" fill="${GREEN}" stroke="${HALO}" stroke-width="1" />` : ""}
+    ${shapes(GREEN, 1.35)}
   </svg>`;
 }
 
 mkdirSync(OUT, { recursive: true });
 
-for (const [name, live] of [
-  ["reg", false],
-  ["reg-live", true],
-]) {
-  const svg = Buffer.from(markSvg(live));
+{
+  const svg = Buffer.from(markSvg());
+  const name = "reg";
   for (const [suffix, size] of [
     ["", 32],
     ["@2x", 64],

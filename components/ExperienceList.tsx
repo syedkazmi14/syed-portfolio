@@ -31,6 +31,7 @@ export function ExperienceList() {
             <button
               type="button"
               onClick={() => setActive(item)}
+              data-cursor-label="View details"
               aria-label={`${item.role} at ${item.company} — details`}
               className="grid w-full grid-cols-1 gap-x-8 gap-y-1.5 px-4 py-5 text-left transition-colors sm:grid-cols-[10.5rem_minmax(0,1fr)]"
             >

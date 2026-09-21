@@ -48,7 +48,7 @@ function WorkTile({
   return (
     <Reveal as="article" delay={(index % 2) * 60} className="border-t border-rule">
       <HoverTile image={project.image} intensity={0.2}>
-        <div className="flex h-full flex-col px-3 py-6">
+        <div data-cursor-label="View project" className="flex h-full flex-col px-3 py-6">
           <div className="flex items-baseline gap-3">
             <span className="font-mono text-[0.72rem] text-faint">
               {String(index + 1).padStart(2, "0")}
