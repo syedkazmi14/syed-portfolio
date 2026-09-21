@@ -24,7 +24,7 @@ export function ExperienceList() {
         <Reveal
           as="article"
           key={item.id}
-          delay={i * 50}
+          delay={i * 80}
           className="border-t border-rule-soft"
         >
           <HoverTile image={item.image}>

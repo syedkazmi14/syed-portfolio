@@ -133,7 +133,7 @@
 /* ------------------------------------------------------------------ */
 /*  Motion — the site has exactly one idea: a fade-up on first view.   */
 /*                                                                     */
-/*  Driven by IntersectionObserver adding [data-revealed] (see         */
+/*  Driven by IntersectionObserver setting [data-reveal] (see          */
 /*  components/Reveal.tsx). Content is VISIBLE by default and only     */
 /*  hidden once JS confirms it can animate it back in, so the page is  */
 /*  never blank if scripting fails or rAF is paused.                   */
@@ -143,20 +143,31 @@
      first paint. No JS -> the rule never applies and everything renders
      normally. This is deliberate: the old build inlined opacity:0 and left
      whole pages invisible whenever its animation runtime didn't run. */
-  [data-js] [data-reveal="pending"] {
-    opacity: 0;
-    transform: translateY(14px);
+
+  /* On screen when the page opens: a keyframe from the first paint. It runs
+     to the end by itself, so it can't strand anything hidden. */
+  [data-js] [data-reveal="load"] {
+    animation: reveal-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) backwards;
   }
 
-  [data-js] [data-reveal] {
-    transition:
-      opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  /* Below the fold: hidden instantly (no transition, it's off screen), then
+     transitioned in when it scrolls into view. */
+  [data-js] [data-reveal="pending"] {
+    opacity: 0;
+    transform: translateY(20px);
   }
 
   [data-js] [data-reveal="shown"] {
-    opacity: 1;
-    transform: none;
+    transition:
+      opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @keyframes reveal-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
   }
 }
 

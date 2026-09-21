@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Schibsted_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import { siteConfig } from "@/data/site";
 import { CursorLabel } from "@/components/CursorLabel";
+import { ScrollMemory } from "@/components/ScrollMemory";
 import "./globals.css";
 
 const display = Instrument_Serif({
@@ -99,6 +100,7 @@ export default function RootLayout({
         />
         {children}
         <CursorLabel />
+        <ScrollMemory />
       </body>
     </html>
   );

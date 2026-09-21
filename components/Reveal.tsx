@@ -12,10 +12,17 @@ interface RevealProps {
 }
 
 /**
- * Fades + lifts its children the first time they scroll into view.
+ * Fades + lifts its children the first time they come into view.
  *
- * The hidden state lives in CSS behind `[data-js]` (see globals.css), which an
- * inline script in the root layout sets before first paint. So:
+ * Every Reveal is server-rendered with `data-reveal="load"`, which (behind
+ * `[data-js]`, see globals.css) plays a CSS keyframe fade-up from the very
+ * first paint. That covers whatever is on screen when the page opens, with no
+ * flash of visible content before hydration. A keyframe always runs to the
+ * end on its own, so it can never leave anything hidden.
+ *
+ * On mount, anything still below the fold is switched to "pending" (hidden,
+ * off screen so nobody sees the switch) and fades in via a transition when it
+ * scrolls into view. So:
  *
  *   - no JS at all          -> content renders normally, never hidden
  *   - JS on, reduced motion -> content renders normally, never hidden
@@ -35,8 +42,11 @@ export function Reveal({
     const el = ref.current;
     if (!el) return;
 
-    // Motion is off: leave the element in its default visible state.
+    // Motion is off: the CSS doesn't apply either, nothing to do.
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    // On screen at mount: the load keyframe is already playing it in.
+    if (el.getBoundingClientRect().top < window.innerHeight) return;
 
     el.dataset.reveal = "pending";
 
@@ -45,8 +55,6 @@ export function Reveal({
       el.dataset.reveal = "shown";
     };
 
-    // Already on screen at mount (above the fold): show on the next frame so
-    // the transition still runs rather than snapping.
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -60,18 +68,16 @@ export function Reveal({
 
     observer.observe(el);
 
-    // Safety net: if the observer somehow never fires (a background tab that
-    // is closed before it is ever viewed, an exotic browser), reveal anyway.
-    const fallback = window.setTimeout(show, 2500);
-
-    return () => {
-      observer.disconnect();
-      window.clearTimeout(fallback);
-    };
+    return () => observer.disconnect();
   }, [delay]);
 
   return (
-    <Tag ref={ref} className={className}>
+    <Tag
+      ref={ref}
+      className={className}
+      data-reveal="load"
+      style={delay ? { animationDelay: `${delay}ms` } : undefined}
+    >
       {children}
     </Tag>
   );

@@ -46,7 +46,7 @@ function WorkTile({
   };
 
   return (
-    <Reveal as="article" delay={(index % 2) * 60} className="border-t border-rule">
+    <Reveal as="article" delay={(index % 2) * 120} className="border-t border-rule">
       <HoverTile image={project.image} intensity={0.2}>
         <div data-cursor-label="View project" className="flex h-full flex-col px-3 py-6">
           <div className="flex items-baseline gap-3">
