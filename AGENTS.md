@@ -121,7 +121,7 @@ compiled output by shape, not by the literal colour you wrote.
 
 ## The logo mark
 
-Syed's own drawn cat head — grey fill, deep-green outline. The source lives at
+Syed's own drawn cat head — beige fill, deep-green outline. The source lives at
 `scripts/assets/mark-cat-source.webp` and already carries a real alpha
 channel, so nothing is keyed out: it is trimmed, resized, and its own colours
 are preserved. Every icon is derived from it by `npm run gen:icons`:
@@ -129,10 +129,13 @@ are preserved. Every icon is derived from it by `npm run gen:icons`:
 - `public/logo/mark.webp` — ink on transparent, trimmed; used by the nav
 - `app/icon.png`, `app/apple-icon.png`, `app/favicon.ico` — on a cream ground
 
-The icon files get a cream ground rather than transparency on purpose: a
-dark-outlined mark on transparent disappears against a dark browser theme.
+The icon files sit on **deep green**, while the nav keeps the artwork as drawn
+on the page's cream. That split is deliberate: the beige fill is only a few
+steps from the cream ground, so a cream-backed favicon washes out at 32px and
+the outline thins to nothing. On green the beige reads as a solid silhouette.
+Green also survives a dark browser theme, which transparency does not.
 
-**The mark is 1.36:1, not square.** The nav `<Image>` is sized to that aspect;
+**The mark is 1.34:1, not square.** The nav `<Image>` is sized to that aspect;
 a square box squashes it. Re-check those dimensions if the artwork changes —
 `gen:icons` prints the trimmed aspect for exactly this reason.
 

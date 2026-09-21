@@ -11,13 +11,17 @@
  *
  * Outputs:
  *   public/logo/mark.webp   transparent, used by the nav
- *   app/icon.png            512, cream ground — the tab icon
- *   app/apple-icon.png      180, cream ground
+ *   app/icon.png            512, green ground — the tab icon
+ *   app/apple-icon.png      180, green ground
  *   app/favicon.ico         16 / 32 / 48
  *
- * The icon files get a cream ground rather than transparency on purpose: a
- * dark-outlined mark on a transparent background disappears against a dark
- * browser theme. Cream reads on both.
+ * The icon files sit on deep green, not cream and not transparency. The beige
+ * fill is only a few steps from the cream ground, so at 32px a cream-backed
+ * icon washes out and the green outline thins to nothing; on green the beige
+ * reads as a solid silhouette and the ears stay crisp. Green also survives a
+ * dark browser theme, which transparency does not.
+ *
+ * The nav keeps the artwork exactly as drawn, on the page's own cream.
  *
  * Run with: npm run gen:icons
  */
@@ -34,7 +38,7 @@ const sharp = require("sharp");
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SOURCE = join(root, "scripts/assets/mark-cat-source.webp");
 
-const GROUND = { r: 244, g: 242, b: 234 }; // --color-ground
+const ICON_GROUND = { r: 12, g: 74, b: 51 }; // --color-green
 
 /** The artwork, trimmed of its transparent margin. */
 async function makeMark() {
@@ -42,7 +46,7 @@ async function makeMark() {
 }
 
 /**
- * Square icon: the mark centred on cream with breathing room.
+ * Square icon: the mark centred on green with breathing room.
  * `fit: "contain"` matters — the cat is wider than it is tall, and a square
  * resize would squash it.
  */
@@ -56,7 +60,7 @@ async function makeIcon(mark, size) {
     .toBuffer();
 
   return sharp({
-    create: { width: size, height: size, channels: 4, background: GROUND },
+    create: { width: size, height: size, channels: 4, background: ICON_GROUND },
   })
     .composite([{ input: art, gravity: "center" }])
     .png()

@@ -70,15 +70,16 @@ export function Nav() {
             className="group flex shrink-0 items-center gap-2.5"
             aria-label={`${siteConfig.name} — home`}
           >
-            {/* The cat mark is 1.36:1, not square — a 40x40 box would squash it.
-                Re-check these if the artwork in scripts/assets ever changes. */}
+            {/* The cat mark is 1.34:1, not square — a square box squashes it.
+                `npm run gen:icons` prints the trimmed aspect; re-check these
+                numbers whenever the artwork changes. */}
             <Image
               src="/logo/mark.webp"
               alt=""
               width={48}
-              height={35}
+              height={36}
               priority
-              className="logo-mark h-[2.2rem] w-[3rem] shrink-0"
+              className="logo-mark h-9 w-12 shrink-0"
             />
             <span className="hidden font-mono text-xs uppercase tracking-[0.1em] text-ink sm:inline">
               {siteConfig.name}
