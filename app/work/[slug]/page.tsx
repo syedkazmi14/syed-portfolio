@@ -48,7 +48,7 @@ export default async function ProjectPage({ params }: Params) {
             href="/work"
             className="font-mono text-xs uppercase tracking-[0.08em] text-muted transition-colors hover:text-ink"
           >
-            ← All work
+            ← All projects
           </Link>
 
           {project.badge ? (
@@ -134,7 +134,7 @@ export default async function ProjectPage({ params }: Params) {
         </Reveal>
 
         <nav
-          aria-label="More work"
+          aria-label="More projects"
           className="mt-20 flex items-baseline justify-between gap-6 border-t border-rule pt-8"
         >
           <span className="label">Next</span>

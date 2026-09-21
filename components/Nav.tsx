@@ -1,9 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { siteConfig, navItems } from "@/data/site";
-import { Avatar } from "@/components/Avatar";
 
 /**
  * Fixed site header with a scroll-progress hairline along its bottom edge.
@@ -70,7 +70,14 @@ export function Nav() {
             className="group flex shrink-0 items-center gap-2.5"
             aria-label={`${siteConfig.name} — home`}
           >
-            <Avatar className="h-9 w-9 shrink-0 text-green" />
+            <Image
+              src="/logo/mark.webp"
+              alt=""
+              width={40}
+              height={40}
+              priority
+              className="logo-mark h-10 w-10 shrink-0"
+            />
             <span className="hidden font-mono text-xs uppercase tracking-[0.1em] text-ink sm:inline">
               {siteConfig.name}
             </span>

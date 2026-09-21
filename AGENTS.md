@@ -69,13 +69,22 @@ more than once in this project. `rm -rf .next` and restart. Lightning CSS also
 rewrites colours (`rgba(20,32,26,0.035)` becomes `#14201a09`), so grep the
 compiled output by shape, not by the literal colour you wrote.
 
-## The avatar
+## The logo mark
 
-`components/Avatar.tsx` is an original monoline drawing (messy spiky hair,
-goatee, no glasses) used as the nav mark. `app/icon.svg` is a simplified solid
-version of the same face for the favicon — line work turns to mush at 16px.
-After editing either, run `npm run gen:icons` to rebuild `favicon.ico` and
-`apple-icon.png`.
+Syed's own hand-drawn mark. The source lives at
+`scripts/assets/mark-source.webp` (black ink on white) and every icon is
+derived from it by `npm run gen:icons`:
+
+- `public/logo/mark.webp` — ink on transparent, trimmed; used by the nav
+- `app/icon.png`, `app/apple-icon.png`, `app/favicon.ico` — on a cream ground
+
+Two things the script does on purpose. It derives alpha from the drawing's own
+darkness, because the white background would otherwise show as a white box on
+the cream nav. And the icon files get a cream ground rather than transparency,
+because black ink on transparent disappears against a dark browser theme.
+
+To change the mark: replace the source file and re-run `npm run gen:icons`.
+Never hand-edit the outputs.
 
 ## Content rules
 

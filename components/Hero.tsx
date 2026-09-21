@@ -31,7 +31,7 @@ export function Hero() {
             href="/work"
             className="inline-flex items-center gap-2.5 rounded-sm bg-green px-6 py-3.5 text-[0.95rem] font-medium text-ground transition-colors hover:bg-green-deep"
           >
-            See selected work
+            See projects
             <ArrowRight className="h-[0.95rem] w-[0.95rem]" />
           </Link>
           <a

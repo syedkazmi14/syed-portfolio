@@ -6,7 +6,7 @@ import { WorkIndex } from "@/components/WorkIndex";
 import { Reveal } from "@/components/Reveal";
 
 export const metadata: Metadata = {
-  title: "Work",
+  title: "Projects",
   description:
     "Every project by Syed Kazmi — crisis mapping, pose estimation, oil-tank telemetry, drone computer vision, and more.",
   alternates: { canonical: "/work" },
@@ -19,7 +19,7 @@ export default function WorkPage() {
       <main className="mx-auto w-full max-w-6xl px-6 pt-36 sm:px-12 sm:pt-44">
         <Reveal>
           <h1 className="max-w-3xl font-display text-[2.75rem] leading-[1.06] tracking-[-0.015em] sm:text-6xl">
-            Work
+            Projects
           </h1>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-body">
             Backend systems, hackathon builds, and research projects. Most of

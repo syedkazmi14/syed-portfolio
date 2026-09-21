@@ -23,28 +23,11 @@ export default function Home() {
           <About />
         </div>
 
-        <section
-          id="work"
-          className="mx-auto mt-24 w-full max-w-6xl px-6 sm:mt-32 sm:px-12"
-        >
-          <Reveal className="flex items-baseline justify-between gap-6 pb-2">
-            <h2 className="label">Selected work</h2>
-            <Link
-              href="/work"
-              className="font-mono text-xs uppercase tracking-[0.08em] text-green transition-colors hover:text-green-deep"
-            >
-              All eight →
-            </Link>
-          </Reveal>
-
-          <WorkIndex projects={featuredProjects} className="mt-4" />
-        </section>
-
         {/* The car and the cats carry the personality now that the written
             "off the clock" block is gone — see SectionBackdrop. */}
         <section
           id="experience"
-          className="relative isolate mx-auto mt-24 w-full max-w-6xl px-6 py-16 sm:mt-32 sm:px-12"
+          className="relative isolate mx-auto mt-20 w-full max-w-6xl px-6 py-16 sm:mt-28 sm:px-12"
         >
           <SectionBackdrop
             src="/photos/sc300.webp"
@@ -58,6 +41,23 @@ export default function Home() {
           <div className="mt-6 max-w-3xl">
             <ExperienceList />
           </div>
+        </section>
+
+        <section
+          id="work"
+          className="mx-auto mt-24 w-full max-w-6xl px-6 sm:mt-32 sm:px-12"
+        >
+          <Reveal className="flex items-baseline justify-between gap-6 pb-2">
+            <h2 className="label">Selected projects</h2>
+            <Link
+              href="/work"
+              className="font-mono text-xs uppercase tracking-[0.08em] text-green transition-colors hover:text-green-deep"
+            >
+              All eight →
+            </Link>
+          </Reveal>
+
+          <WorkIndex projects={featuredProjects} className="mt-4" />
         </section>
 
         <div className="relative isolate mt-24 py-16 sm:mt-32">
