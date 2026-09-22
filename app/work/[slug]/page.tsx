@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import { PhotoCarousel } from "@/components/PhotoCarousel";
 import { notFound } from "next/navigation";
 import { projects, getProject } from "@/data/projects";
 import { Nav } from "@/components/Nav";
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     openGraph: {
       title: project.name,
       description: project.tagline,
-      images: project.image ? [{ url: project.image }] : undefined,
+      images: project.images?.length ? [{ url: project.images[0] }] : undefined,
     },
   };
 }
@@ -73,20 +73,14 @@ export default async function ProjectPage({ params }: Params) {
           ) : null}
         </Reveal>
 
-        {project.image ? (
+        {project.images?.length ? (
           <Reveal delay={60}>
-            <figure className="mt-12">
-              <div className="relative aspect-[16/9] overflow-hidden border border-rule bg-rule-soft">
-                <Image
-                  src={project.image}
-                  alt={`${project.name} — screenshot`}
-                  fill
-                  sizes="(max-width: 896px) 100vw, 896px"
-                  className="object-cover"
-                  priority
-                />
-              </div>
-            </figure>
+            <PhotoCarousel
+              className="mt-12"
+              images={project.images}
+              alt={`${project.name} — screenshot`}
+              sizes="(max-width: 896px) 100vw, 896px"
+            />
           </Reveal>
         ) : null}
 

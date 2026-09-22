@@ -295,3 +295,13 @@
   -webkit-mask-image: linear-gradient(to bottom, transparent, #000 62%);
   mask-image: linear-gradient(to bottom, transparent, #000 62%);
 }
+
+/* Carousel crossfade — the only animation the photo frame uses. */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

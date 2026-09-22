@@ -54,6 +54,12 @@ display face ever changes again.
   a pseudo-element: it has a `backdrop-filter`, and a background on the header
   itself would be blurred with everything behind it. Keep the alphas tiny —
   this is texture in the stock, not a pattern.
+- **Multiple photos**: projects, experience and interests all take
+  `images?: string[]`. The **first is primary** — it is what the hover wash and
+  the OG card use — and the rest are paged through by
+  `components/PhotoCarousel.tsx`. The frame is a fixed aspect with the arrows
+  laid *over* it, so extra photos never cost extra height, and only the active
+  image is mounted. One photo renders as a plain figure with no controls.
 - **Imagery**: photographs appear three ways — `HoverTile` (fades a photo in
   behind a row on hover) `SectionBackdrop` (a grayscale, green-tinted wash
   far behind a section) and `PhotoSticker` (a small rotated photo tucked in a

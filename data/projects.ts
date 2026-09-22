@@ -62,7 +62,7 @@ export const projects: Project[] = [
       "TailwindCSS",
     ],
     featured: true,
-    image: "/projects/blue-relief.webp",
+    images: ["/projects/blue-relief.webp"],
     links: [],
   },
   {
@@ -78,7 +78,7 @@ export const projects: Project[] = [
     tech: ["Python", "TensorFlow", "PoseNet", "MoveNet", "Machine Learning"],
     featured: true,
     badge: "1st Place · Axxess AI Track",
-    image: "/projects/telekinetics.webp",
+    images: ["/projects/telekinetics.webp"],
     links: [],
   },
   {
@@ -102,7 +102,7 @@ export const projects: Project[] = [
     ],
     featured: true,
     badge: "People's Choice Award",
-    image: "/projects/guardiangram.webp",
+    images: ["/projects/guardiangram.webp"],
     links: [],
   },
   {
@@ -127,7 +127,7 @@ export const projects: Project[] = [
       "EOG API",
     ],
     badge: "HackUTD 2025",
-    image: "/projects/witchwatch.webp",
+    images: ["/projects/witchwatch.webp"],
     links: [],
   },
   {
@@ -141,7 +141,7 @@ export const projects: Project[] = [
     solution:
       "A vehicle data platform that reads OBD data via an Arduino bridge, exposes it through a REST API, and visualizes fuel-economy trends in a Next.js dashboard.",
     tech: ["Next.js", "MongoDB", "Arduino", "REST API", "Data Visualization"],
-    image: "/projects/ecodrive.webp",
+    images: ["/projects/ecodrive.webp"],
     links: [],
   },
   {
@@ -155,7 +155,7 @@ export const projects: Project[] = [
     solution:
       "A computer-vision pipeline using YOLOv8 and Python (with MATLAB for analysis) trained to detect TCP coils accurately and repeatably.",
     tech: ["Machine Learning", "MATLAB", "Python", "YOLOv8", "Computer Vision"],
-    image: "/projects/hbs-cv.webp",
+    images: ["/projects/hbs-cv.webp"],
     links: [],
   },
 ];

@@ -20,7 +20,7 @@ export const interests: Interest[] = [
     id: "cars",
     title: "Cars",
     blurb: "A '95 SC300 and a permanent list of things to fix",
-    image: "/photos/sc300.webp",
+    images: ["/photos/sc300.webp"],
     imageAlt: "A 1995 Lexus SC300",
     body: [
       "DRAFT — rewrite in your own words. The SC300 is the long-running project: a 1995 Lexus coupe that is equal parts car and to-do list. Weekends go into it.",

@@ -5,6 +5,7 @@ import { experience } from "@/data/experience";
 import type { ExperienceItem } from "@/lib/types";
 import { Reveal } from "@/components/Reveal";
 import { HoverTile } from "@/components/HoverTile";
+import { PhotoCarousel } from "@/components/PhotoCarousel";
 import { Drawer } from "@/components/Drawer";
 
 /**
@@ -27,7 +28,7 @@ export function ExperienceList() {
           delay={i * 80}
           className="border-t border-rule-soft"
         >
-          <HoverTile image={item.image}>
+          <HoverTile image={item.images?.[0]}>
             <button
               type="button"
               onClick={() => setActive(item)}
@@ -74,6 +75,14 @@ function ExperienceDetail({ item }: { item: ExperienceItem }) {
       <h2 className="font-display text-4xl leading-tight">{item.company}</h2>
       <p className="mt-2 text-lg leading-relaxed text-body">{item.role}</p>
       <p className="mt-1 font-mono text-xs text-muted">{item.period}</p>
+
+      {item.images?.length ? (
+        <PhotoCarousel
+          className="mt-7"
+          images={item.images}
+          alt={`${item.company} — photo`}
+        />
+      ) : null}
 
       <p className="mt-7 leading-relaxed">{item.description}</p>
 

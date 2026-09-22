@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, type MouseEvent } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/lib/types";
 import { Reveal } from "@/components/Reveal";
 import { ArrowUpRight } from "@/components/icons";
 import { HoverTile } from "@/components/HoverTile";
+import { PhotoCarousel } from "@/components/PhotoCarousel";
 import { Drawer } from "@/components/Drawer";
 
 /** Tech shown on a tile before it gets noisy. Tiles are narrow now. */
@@ -47,7 +47,7 @@ function WorkTile({
 
   return (
     <Reveal as="article" delay={(index % 2) * 120} className="border-t border-rule">
-      <HoverTile image={project.image} intensity={0.2}>
+      <HoverTile image={project.images?.[0]} intensity={0.2}>
         <div data-cursor-label="View project" className="flex h-full flex-col px-3 py-6">
           <div className="flex items-baseline gap-3">
             <span className="font-mono text-[0.72rem] text-faint">
@@ -156,16 +156,12 @@ function ProjectDetail({ project }: { project: Project }) {
         <p className="mt-1 font-mono text-xs text-muted">{project.period}</p>
       ) : null}
 
-      {project.image ? (
-        <div className="relative mt-7 aspect-[16/9] overflow-hidden border border-rule bg-rule-soft">
-          <Image
-            src={project.image}
-            alt={`${project.name} — screenshot`}
-            fill
-            sizes="30rem"
-            className="object-cover"
-          />
-        </div>
+      {project.images?.length ? (
+        <PhotoCarousel
+          className="mt-7"
+          images={project.images}
+          alt={`${project.name} — screenshot`}
+        />
       ) : null}
 
       {project.problem ? (

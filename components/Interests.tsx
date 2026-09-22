@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { interests } from "@/data/interests";
 import type { Interest } from "@/lib/types";
 import { Reveal } from "@/components/Reveal";
 import { HoverTile } from "@/components/HoverTile";
+import { PhotoCarousel } from "@/components/PhotoCarousel";
 import { Drawer } from "@/components/Drawer";
 import { ArrowUpRight } from "@/components/icons";
 
@@ -35,7 +35,7 @@ export function Interests() {
             delay={(i % 4) * 60}
             className="border-t border-rule"
           >
-            <HoverTile image={interest.image} intensity={0.2}>
+            <HoverTile image={interest.images?.[0]} intensity={0.2}>
               <button
                 type="button"
                 onClick={() => setActive(interest)}
@@ -77,16 +77,13 @@ function InterestDetail({ interest }: { interest: Interest }) {
       <h2 className="font-display text-4xl leading-tight">{interest.title}</h2>
       <p className="mt-2 text-lg leading-relaxed text-body">{interest.blurb}</p>
 
-      {interest.image ? (
-        <div className="relative mt-7 aspect-[4/3] overflow-hidden border border-rule bg-rule-soft">
-          <Image
-            src={interest.image}
-            alt={interest.imageAlt ?? ""}
-            fill
-            sizes="30rem"
-            className="object-cover"
-          />
-        </div>
+      {interest.images?.length ? (
+        <PhotoCarousel
+          className="mt-7"
+          images={interest.images}
+          alt={interest.imageAlt ?? interest.title}
+          aspect="aspect-[4/3]"
+        />
       ) : null}
 
       <div className="mt-7 space-y-4">

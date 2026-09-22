@@ -30,8 +30,12 @@ export interface Project {
   badge?: string;
   /** Repo / demo / writeup links. Empty array renders nothing. */
   links?: ProjectLink[];
-  /** Screenshot under /public/projects. */
-  image?: string;
+  /**
+   * Screenshots under /public/projects. The first is the primary — it is what
+   * the hover wash and the OG card use; the rest are paged through in the
+   * drawer and on the project page.
+   */
+  images?: string[];
 }
 
 export type ExperienceType = "software" | "hardware" | "it";
@@ -47,10 +51,11 @@ export interface ExperienceItem {
   highlights?: string[];
   tech: string[];
   /**
-   * Optional photo or logo, revealed faintly behind the row on hover.
+   * Photos or logos for this role. The first is revealed faintly behind the
+   * row on hover; all of them are paged through in the drawer.
    * Put files in public/experience/ and run `npm run optimize:images`.
    */
-  image?: string;
+  images?: string[];
 }
 
 export interface SkillCategory {
@@ -79,7 +84,7 @@ export interface Interest {
   blurb: string;
   /** Paragraphs shown in the drawer. */
   body: string[];
-  image?: string;
+  images?: string[];
   imageAlt?: string;
   /** Optional pointer at related work. */
   link?: { label: string; href: string };
