@@ -96,8 +96,14 @@ export function AboutScrapbook() {
             live region, screen readers would re-announce the button every time
             a photo changed the caption.
           */}
-          <figcaption className="mt-6 flex items-center justify-center gap-3 font-mono text-[0.68rem] uppercase tracking-[0.1em] text-faint lg:justify-start">
-            <span aria-live="polite">
+          <figcaption className="mt-6 flex items-center justify-between gap-4 font-mono text-[0.68rem] uppercase tracking-[0.1em] text-faint">
+            {/*
+              The caption takes the free space and keeps its own alignment, so
+              with no reset button showing it still centres on mobile and sits
+              left from lg — exactly as before. The button is pushed to the far
+              right by justify-between rather than sitting next to the text.
+            */}
+            <span aria-live="polite" className="flex-1 text-center lg:text-left">
               {top ? top.caption : portrait.caption}
             </span>
 
@@ -106,7 +112,7 @@ export function AboutScrapbook() {
                 type="button"
                 onClick={() => setStack([])}
                 data-cursor-label="Clear photos"
-                className="inline-flex items-center gap-1 text-green transition-colors hover:text-green-deep"
+                className="inline-flex shrink-0 items-center gap-1 text-green transition-colors hover:text-green-deep"
               >
                 <svg
                   viewBox="0 0 16 16"
