@@ -38,6 +38,16 @@ function WorkTile({
    * The title stays a real <a href="/work/<id>"> even though a plain click
    * opens the drawer: it keeps the project pages crawlable and lets
    * cmd-click / middle-click open them in a new tab as expected.
+   *
+   * The whole tile is clickable via `after:absolute after:inset-0` on that
+   * same link — the "stretched link" pattern. It is one real anchor rather
+   * than a click handler on the wrapper, so the entire tile inherits the
+   * link's behaviour for free: cmd-click anywhere opens a tab, the status bar
+   * shows the URL, and there is still exactly one tab stop. The ::after
+   * resolves against HoverTile's `relative` root, which is the full tile box.
+   *
+   * Anything that needs its own click — the Details link and any repo/demo
+   * links — sits above that overlay on `relative z-10`.
    */
   const handle = (e: MouseEvent) => {
     if (!isPlainClick(e)) return;
@@ -49,12 +59,20 @@ function WorkTile({
     <Reveal as="article" delay={(index % 2) * 120} className="border-t border-rule">
       <HoverTile image={project.images?.[0]} intensity={0.2}>
         <div data-cursor-label="View project" className="flex h-full flex-col px-3 py-6">
+          {/*
+            The badge wraps rather than truncates. Two of them — "1st Place ·
+            Axxess 2024 Hackathon" and "People's Choice Award · ACM Projects" —
+            are wider than a 320px tile, and `truncate` cut them off silently:
+            the Playwright suite never caught it because clipping is exactly
+            how truncate avoids overflow. `min-w-0` lets the flex item shrink
+            below its content so the text can break.
+          */}
           <div className="flex items-baseline gap-3">
-            <span className="font-mono text-[0.72rem] text-faint">
+            <span className="shrink-0 font-mono text-[0.72rem] text-faint">
               {String(index + 1).padStart(2, "0")}
             </span>
             {project.badge ? (
-              <p className="truncate font-mono text-[0.65rem] uppercase tracking-[0.1em] text-green">
+              <p className="min-w-0 font-mono text-[0.65rem] uppercase leading-relaxed tracking-[0.1em] text-green">
                 {project.badge}
               </p>
             ) : null}
@@ -64,7 +82,7 @@ function WorkTile({
             <Link
               href={`/work/${project.id}`}
               onClick={handle}
-              className="transition-colors hover:text-green"
+              className="transition-colors after:absolute after:inset-0 after:content-[''] hover:text-green"
             >
               {project.name}
             </Link>
@@ -76,10 +94,12 @@ function WorkTile({
             </p>
           ) : null}
 
-          {project.period ? (
-            <p className="mt-2 font-mono text-[0.7rem] text-faint">{project.period}</p>
-          ) : null}
-
+          {/*
+            No date on the tile. Only Copilot SDK and DayOne carry a `period`,
+            so rendering it here made those two the odd ones out — a date where
+            every other tile shows its stack. The date is not lost: it still
+            reads in the drawer and on the project page.
+          */}
           {project.tech.length > 0 ? (
             <p className="mt-3 font-mono text-[0.7rem] leading-relaxed text-muted">
               {techLine(project.tech)}
@@ -90,7 +110,7 @@ function WorkTile({
             <Link
               href={`/work/${project.id}`}
               onClick={handle}
-              className="border-b border-green pb-px text-[0.85rem] font-medium text-green transition-colors hover:text-green-deep"
+              className="relative z-10 border-b border-green pb-px text-[0.85rem] font-medium text-green transition-colors hover:text-green-deep"
             >
               Details
             </Link>
@@ -100,7 +120,7 @@ function WorkTile({
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-[0.85rem] text-muted transition-colors hover:text-ink"
+                className="relative z-10 inline-flex items-center gap-1 text-[0.85rem] text-muted transition-colors hover:text-ink"
               >
                 {link.label}
                 <ArrowUpRight className="h-3 w-3" />

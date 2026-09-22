@@ -13,34 +13,59 @@ import type { Project } from "@/lib/types";
 export const projects: Project[] = [
   {
     /*
-     * Syed supplied only the name, the dates and "Open Source" for this one.
-     * No tagline, stack or description yet — nothing here is invented, so the
-     * tile and drawer simply render less until he fills it in.
+     * `description` is Syed's own two bullets, joined into a sentence — no
+     * claim added. The tagline is mine, drawn from those bullets, and is the
+     * one line here he has not written himself.
      */
     id: "copilot-sdk",
     name: "Copilot SDK",
     period: "Jul 2026 — Present",
     badge: "Open source",
-    tech: [],
+    tagline: "Java and Go SDK contributions",
+    images: ["/projects/copilot-sdk.webp"],
+    description:
+      "Built Java testing infrastructure for MCP server connectivity and HTTP request callback validation, and contributed Go SDK session configuration features, aligning API behavior across SDK implementations.",
+    tech: ["Java", "Go", "MCP", "APIs"],
     links: [],
     featured: true,
   },
   {
-    /* Description is Syed's own wording, verbatim. Stack not supplied. */
+    /*
+     * `description` is Syed's own wording, verbatim. The tagline is that same
+     * sentence condensed to the 3-5 word noun phrase the other tiles use —
+     * no new claim, and the full sentence still reads in the drawer.
+     *
+     * `tech` is drawn from the architecture Syed described (knowledge agent,
+     * episode generator, voice, visuals, recasting, storage). That write-up is
+     * richer than the one-line description here and is not yet on the site.
+     */
     id: "dayone",
     name: "DayOne",
     period: "Sep 2026",
     badge: "HackRice 2026",
+    tagline: "Gamified agentic onboarding tool",
     images: ["/projects/dayone.webp"],
     description:
       "Gamified agentic document parser and AI video generation to make onboarding processes more engaging.",
-    tech: [],
+    tech: [
+      "TypeScript",
+      "OpenAI",
+      "Gemini",
+      "ElevenLabs",
+      "FLUX",
+      "Replicate",
+      "Wan 2.2",
+      "Supabase",
+      "PostgreSQL",
+      "SQLite",
+    ],
     links: [],
     featured: true,
   },
   {
     id: "blue-relief",
     name: "BlueRelief",
+    badge: "Open source",
     tagline: "Real-time crisis detection platform",
     description:
       "I pull live posts from BlueSky, run them through Gemini to find and tag crisis reports, and drop the geolocated ones onto a Mapbox map as they come in. FastAPI workers handle ingest, Redis and Celery move work between them, PostGIS runs the geo queries, and everything ships in Docker.",
@@ -78,7 +103,7 @@ export const projects: Project[] = [
       "An AI app that runs pose estimation (PoseNet / MoveNet) on live movement, scores form against target ranges, and surfaces real-time corrective feedback — built and shipped in a hackathon weekend.",
     tech: ["Python", "TensorFlow", "PoseNet", "MoveNet", "Machine Learning"],
     featured: true,
-    badge: "1st Place · Axxess AI Track",
+    badge: "1st Place · Axxess 2024 Hackathon",
     images: [
       "/projects/telekinetics.webp",
       "/projects/telekinetics-team.webp",
@@ -105,7 +130,7 @@ export const projects: Project[] = [
       "Git",
     ],
     featured: true,
-    badge: "People's Choice Award",
+    badge: "People's Choice Award · ACM Projects",
     images: ["/projects/guardiangram.webp"],
     links: [],
   },
@@ -145,6 +170,7 @@ export const projects: Project[] = [
     solution:
       "A vehicle data platform that reads OBD data via an Arduino bridge, exposes it through a REST API, and visualizes fuel-economy trends in a Next.js dashboard.",
     tech: ["Next.js", "MongoDB", "Arduino", "REST API", "Data Visualization"],
+    badge: "HackUTD 2024",
     images: ["/projects/ecodrive.webp"],
     links: [],
   },
@@ -159,6 +185,7 @@ export const projects: Project[] = [
     solution:
       "A computer-vision pipeline using YOLOv8 and Python (with MATLAB for analysis) trained to detect TCP coils accurately and repeatably.",
     tech: ["Machine Learning", "MATLAB", "Python", "YOLOv8", "Computer Vision"],
+    badge: "Research",
     images: ["/projects/hbs-cv.webp"],
     links: [],
   },
