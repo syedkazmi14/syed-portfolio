@@ -11,12 +11,16 @@ export const siteConfig = {
   shortName: "Syed",
   role: "Software Developer",
 
-  /** The hero statement. Three lines by design — see components/Hero.tsx. */
-  headline: {
-    lead: "I build the backend —",
-    accent: "cloud services and AI agents —",
-    trail: "and the products around it.",
-  },
+  /**
+   * The line on the share card (Open Graph / Twitter), and nothing else.
+   *
+   * This used to be a three-part `headline` the hero rendered. Once the hero
+   * became greeting / name / role, the share card was the only thing still
+   * reading it — which is why a shared link showed a sentence written to be
+   * a headline. The city is appended from `location` in app/layout.tsx, so
+   * it cannot go stale independently of the rest of the site.
+   */
+  tagline: "Backend, cloud, and AI agents.",
 
   /**
    * The paragraph under the hero. Past tense: the IBM internship ended in

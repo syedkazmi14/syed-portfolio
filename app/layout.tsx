@@ -43,8 +43,14 @@ const amiri = localFont({
   adjustFontFallback: false,
 });
 
-const { headline, intro, name, role, education } = siteConfig;
-const plainHeadline = `${headline.lead} ${headline.accent} ${headline.trail}`;
+const { tagline, intro, name, role, location, education } = siteConfig;
+
+/*
+ * The share card's title already reads "Syed Kazmi — Software Developer", so
+ * this line does not spend itself repeating the role. The city is composed in
+ * rather than written into the tagline, so there is one place to change it.
+ */
+const shareDescription = `${tagline} ${location}.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -71,14 +77,14 @@ export const metadata: Metadata = {
     type: "website",
     url: siteConfig.url,
     title: `${name} — ${role}`,
-    description: plainHeadline,
+    description: shareDescription,
     siteName: name,
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
     title: `${name} — ${role}`,
-    description: plainHeadline,
+    description: shareDescription,
   },
   robots: { index: true, follow: true },
 };

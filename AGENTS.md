@@ -213,7 +213,8 @@ All content lives in `data/`. Never invent an accomplishment, metric, date,
 company, or responsibility — if a fact is not already in `data/` or stated by
 Syed, ask rather than filling the gap.
 
-- `data/site.ts` — identity, headline, bio, education, portrait, links.
+- `data/site.ts` — identity, tagline, bio, education, portrait, links.
+  `tagline` is the share-card line only; nothing on the page renders it.
   `nameUrdu` is Syed's own spelling, supplied by him — not transliterated by a
   tool. `role` is already title-cased ("Software Developer"); the hero renders
   it verbatim rather than re-casing it.
