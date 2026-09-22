@@ -82,9 +82,15 @@ display face ever changes again.
   initial transform inline instead. `translate-*` behaves the same way, though
   `transition-transform` does cover it (it compiles to
   `transform, translate, scale, rotate`).
-- **Dependencies**: five runtime deps. `framer-motion`, `lucide-react`, and
-  `@radix-ui/react-dialog` were deliberately removed. Icons are inline SVG in
-  `components/icons.tsx`. Do not add a component library or an icon package.
+- **Dependencies**: **three** runtime deps — `next`, `react`, `react-dom`.
+  `framer-motion`, `lucide-react`, `@radix-ui/react-dialog`, `clsx` and
+  `tailwind-merge` were all deliberately removed. Icons are inline SVG in
+  `components/icons.tsx`; there is no `cn()` helper, so write class strings
+  directly or use a template literal. Do not add a component library, an icon
+  package, or a classname utility.
+- **`sharp` is a pinned devDependency** (exact, no caret). All three image
+  scripts need it. It used to resolve only as a transitive dependency of Next,
+  which would have broken them silently the day Next moved it.
 - **Images**: everything under `public/` is WebP and size-budgeted by
   `scripts/optimize-images.mjs`. Run `npm run optimize:images` after adding any
   image, and add new folders to that script's `TARGETS`. Never commit a

@@ -160,5 +160,4 @@ export const projects: Project[] = [
   },
 ];
 
-export const featuredProjects = projects.filter((p) => p.featured);
 export const getProject = (id: string) => projects.find((p) => p.id === id);

@@ -28,8 +28,6 @@
   --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-fragment-mono), ui-monospace, monospace;
 
-  /* container */
-  --spacing-gutter: 1.5rem;
 }
 
 /* ------------------------------------------------------------------ */
