@@ -1,11 +1,15 @@
 /**
  * Margin drawings.
  *
- * PLACEHOLDERS. These are rough monoline stand-ins that establish placement,
- * scale and line weight — Syed is drawing the real ones (Saturn, the '95
- * SC300, a cat, a dinosaur). To swap one in: export the drawing as an SVG with
- * `fill="none" stroke="currentColor"`, drop it in below keeping the same
- * props signature, and the colour and sizing will follow automatically.
+ * PLACEHOLDERS, and mostly unused now. `Cat` is live (the /cats easter egg in
+ * the footer); `Saturn`, `Coupe` and `Sauropod` have no home — Saturn was
+ * replaced in the hero by Syed's drawn astronaut cat, and the other two lost
+ * their place when the About marginalia came out. They cost nothing sitting
+ * here, and are ready if a slot appears.
+ *
+ * To swap one in: export the drawing as an SVG with `fill="none"
+ * stroke="currentColor"`, keep the same props signature, and colour and
+ * sizing follow automatically.
  *
  * They are decorative, so every one is aria-hidden.
  */

@@ -1,8 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/data/site";
 import { Reveal } from "@/components/Reveal";
 import { ArrowRight } from "@/components/icons";
-import { Saturn } from "@/components/marginalia";
 
 const { name, location, education, links } = siteConfig;
 
@@ -20,7 +20,19 @@ const { name, location, education, links } = siteConfig;
 export function Hero() {
   return (
     <section className="relative mx-auto w-full max-w-6xl px-6 pb-4 pt-36 sm:px-12 sm:pt-44">
-      <Saturn className="pointer-events-none absolute right-6 top-40 hidden h-28 w-28 text-green/70 sm:right-12 lg:block" />
+      {/*
+        Syed's drawn astronaut cat. Portrait (0.817), unlike the square mark it
+        replaced, so it is sized by height and left to find its own width.
+        Desktop only — there is no room beside the headline below lg.
+      */}
+      <Image
+        src="/logo/astronaut-cat.webp"
+        alt=""
+        width={868}
+        height={1062}
+        priority
+        className="pointer-events-none absolute right-6 top-28 hidden h-44 w-auto sm:right-12 lg:block"
+      />
 
       <Reveal>
         <p className="label">
