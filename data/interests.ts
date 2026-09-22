@@ -31,6 +31,11 @@ export const interests: Interest[] = [
     id: "fitness",
     title: "Fitness",
     blurb: "Training, and the habit of showing up",
+    images: [
+      "/interests/lake-travis.webp",
+      "/interests/greenbelt-overlook.webp",
+    ],
+    imageAlt: "Syed outdoors around Austin",
     body: [
       "DRAFT — rewrite in your own words. Nothing in the repo told me anything about this one, so treat every sentence here as a placeholder.",
       "DRAFT — rewrite in your own words. What you train, how long you have been at it, and what keeps you going back.",

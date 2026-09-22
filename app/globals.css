@@ -305,3 +305,15 @@
     opacity: 1;
   }
 }
+
+/*
+ * The cursor label never rides over an open drawer.
+ *
+ * !important is load-bearing here: CursorLabel writes opacity as an inline
+ * style from its rAF, and an inline style beats an ordinary rule. Suppressing
+ * it in JS instead would not help — the drawer can open with no pointer
+ * movement, so the label would never repaint.
+ */
+[data-drawer-open] .cursor-label {
+  opacity: 0 !important;
+}

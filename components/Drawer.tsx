@@ -65,12 +65,18 @@ export function Drawer({
     body.style.overflow = "hidden";
     if (gap > 0) body.style.paddingRight = `${gap}px`;
 
+    // Hides the cursor label (see globals.css). Clicking a tile leaves the
+    // label showing until the next pointer move, which lands it on top of the
+    // open panel.
+    document.documentElement.dataset.drawerOpen = "";
+
     if (bodyRef.current) bodyRef.current.scrollTop = 0;
     closeRef.current?.focus();
 
     return () => {
       body.style.overflow = prevOverflow;
       body.style.paddingRight = prevPad;
+      delete document.documentElement.dataset.drawerOpen;
       restoreTo.current?.focus?.();
     };
   }, [open]);

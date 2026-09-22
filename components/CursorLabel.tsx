@@ -73,7 +73,7 @@ export function CursorLabel() {
     <div
       ref={ref}
       aria-hidden
-      className="pointer-events-none fixed left-0 top-0 z-[200] whitespace-nowrap rounded-sm bg-ink px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-[0.1em] text-ground opacity-0 transition-opacity duration-150"
+      className="cursor-label pointer-events-none fixed left-0 top-0 z-[200] whitespace-nowrap rounded-sm bg-ink px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-[0.1em] text-ground opacity-0 transition-opacity duration-150"
       style={{ transform: "translate3d(-300px, -300px, 0)" }}
     />
   );
