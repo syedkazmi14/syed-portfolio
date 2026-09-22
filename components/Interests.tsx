@@ -57,7 +57,15 @@ export function Interests() {
           </Reveal>
         ))}
       </div>
-      <div className="border-t border-rule" />
+      {/*
+        No closing rule here, deliberately. Interests is the last section on
+        the homepage and the footer opens with its own `border-t` — two
+        identical hairlines 113px apart with nothing between them read as a
+        mistake. The footer's rule is the one that has to stay: on
+        /work/[slug] it separates the contact block from a "Next project" nav.
+        WorkIndex keeps its closing rule because a section follows it, not the
+        footer.
+      */}
 
       <Drawer
         open={!!active}
