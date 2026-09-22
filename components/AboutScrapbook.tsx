@@ -27,7 +27,8 @@ const PORTRAIT_TILT = -1.2;
  *
  * Phrases in the bio that match an `aboutPhotos` entry become buttons. Each
  * click tapes that photo on top of the pile; clicking one already on the pile
- * brings it back to the top. The portrait stays at the bottom. Photos appear
+ * brings it back to the top. The portrait stays at the bottom, and a reset
+ * button beside the caption clears the pile back to it. Photos appear
  * instantly — no drop animation, the motion budget is spent elsewhere.
  */
 export function AboutScrapbook() {
@@ -90,11 +91,38 @@ export function AboutScrapbook() {
             ))}
           </div>
 
-          <figcaption
-            aria-live="polite"
-            className="mt-6 text-center font-mono text-[0.68rem] uppercase tracking-[0.1em] text-faint lg:text-left"
-          >
-            {top ? top.caption : portrait.caption}
+          {/*
+            aria-live wraps the caption only. With the reset button inside the
+            live region, screen readers would re-announce the button every time
+            a photo changed the caption.
+          */}
+          <figcaption className="mt-6 flex items-center justify-center gap-3 font-mono text-[0.68rem] uppercase tracking-[0.1em] text-faint lg:justify-start">
+            <span aria-live="polite">
+              {top ? top.caption : portrait.caption}
+            </span>
+
+            {stack.length ? (
+              <button
+                type="button"
+                onClick={() => setStack([])}
+                data-cursor-label="Clear photos"
+                className="inline-flex items-center gap-1 text-green transition-colors hover:text-green-deep"
+              >
+                <svg
+                  viewBox="0 0 16 16"
+                  className="h-3 w-3"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={1.6}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden
+                >
+                  <path d="M13 8a5 5 0 1 1-1.6-3.7M13 2v3h-3" />
+                </svg>
+                Reset
+              </button>
+            ) : null}
           </figcaption>
         </figure>
       </Reveal>
@@ -189,20 +217,15 @@ function Tape({ className }: { className: string }) {
   );
 }
 
-/** The photo itself, or a labelled card while no real photo exists yet. */
+/**
+ * The photo itself.
+ *
+ * This used to fall back to a labelled placeholder card for entries with a
+ * null `src`. All three now have real photos, which narrowed the type and made
+ * that branch unreachable, so it is gone — add it back if an entry ever ships
+ * without an image again.
+ */
 function PhotoFace({ photo }: { photo: Photo }) {
-  if (!photo.src) {
-    return (
-      <div
-        role="img"
-        aria-label={photo.alt}
-        className="flex h-full w-full flex-col items-center justify-center gap-2 border border-rule bg-green-wash p-6 text-center"
-      >
-        <span className="label text-green">Photo placeholder</span>
-        <span className="font-mono text-[0.7rem] text-muted">{photo.phrase}</span>
-      </div>
-    );
-  }
   return (
     <Image
       src={photo.src}

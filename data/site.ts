@@ -50,7 +50,7 @@ export const siteConfig = {
   portrait: {
     src: "/photos/syedheadshot.webp",
     alt: "Syed Kazmi",
-    caption: "Austin, Texas",
+    caption: "he/him/his",
   },
 
   /**
@@ -62,21 +62,21 @@ export const siteConfig = {
   aboutPhotos: [
     {
       phrase: "two cats",
-      src: "/cats/baileyandlouisecuddled.webp",
-      alt: "Bailey and Louise, Syed's two cats, curled up together",
+      src: "/cats/bailey-louise-couch.webp",
+      alt: "Bailey and Louise asleep together on the couch",
       caption: "Bailey & Louise",
     },
     {
       phrase: "getting outside",
-      src: null,
-      alt: "Placeholder for a photo outdoors",
-      caption: "Placeholder \u00b7 outside",
+      src: "/interests/lake-travis.webp",
+      alt: "Syed on a boat at Lake Travis",
+      caption: "Lake Travis",
     },
     {
       phrase: "volunteering",
-      src: null,
-      alt: "Placeholder for a volunteering photo",
-      caption: "Placeholder \u00b7 volunteering",
+      src: "/photos/lahore.webp",
+      alt: "Syed outside Allama Iqbal International Airport in Lahore",
+      caption: "Lahore, Pakistan",
     },
   ],
 
