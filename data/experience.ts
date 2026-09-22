@@ -65,6 +65,7 @@ export const experience: ExperienceItem[] = [
     role: "IT Technician",
     period: "March 2024 — May 2025",
     type: "it",
+    images: ["/experience/metropak-team.webp"],
     description:
       "Provided IT infrastructure management, database optimization, and automated core business workflows for enterprise systems.",
     highlights: [
