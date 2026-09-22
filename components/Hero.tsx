@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { siteConfig } from "@/data/site";
 import { Reveal } from "@/components/Reveal";
+import { Greeting } from "@/components/Greeting";
+import { NameToggle } from "@/components/NameToggle";
 import { ArrowRight } from "@/components/icons";
 
-const { name, location, education, links } = siteConfig;
+const { name, nameUrdu, role, links } = siteConfig;
 
 /*
  * The type scale here is tuned to Young Serif, which sets appreciably wider
@@ -12,21 +14,32 @@ const { name, location, education, links } = siteConfig;
  * again.
  */
 /**
- * Deliberately short. The hero states who he is and what he does; everything
- * else — the IBM detail, the backend/cloud/agents positioning — lives in the
- * About section directly below it.
+ * A nameplate rather than a sentence: greeting, name, role, one per line.
+ *
+ * Location and graduation date used to sit in the line above the headline.
+ * They were not dropped — both still read in the About card, and the location
+ * also sits in the footer colophon. The line above is now the greeting alone.
+ *
+ * The name line carries a fixed `min-h`, because the Urdu spelling sets taller
+ * than the Latin one: without it, flipping the name would shove the role line
+ * down the page. Pinning it means the toggle changes exactly one thing.
+ *
+ * That pin is also why the h1 margin is small. `items-center` splits the slack
+ * between the 1.5em box and the ~1.08em Latin line, dropping ~14px of optical
+ * space above the name — so the margin here is tuned to the gap you actually
+ * see, not the gap in the markup. Re-measure it if the pin changes.
  */
 export function Hero() {
   return (
     <section className="mx-auto w-full max-w-6xl px-6 pb-4 pt-36 sm:px-12 sm:pt-44">
       <Reveal>
-        <p className="label">
-          {location} &nbsp;·&nbsp; Graduating {education.graduating}
-        </p>
+        <Greeting className="label" />
 
-        <h1 className="mt-7 max-w-4xl font-display text-[2.35rem] font-normal leading-[1.08] tracking-[-0.015em] sm:text-5xl lg:text-[4.1rem]">
-          Hi, I&rsquo;m <span className="text-green">{name}</span>,
-          <br />a software developer.
+        <h1 className="mt-3 max-w-4xl font-display text-[2.35rem] font-normal leading-[1.08] tracking-[-0.015em] sm:text-5xl lg:text-[4.1rem]">
+          <span className="flex min-h-[1.5em] items-center">
+            <NameToggle name={name} urdu={nameUrdu} />
+          </span>
+          <span className="block">{role}</span>
         </h1>
 
         <div className="mt-11 flex flex-wrap items-center gap-3">

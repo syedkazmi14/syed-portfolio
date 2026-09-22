@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Young_Serif, Archivo, Fragment_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { siteConfig } from "@/data/site";
 import { CursorLabel } from "@/components/CursorLabel";
 import { ScrollMemory } from "@/components/ScrollMemory";
@@ -26,6 +27,20 @@ const mono = Fragment_Mono({
   subsets: ["latin"],
   weight: "400",
   display: "swap",
+});
+
+// Amiri, subset to the eight characters in "سید کاظمی" and nothing else — 9KB
+// rather than the ~100KB the full Arabic subset would cost for two words.
+// `next/font/google` has no text-subsetting option, so the file is committed
+// and loaded locally. See AGENTS.md for how to regenerate it.
+const amiri = localFont({
+  src: "./fonts/amiri-urdu-subset.woff2",
+  variable: "--font-amiri",
+  weight: "400",
+  display: "swap",
+  // The metric-matched fallback is built from Arial, which tells us nothing
+  // useful about Arabic glyphs — and the name line is height-pinned anyway.
+  adjustFontFallback: false,
 });
 
 const { headline, intro, name, role, education } = siteConfig;
@@ -86,7 +101,7 @@ export default function RootLayout({
       // hydrates, which React would otherwise report as a mismatch. Same
       // pattern the theming libraries use for their no-flash scripts.
       suppressHydrationWarning
-      className={`${display.variable} ${sans.variable} ${mono.variable} h-full`}
+      className={`${display.variable} ${sans.variable} ${mono.variable} ${amiri.variable} h-full`}
     >
       <body className="flex min-h-full flex-col">
         {/*

@@ -6,6 +6,8 @@ import type { NavItem } from "@/lib/types";
  */
 export const siteConfig = {
   name: "Syed Kazmi",
+  /** Syed's own spelling, supplied by him. Rendered by components/NameToggle. */
+  nameUrdu: "سید کاظمی",
   shortName: "Syed",
   role: "Software Developer",
 

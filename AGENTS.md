@@ -18,10 +18,11 @@ faint  #9AA49D   rule #D8D4C6   rule-soft #E2DED1
 green  #0C4A33   green-deep #0A3A28   green-wash #E9EEE9
 ```
 
-## Type — three families
+## Type — four families
 
-`font-display` Young Serif · `font-sans` Archivo · `font-mono` Fragment Mono.
-All three load via `next/font/google` in `app/layout.tsx`. Use the `label`
+`font-display` Young Serif · `font-sans` Archivo · `font-mono` Fragment Mono ·
+`font-urdu` Amiri. The first three load via `next/font/google` in
+`app/layout.tsx`; Amiri is a committed local subset, below. Use the `label`
 utility for small uppercase mono headings rather than re-specifying it.
 
 **Young Serif and Fragment Mono are single-weight (400).** Never pair a weight
@@ -33,6 +34,45 @@ Young Serif also sets appreciably wider than most display serifs: the hero
 scale in `components/Hero.tsx` is tuned to it, and at the previous 5.2rem the
 two-line headline wrapped to four even at 1440px. Re-measure the hero if the
 display face ever changes again.
+
+### The Urdu face
+
+`font-urdu` is **Amiri**, and only ever renders `siteConfig.nameUrdu` — Syed's
+name, in `components/NameToggle.tsx`. It is not a text face here.
+
+Amiri is **Naskh, not Nastaliq**, and that was a considered trade rather than a
+default. Nastaliq is the traditional hand for Urdu, but it is written down a
+steep diagonal — letters climb onto the shoulder of the one before — so it sets
+roughly half the width of the Latin and wants twice the line-height. Beside
+Young Serif it reads as compressed. Amiri runs horizontally on a flat baseline
+and is close enough in colour to share a headline. Syed chose it from a
+six-face comparison. **Do not "fix" it back to Nastaliq.**
+
+The file is `app/fonts/amiri-urdu-subset.woff2` — **9KB**, carrying only the
+eight codepoints that string needs (`U+20, 627, 62f, 633, 638, 645, 6a9, 6cc`).
+`next/font/google` has no text-subsetting option, so it is committed and loaded
+with `next/font/local`. To regenerate it, ask Google for the subset directly:
+
+```
+curl -sG -A 'Mozilla/5.0' https://fonts.googleapis.com/css2 \
+  --data-urlencode 'family=Amiri' --data-urlencode 'text=سید کاظمی'
+```
+
+then download the `src: url(...)` it returns. Without a browser User-Agent the
+API serves TTF instead of woff2.
+
+Two things keep the toggle honest, and both are load-bearing:
+
+- The name line in `components/Hero.tsx` carries a fixed `min-h`. Amiri sets
+  taller than Young Serif, so without it, flipping the name shoves the role
+  line and both buttons down the page. Measured: zero drift in either state.
+- The Urdu span keeps `lang="ur"` so a screen reader pronounces it, and the
+  button carries an `sr-only` sentence naming the action — otherwise an
+  English-only reader lands on a control labelled in a script they cannot read.
+
+The Playwright overflow suite never clicks the toggle, so it only ever sees the
+Latin state. **Check the Urdu state by hand after touching the hero.** At the
+time of writing the Urdu sets narrower than the Latin at every guarded width.
 
 ## Hard rules
 
@@ -173,7 +213,10 @@ All content lives in `data/`. Never invent an accomplishment, metric, date,
 company, or responsibility — if a fact is not already in `data/` or stated by
 Syed, ask rather than filling the gap.
 
-- `data/site.ts` — identity, headline, bio, education, portrait, links
+- `data/site.ts` — identity, headline, bio, education, portrait, links.
+  `nameUrdu` is Syed's own spelling, supplied by him — not transliterated by a
+  tool. `role` is already title-cased ("Software Developer"); the hero renders
+  it verbatim rather than re-casing it.
 - `data/projects.ts` — the projects; `links: []` is the repo/demo slot.
   Everything below `name` is **optional**: entries often arrive with only a
   name, a date and a line of copy, and every surface omits what is missing.

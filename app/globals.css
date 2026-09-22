@@ -27,6 +27,9 @@
   --font-display: var(--font-young-serif), Georgia, serif;
   --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-fragment-mono), ui-monospace, monospace;
+  /* Naskh, for the Urdu spelling of the name in the hero. Not a text face —
+     the subset holds eight characters. */
+  --font-urdu: var(--font-amiri), serif;
 
 }
 
