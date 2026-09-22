@@ -54,6 +54,8 @@ export const interests: Interest[] = [
     id: "games",
     title: "Video games",
     blurb: "Playing them, and occasionally building one",
+    images: ["/interests/fortnite.webp"],
+    imageAlt: "A Fortnite squad drop",
     body: [
       "DRAFT — rewrite in your own words. Playing games turned into taking them apart — building one in Unreal Engine 5, part Blueprint and part C++.",
       "DRAFT — rewrite in your own words. What you actually play, and what building one taught you that playing them did not.",

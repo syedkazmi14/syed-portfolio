@@ -31,6 +31,7 @@ export const projects: Project[] = [
     name: "DayOne",
     period: "Sep 2026",
     badge: "HackRice 2026",
+    images: ["/projects/dayone.webp"],
     description:
       "Gamified agentic document parser and AI video generation to make onboarding processes more engaging.",
     tech: [],
@@ -78,7 +79,10 @@ export const projects: Project[] = [
     tech: ["Python", "TensorFlow", "PoseNet", "MoveNet", "Machine Learning"],
     featured: true,
     badge: "1st Place · Axxess AI Track",
-    images: ["/projects/telekinetics.webp"],
+    images: [
+      "/projects/telekinetics.webp",
+      "/projects/telekinetics-team.webp",
+    ],
     links: [],
   },
   {

@@ -8,6 +8,7 @@ export const experience: ExperienceItem[] = [
     role: "Software Engineering Intern",
     period: "May 2026 — August 2026",
     type: "software",
+    images: ["/experience/ibm-team.webp", "/experience/ibm-intern.webp"],
     description:
       "I worked on watsonx Orchestrate, IBM's platform for building and running AI agents. My focus was the Bring Your Own Agent path — letting teams register agents they built in frameworks like LangChain or CrewAI and run them inside Orchestrate next to IBM's own.",
     highlights: [
@@ -34,6 +35,10 @@ export const experience: ExperienceItem[] = [
     role: "Software Engineering Intern",
     period: "May 2025 — July 2025",
     type: "software",
+    images: [
+      "/experience/infosys-team.webp",
+      "/experience/infosys-group.webp",
+    ],
     description:
       "I built an advisor app where people talk to a video avatar instead of reading through documents. The avatar streamed through HeyGen over WebRTC; behind it, a Flask and Node backend answered questions from a ChromaDB + AWS Bedrock retrieval pipeline, all running on Google Cloud.",
     highlights: [

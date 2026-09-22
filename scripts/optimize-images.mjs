@@ -28,6 +28,7 @@ const TARGETS = [
   { dir: "projects", maxWidth: 1600, quality: 82 },
   { dir: "photos", maxWidth: 1200, quality: 84 },
   { dir: "interests", maxWidth: 1400, quality: 84 },
+  { dir: "experience", maxWidth: 1400, quality: 84 },
 ];
 
 const SOURCE_EXT = [".png", ".jpg", ".jpeg"];
