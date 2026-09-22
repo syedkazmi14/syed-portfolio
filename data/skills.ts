@@ -1,6 +1,13 @@
 import type { SkillCategory } from "@/lib/types";
 
-/** Skills grouped into "toolbox drawers". Icons resolve in SkillsToolbox. */
+/**
+ * Skills grouped for the Stack list in components/Credentials.tsx.
+ *
+ * A "Hardware / IT" group (soldering, PCB repair, oscilloscope, multimeter,
+ * VMware vCenter, SAP B1) was removed at Syed's request. The two IT entries
+ * still read on the Metropak role in data/experience.ts; the four bench-work
+ * ones are deliberately no longer claimed anywhere on the site.
+ */
 export const skills: SkillCategory[] = [
   {
     id: "languages",
@@ -34,17 +41,5 @@ export const skills: SkillCategory[] = [
     id: "cloud-devops",
     title: "Cloud / DevOps",
     items: ["AWS", "Google Cloud", "Docker", "CI/CD", "PostgreSQL", "MongoDB", "Redis"],
-  },
-  {
-    id: "hardware-it",
-    title: "Hardware / IT",
-    items: [
-      "Soldering",
-      "PCB Repair",
-      "Oscilloscope",
-      "Multimeter",
-      "VMware vCenter",
-      "SAP B1",
-    ],
   },
 ];
