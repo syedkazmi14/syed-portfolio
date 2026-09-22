@@ -1,7 +1,8 @@
 /**
  * Margin drawings.
  *
- * One mark: the cat that opens /cats from the footer. The Saturn, coupe and
+ * One mark: Syed's cat, used as decoration in the footer colophon. It used
+ * to open a /cats gallery, which has been deleted. The Saturn, coupe and
  * sauropod placeholders that used to live here were removed once Syed's own
  * artwork replaced them and the About marginalia came out.
  *

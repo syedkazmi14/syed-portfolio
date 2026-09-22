@@ -13,7 +13,6 @@ const routes = [
   "/work/blue-relief",
   "/work/telekinetics",
   "/work/copilot-sdk",
-  "/cats",
 ];
 const widths = [320, 360, 390, 768];
 

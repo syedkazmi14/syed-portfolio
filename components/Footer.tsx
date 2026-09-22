@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { siteConfig } from "@/data/site";
 import { Cat } from "@/components/marginalia";
 import { GithubIcon, LinkedinIcon, MailIcon } from "@/components/icons";
@@ -54,17 +53,11 @@ export function Footer() {
             <div className="flex items-center gap-3">
               <p className="font-mono">Next.js · TypeScript · Tailwind</p>
               {/*
-                The cat easter egg. The closing photo below links to /cats too,
-                so this small mark is now the second route rather than the only
-                one — safe to drop if the row feels busy.
+                Syed's cat mark. It used to link to /cats; that page is gone,
+                so this is decoration now — kept because the drawing is his and
+                the colophon is the last place the site shows any personality.
               */}
-              <Link
-                href="/cats"
-                aria-label="Louise and Bailey"
-                className="text-rule transition-colors hover:text-green"
-              >
-                <Cat className="h-5 w-[1.4rem]" />
-              </Link>
+              <Cat aria-hidden className="h-5 w-[1.4rem] text-rule" />
             </div>
           </div>
         </div>
@@ -83,20 +76,16 @@ export function Footer() {
           any photo Syed drops in — portrait or landscape — without spilling
           past the band or being cropped.
         */}
-        <Link
-          href="/cats"
-          aria-label="Louise and Bailey"
-          className="group absolute bottom-0 left-1/2 flex h-[9.5rem] -translate-x-1/2 items-end sm:h-[13rem]"
-        >
+        <div className="absolute bottom-0 left-1/2 flex h-[9.5rem] -translate-x-1/2 items-end sm:h-[13rem]">
           <Image
             src={siteConfig.footerPhoto.src}
             alt={siteConfig.footerPhoto.alt}
             width={siteConfig.footerPhoto.width}
             height={siteConfig.footerPhoto.height}
             sizes="(max-width: 640px) 60vw, 26rem"
-            className="h-full w-auto object-contain object-bottom transition-transform duration-500 group-hover:-translate-y-1"
+            className="h-full w-auto object-contain object-bottom"
           />
-        </Link>
+        </div>
       </div>
     </footer>
   );
