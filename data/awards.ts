@@ -10,7 +10,7 @@ export const awards: Award[] = [
   },
   {
     id: "axxess",
-    title: "1st Place — AI Track",
+    title: "1st Place - AI Track",
     org: "Axxess Hackathon",
     description:
       "Led a team to victory in the AI track by building an AI-powered physical therapy analysis app.",
