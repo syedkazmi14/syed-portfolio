@@ -53,11 +53,24 @@ export function Footer() {
             <div className="flex items-center gap-3">
               <p className="font-mono">Next.js · TypeScript · Tailwind</p>
               {/*
-                Syed's cat mark. It used to link to /cats; that page is gone,
-                so this is decoration now — kept because the drawing is his and
-                the colophon is the last place the site shows any personality.
+                Syed's cat mark, now the back-to-top control.
+
+                A plain <a href="#top"> rather than a button calling
+                scrollTo: the HTML spec makes "top" the one fragment that
+                needs no matching element — with no `id="top"` in the
+                document the browser scrolls to the start of it. So this
+                works with scripting off, keeps the footer a server
+                component, and the smooth scroll comes from the
+                `scroll-behavior` already on <html>.
               */}
-              <Cat aria-hidden className="h-5 w-[1.4rem] text-rule" />
+              <a
+                href="#top"
+                aria-label="Back to top"
+                data-cursor-label="Back to top"
+                className="text-rule transition-colors hover:text-green"
+              >
+                <Cat aria-hidden className="h-5 w-[1.4rem]" />
+              </a>
             </div>
           </div>
         </div>
