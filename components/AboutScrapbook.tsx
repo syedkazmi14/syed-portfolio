@@ -158,7 +158,7 @@ function withPhotoButtons(text: string, add: (i: number) => void): ReactNode[] {
         key={i}
         type="button"
         onClick={() => add(i)}
-        data-cursor-label="Add photo"
+        data-cursor-label="View photo"
         className="cursor-pointer text-green underline decoration-rule decoration-1 underline-offset-[5px] transition-colors hover:text-green-deep hover:decoration-green"
       >
         {phrase}
