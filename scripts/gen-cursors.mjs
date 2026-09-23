@@ -39,6 +39,9 @@ const SOURCE = join(root, "scripts/assets/cursor-paw-source.png");
 /** Canvas is 32; the paw is inset so its outline never clips at the edge. */
 const INSET = 1;
 
+/** Degrees counterclockwise. Leans the paw left so it reads as a pointer. */
+const TILT = 25;
+
 mkdirSync(OUT, { recursive: true });
 
 const name = "paw";
@@ -51,6 +54,7 @@ for (const [suffix, size] of [
   const inner = Math.round(size - INSET * 2 * scale);
 
   const paw = await sharp(SOURCE)
+    .rotate(-TILT, { background: { r: 0, g: 0, b: 0, alpha: 0 } })
     .trim({ threshold: 8 }) // drop the transparent margin around the artwork
     .resize(inner, inner, {
       fit: "contain",
