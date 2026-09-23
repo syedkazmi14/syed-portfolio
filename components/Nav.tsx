@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { siteConfig, navItems } from "@/data/site";
 
@@ -24,6 +25,7 @@ import { siteConfig, navItems } from "@/data/site";
  * those tests if the nav changes again.
  */
 export function Nav() {
+  const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
   const fillRef = useRef<HTMLSpanElement>(null);
 
@@ -74,6 +76,25 @@ export function Nav() {
         <nav aria-label="Main" className="flex items-center justify-between gap-4">
           <Link
             href="/"
+            onClick={(e) => {
+              // Next only scrolls a same-route link when the top of the page
+              // is out of view, and after a hash nav it can skip it entirely,
+              // so on the homepage do it ourselves. The smooth scroll comes
+              // from `scroll-behavior` on <html>. Modified clicks keep their
+              // default (new tab, etc.).
+              if (
+                pathname !== "/" ||
+                e.metaKey ||
+                e.ctrlKey ||
+                e.shiftKey ||
+                e.altKey ||
+                e.button !== 0
+              )
+                return;
+              e.preventDefault();
+              if (location.hash) history.replaceState(null, "", "/");
+              window.scrollTo({ top: 0 });
+            }}
             className="group flex shrink-0 items-center gap-2.5"
             aria-label={`${siteConfig.name} — home`}
           >
