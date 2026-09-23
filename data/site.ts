@@ -27,7 +27,7 @@ export const siteConfig = {
    * August 2026.
    */
   intro:
-    "Software developer, full-stack by necessity and backend by preference. This past summer I was at IBM, working on watsonx Orchestrate — letting teams run agents they built in LangChain or CrewAI inside IBM's platform.",
+    "Software developer. This past summer I was at IBM, working on watsonx Orchestrate — letting teams run agents they built in LangChain or CrewAI inside IBM's platform.",
 
   location: "Austin, Texas",
 
