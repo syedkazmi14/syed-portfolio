@@ -9,8 +9,10 @@ import type { ReactNode } from "react";
  * `pointer-events-none` and `aria-hidden`: purely atmospheric, never the only
  * carrier of information.
  *
- * `group-focus-within` mirrors the hover state so keyboard users tabbing to
- * the row's links get the same feedback.
+ * `group-has-[:focus-visible]` mirrors the hover state so keyboard users
+ * tabbing to the row's links get the same feedback. It is not `focus-within`:
+ * the drawer hands focus back to the row it opened from, and after a mouse
+ * click that would pin the photo on until focus moved to another tile.
  *
  * With no `image` the row simply renders flat — which is what the experience
  * entries do until real photos land for them.
@@ -31,7 +33,7 @@ export function HoverTile({
       {image ? (
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 overflow-hidden opacity-0 transition-opacity duration-[220ms] ease-out group-hover:opacity-100 group-focus-within:opacity-100"
+          className="pointer-events-none absolute inset-0 -z-10 overflow-hidden opacity-0 transition-opacity duration-[220ms] ease-out group-hover:opacity-100 group-has-[:focus-visible]:opacity-100"
         >
           <Image
             src={image}
