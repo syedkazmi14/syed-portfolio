@@ -251,8 +251,8 @@
 @media (pointer: fine) {
   body {
     cursor:
-      image-set(url("/cursor/reg.png") 1x, url("/cursor/reg@2x.png") 2x) 16 16,
-      url("/cursor/reg.png") 16 16,
+      image-set(url("/cursor/paw.png") 1x, url("/cursor/paw@2x.png") 2x) 16 16,
+      url("/cursor/paw.png") 16 16,
       default;
   }
 
@@ -265,8 +265,8 @@
   [role="button"],
   [role="link"] {
     cursor:
-      image-set(url("/cursor/reg.png") 1x, url("/cursor/reg@2x.png") 2x) 16 16,
-      url("/cursor/reg.png") 16 16,
+      image-set(url("/cursor/paw.png") 1x, url("/cursor/paw@2x.png") 2x) 16 16,
+      url("/cursor/paw.png") 16 16,
       pointer;
   }
 

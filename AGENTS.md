@@ -144,9 +144,15 @@ time of writing the Urdu sets narrower than the Latin at every guarded width.
 
 ## The cursor
 
-A printer's registration mark — the crosshair used to align colour plates on
-press, in the same print vocabulary as the paper tooth and the drawer's dotted
-frame. One mark everywhere, lines closed through the centre.
+Syed's paw print — a beige pad inside a heavy deep-green outline, the same
+hand as the cat in the nav and the favicon. One mark everywhere.
+
+It replaced a printer's registration mark, which was the tidier idea and much
+less his. **If it is ever reverted, revert the whole commit rather than
+unpicking it** — the change is deliberately self-contained (the generator, the
+two PNGs, the source asset and four lines of CSS). The crosshair had no source
+file; it was drawn by inline SVG inside `scripts/gen-cursors.mjs`, so
+`git log --follow -p scripts/gen-cursors.mjs` is where to find it.
 
 Interactivity is carried by `components/CursorLabel.tsx`, a small label that
 rides beside the cursor over anything with a `data-cursor-label` attribute
@@ -155,10 +161,28 @@ by a second cursor image. It is mounted once in the root layout, writes
 position straight to the DOM in a rAF so moving the mouse never renders, and
 is skipped entirely on coarse pointers and under reduced motion.
 
-`npm run gen:cursors` builds `public/cursor/*.png` from
-`scripts/gen-cursors.mjs`. PNG, not SVG: Safari does not support SVG cursors.
-Each shape is drawn twice — a cream halo under the green — or the mark vanishes
-over photos and the drawer backdrop.
+`npm run gen:cursors` builds `public/cursor/paw.png` and `paw@2x.png` from
+`scripts/assets/cursor-paw-source.png`. PNG, not SVG: Safari does not support
+SVG cursors. To change the artwork, replace the source and re-run; never
+hand-edit the files in `public/cursor`.
+
+The crosshair had to be drawn twice — a cream halo under the green — or it
+disappeared over a photo or the drawer's dimmed backdrop. The paw needs no
+halo: one of its two colours always contrasts with what is behind it. Over the
+cream ground the green outline carries it; over a dark photo or the green
+button, the beige body does.
+
+**32px is a ceiling, not a preference.** Browsers accept larger cursor images,
+but some platforms silently refuse anything over 32 and fall back to the system
+arrow — so a "retina" 64px 1x file would look fine locally and break for other
+people. The 64px file is the 2x half of an `image-set()`, nothing more.
+
+The hotspot is `16 16`, carried over unchanged from the crosshair. Note the
+trade that came with the artwork: the crosshair was two thin lines, so you
+could see the pixel you were about to click through it. The paw is solid, so
+the click point sits under the middle of it. Moving the hotspot to roughly
+`6 6` would make it behave like a normal arrow if that ever proves annoying —
+it is one number, in two rules.
 
 The CSS is scoped to `pointer: fine`, keeps a standard keyword fallback on
 every rule, and leaves the I-beam alone on text inputs. It does override the
