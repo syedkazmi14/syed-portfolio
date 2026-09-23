@@ -86,19 +86,6 @@ export const siteConfig = {
     },
   ],
 
-  /**
-   * The photo that closes the page, sitting on the jali band under the
-   * colophon. Swap `src` for whichever loafed shot you want — anything in
-   * /public/cats works, and a cut-out with a transparent background would sit
-   * on the lattice better than a rectangle.
-   */
-  footerPhoto: {
-    src: "/cats/loaf-cutout.webp",
-    alt: "Louise and Bailey, loafed",
-    width: 1283,
-    height: 954,
-  },
-
   url: "https://syedk.dev",
 
   links: {

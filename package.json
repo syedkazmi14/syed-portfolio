@@ -10,7 +10,8 @@
     "test:e2e": "playwright test",
     "gen:icons": "node scripts/gen-icons.mjs",
     "optimize:images": "node scripts/optimize-images.mjs",
-    "gen:cursors": "node scripts/gen-cursors.mjs"
+    "gen:cursors": "node scripts/gen-cursors.mjs",
+    "gen:skyline": "node scripts/gen-skyline.mjs"
   },
   "dependencies": {
     "next": "16.2.7",

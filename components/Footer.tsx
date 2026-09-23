@@ -1,6 +1,6 @@
-import Image from "next/image";
 import { siteConfig } from "@/data/site";
 import { Cat } from "@/components/marginalia";
+import { SkylineBand } from "@/components/SkylineBand";
 import { GithubIcon, LinkedinIcon, MailIcon } from "@/components/icons";
 
 const social = [
@@ -79,26 +79,15 @@ export function Footer() {
       {/*
         The jali resolves. Everything above has run on a 5% lattice; here it
         comes up to strength at double the tile, below the colophon rather
-        than behind it, and the cats sit at the very bottom edge.
+        than behind it, and the Austin and Dallas skylines stand along the
+        bottom edge.
       */}
-      <div className="relative mt-14 h-52 w-full overflow-hidden sm:h-64">
-        <div aria-hidden className="jali-resolve absolute inset-0" />
+      <div className="relative mt-14 h-52 w-full sm:h-64">
+        {/* Reaches up 3.5rem (the band's own margin) so the lattice begins
+            fading in right under the copyright line, not below a blank gap. */}
+        <div aria-hidden className="jali-resolve absolute inset-x-0 -top-14 bottom-0" />
 
-        {/*
-          Height-constrained rather than width-constrained, so the slot takes
-          any photo Syed drops in — portrait or landscape — without spilling
-          past the band or being cropped.
-        */}
-        <div className="absolute bottom-0 left-1/2 flex h-[9.5rem] -translate-x-1/2 items-end sm:h-[13rem]">
-          <Image
-            src={siteConfig.footerPhoto.src}
-            alt={siteConfig.footerPhoto.alt}
-            width={siteConfig.footerPhoto.width}
-            height={siteConfig.footerPhoto.height}
-            sizes="(max-width: 640px) 60vw, 26rem"
-            className="h-full w-auto object-contain object-bottom"
-          />
-        </div>
+        <SkylineBand />
       </div>
     </footer>
   );

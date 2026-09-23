@@ -295,8 +295,10 @@
   background-image: var(--jali-bold);
   background-size: 48px 48px;
   opacity: 0.26;
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 62%);
-  mask-image: linear-gradient(to bottom, transparent, #000 62%);
+  /* 70%, not 62%: the element now reaches 3.5rem above the band, so the ramp
+     finishes at the same distance from the skyline it always did. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 70%);
+  mask-image: linear-gradient(to bottom, transparent, #000 70%);
 }
 
 /* Carousel crossfade — the only animation the photo frame uses. */

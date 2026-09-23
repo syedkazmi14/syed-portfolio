@@ -197,10 +197,21 @@ more than once in this project. `rm -rf .next` and restart. Lightning CSS also
 rewrites colours (`rgba(20,32,26,0.035)` becomes `#14201a09`), so grep the
 compiled output by shape, not by the literal colour you wrote.
 
-The footer's closing photo slot (`siteConfig.footerPhoto`) is
-**height-constrained, not width-constrained**, so it accepts any aspect Syed
-drops in. Give it real intrinsic `width`/`height` — the first attempt used a
-portrait photo with 4:3 dimensions hardcoded and it overflowed the band.
+## The footer skyline
+
+The band that closes the page is Austin and Dallas on one horizon —
+`components/SkylineBand.tsx`, drawn from `public/skyline/skyline.webp`. It gets
+the same treatment as the SC300 backdrop (grayscale, green `multiply`, low
+opacity), which only works because the sky is cut out: both source photos are
+dusk shots, and a dark sky under that treatment would be a solid slab.
+
+`npm run gen:skyline` builds the file from `scripts/assets/austinSkyline.jpg`
+and `dallasSkyline.webp`. The cut-out scans each column down from the top,
+following the sky's gradient, and stops at the first edge that persists — a
+flood fill was tried first and leaked through glass facades. Never hand-edit
+the output; change the sources or the crop/tolerance numbers and re-run.
+Austin is deliberately cropped short of its right-hand haze band. The photo of
+the cats no longer appears in the footer.
 
 ## The logo mark
 
