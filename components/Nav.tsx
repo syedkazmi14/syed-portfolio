@@ -13,8 +13,15 @@ import { siteConfig, navItems } from "@/data/site";
  * are written straight to the DOM in a rAF callback — no React state, so
  * scrolling never triggers a re-render.
  *
- * Below `sm` the wordmark collapses to its monogram: the full name plus four
- * links overflowed 320/360px viewports (caught by e2e/no-overflow).
+ * Below `sm` the wordmark collapses to its monogram, and the nav drops to two
+ * links — Experience and Contact.
+ *
+ * All four labels need 308px but a 320px viewport leaves the list only 208px,
+ * so Résumé was being clipped on every phone narrower than ~400px. The
+ * overflow suite never caught it: this header is `fixed`, and a fixed
+ * element's overflow does not extend documentElement.scrollWidth, which is
+ * what that suite measures. Re-measure the labels here rather than trusting
+ * those tests if the nav changes again.
  */
 export function Nav() {
   const headerRef = useRef<HTMLElement>(null);
@@ -88,7 +95,7 @@ export function Nav() {
 
           <ul className="flex items-center gap-4 sm:gap-7">
             {navItems.map((item) => (
-              <li key={item.href}>
+              <li key={item.href} className={item.compact ? "" : "hidden sm:block"}>
                 <Link
                   href={item.href}
                   className="font-mono text-xs uppercase tracking-[0.08em] text-muted transition-colors hover:text-ink"
@@ -97,7 +104,8 @@ export function Nav() {
                 </Link>
               </li>
             ))}
-            <li>
+            {/* Résumé is a button in the hero, so the phone nav omits it. */}
+            <li className="hidden sm:block">
               <a
                 href={siteConfig.links.resume}
                 target="_blank"

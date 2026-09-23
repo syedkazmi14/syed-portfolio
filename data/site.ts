@@ -111,7 +111,8 @@ export const siteConfig = {
 } as const;
 
 export const navItems: NavItem[] = [
-  { label: "Experience", href: "/#experience" },
+  { label: "Experience", href: "/#experience", compact: true },
+  // Hidden on phones: the hero's "See projects" button already leads here.
   { label: "Projects", href: "/#work" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Contact", href: "/#contact", compact: true },
 ];

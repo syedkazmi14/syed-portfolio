@@ -93,4 +93,11 @@ export interface Interest {
 export interface NavItem {
   label: string;
   href: string;
+  /**
+   * Show this item in the phone nav. The header is fixed, so an overflowing
+   * nav is clipped rather than scrolling the page — which means the overflow
+   * e2e suite cannot catch it. Below `sm` there is room for two labels, so
+   * the rest are hidden there and reached by scrolling instead.
+   */
+  compact?: boolean;
 }
