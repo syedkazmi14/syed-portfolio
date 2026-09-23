@@ -229,10 +229,10 @@ Syed, ask rather than filling the gap.
 - `data/skills.ts`, `data/awards.ts` — rendered by `Credentials.tsx`.
   `awards.ts` also exports `certifications`, kept separate on purpose: a
   credential earned by examination is a different claim from a prize.
-- `data/interests.ts` — the four interest tiles. **Every `body` in this file is
-  currently Claude-written draft copy, not Syed's words**, and the header says
-  so. Only the SC300 and the UE5 project references are grounded in the repo.
-  Replace all of it before treating the section as finished.
+- `data/interests.ts` — the four interest tiles. **Every `body` here is Syed's
+  own writing.** It replaced the draft copy that briefly lived in this file.
+  Leave the prose alone: do not tighten, correct or restyle it without being
+  asked. Reading has no photo yet; the drawer omits the figure cleanly.
 
 The site makes **no claim about job-search status or availability.** This is
 intentional. Do not add one.

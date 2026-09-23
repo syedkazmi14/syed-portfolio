@@ -1,19 +1,15 @@
 import type { Interest } from "@/lib/types";
 
 /**
- * ⚠️ THE `body` COPY BELOW IS A DRAFT, NOT SYED'S WORDS. ⚠️
+ * The four interest tiles.
  *
- * Claude wrote these paragraphs to get the section standing up. Only two
- * things in here are verified facts from the rest of the repo:
+ * Every `body` paragraph here is Syed's own writing — he replaced the draft
+ * copy that used to sit in this file. **Do not rewrite, tighten or "improve"
+ * it.** The voice, the asides and the specifics are the point of the section;
+ * an edit that makes it read more smoothly makes it read less like him.
  *
- *   - cars   the '95 Lexus SC300, described as "the weekend project", and the
- *            photo at /photos/sc300.webp
- *   - games  the Unreal Engine 5 FPS in data/projects.ts (C++/Blueprint,
- *            Chaos Physics, UMG)
- *
- * Everything else — especially all of fitness and reading — is invented
- * scaffolding. Rewrite every `body` in your own voice before this is seen by
- * anyone, and swap the two missing images in.
+ * Reading is the one tile with no `images`, which renders fine — the drawer
+ * simply omits the figure.
  */
 export const interests: Interest[] = [
   {
