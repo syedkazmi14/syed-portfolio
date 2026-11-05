@@ -271,15 +271,8 @@ for (const [n, city] of cities.entries()) {
       px[k] = Math.round(px[k] * t);
     }
   }
-  // Fade the base so the crop never ends on a hard horizontal line.
-  const fade = Math.round(h * 0.16);
-  for (let y = h - fade; y < h; y++) {
-    const t = (h - 1 - y) / fade;
-    for (let x = 0; x < w; x++) {
-      const k = (y * w + x) * 4 + 3;
-      px[k] = Math.round(px[k] * t);
-    }
-  }
+  // No fade at the base: the skyline stands solid on the bottom edge of the
+  // page, which is where the crop ends anyway.
   layers.push({
     input: await sharp(px, { raw: { width: w, height: h, channels: 4 } })
       .png()

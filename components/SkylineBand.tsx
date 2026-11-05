@@ -13,8 +13,8 @@ const SRC = "/skyline/skyline.webp";
  * two always line up.
  *
  * `cover` + `bottom` means a wide screen shows the whole horizon and a phone
- * crops in on the middle, where Austin hands over to Dallas. A gradient mask
- * fades the two ends so the row never stops on a hard vertical edge.
+ * crops in on the middle, where Austin hands over to Dallas. Nothing fades:
+ * the skyline runs edge to edge and stands solid on the bottom of the page.
  *
  * The skyline is opaque to the lattice behind it: a solid ground-coloured
  * silhouette sits under the tinted photo.
@@ -22,8 +22,6 @@ const SRC = "/skyline/skyline.webp";
  * Purely atmospheric: `aria-hidden`, no alt text.
  */
 export function SkylineBand({ opacity = 0.5 }: { opacity?: number }) {
-  const fade =
-    "linear-gradient(to right, transparent, #000 10%, #000 90%, transparent)";
   // The same file, placed the same way, as a mask.
   const cutout = {
     maskImage: `url(${SRC})`,
@@ -40,7 +38,6 @@ export function SkylineBand({ opacity = 0.5 }: { opacity?: number }) {
     <div
       aria-hidden
       className="pointer-events-none absolute inset-0"
-      style={{ maskImage: fade, WebkitMaskImage: fade }}
     >
       {/*
         A solid ground-coloured copy of the silhouette, so the skyline stands
