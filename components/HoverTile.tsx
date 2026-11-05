@@ -1,5 +1,7 @@
+"use client";
+
 import Image from "next/image";
-import type { ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 
 /**
  * A row that reveals a faint photograph behind its text on hover.
@@ -13,6 +15,13 @@ import type { ReactNode } from "react";
  * tabbing to the row's links get the same feedback. It is not `focus-within`:
  * the drawer hands focus back to the row it opened from, and after a mouse
  * click that would pin the photo on until focus moved to another tile.
+ *
+ * Touch has no hover, and Tailwind gates `hover:` behind `(hover: hover)`, so
+ * on a phone the photo would never appear. Instead, a finger resting on the
+ * row sets `data-touching` and the photo shows for as long as it stays down —
+ * including while the page scrolls under it. Plain `:active` is not enough:
+ * browsers drop it the moment a scroll starts. The listeners are passive, so
+ * scrolling is never held up.
  *
  * With no `image` the row simply renders flat — which is what the experience
  * entries do until real photos land for them.
@@ -28,12 +37,29 @@ export function HoverTile({
   className?: string;
   intensity?: number;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !image) return;
+    const on = () => el.setAttribute("data-touching", "");
+    const off = () => el.removeAttribute("data-touching");
+    el.addEventListener("touchstart", on, { passive: true });
+    el.addEventListener("touchend", off, { passive: true });
+    el.addEventListener("touchcancel", off, { passive: true });
+    return () => {
+      el.removeEventListener("touchstart", on);
+      el.removeEventListener("touchend", off);
+      el.removeEventListener("touchcancel", off);
+    };
+  }, [image]);
+
   return (
-    <div className={`group relative isolate ${className}`}>
+    <div ref={ref} className={`group relative isolate ${className}`}>
       {image ? (
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 overflow-hidden opacity-0 transition-opacity duration-[220ms] ease-out group-hover:opacity-100 group-has-[:focus-visible]:opacity-100"
+          className="pointer-events-none absolute inset-0 -z-10 overflow-hidden opacity-0 transition-opacity duration-[220ms] ease-out group-hover:opacity-100 group-has-[:focus-visible]:opacity-100 group-data-[touching]:opacity-100"
         >
           <Image
             src={image}
